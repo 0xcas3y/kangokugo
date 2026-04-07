@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>韩语单词速记</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117;
+  color: #e8eaf0;
+  font-family: -apple-system, "PingFang SC", "Apple SD Gothic Neo", sans-serif;
+  min-height: 100vh;
+  padding: 20px 16px 60px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.wrap { width: 100%; max-width: 600px; }
+h1 { font-size: 18px; text-align: center; margin-bottom: 16px; color: #a78bfa; }
+.levels { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 16px; }
+.lv {
+  padding: 6px 14px;
+  background: #1a1c24;
+  border: 1.5px solid #2c2f3e;
+  border-radius: 20px;
+  font-size: 13px;
+  color: #9095b0;
+  cursor: pointer;
+  user-select: none;
+}
+.lv.on { border-color: #7c6af7; color: #a78bfa; background: rgba(124,106,247,0.1); }
+.info { text-align: center; font-size: 12px; color: #5a5f7a; margin-bottom: 12px; }
+.card {
+  background: #1a1c24;
+  border: 1px solid #2c2f3e;
+  border-radius: 16px;
+  padding: 28px 24px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.kr { font-size: 56px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; }
+.ro { font-size: 18px; color: #a78bfa; margin-bottom: 6px; font-family: Menlo, monospace; }
+.zh { font-size: 20px; color: #c0c5dd; margin-bottom: 18px; }
+.letters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 16px; }
+.letter {
+  background: #22242e;
+  border: 1px solid #383b50;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.letter b { color: #a78bfa; font-size: 16px; }
+.letter span { color: #5a5f7a; font-size: 10px; margin-top: 2px; font-family: Menlo, monospace; }
+.tip {
+  background: #22242e;
+  border-left: 3px solid #fbbf24;
+  padding: 12px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+  color: #c0c5dd;
+}
+.btns { display: flex; gap: 8px; }
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn-prev { background: #22242e; color: #c0c5dd; }
+.btn-play { background: #34d399; color: #0f1117; }
+.btn-next { background: #7c6af7; color: #fff; }
+.btn:hover { opacity: 0.9; }
+.counter { text-align: center; font-size: 12px; color: #5a5f7a; margin-top: 12px; font-family: Menlo, monospace; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>한글 韩语单词速记</h1>
+  <div class="levels" id="levels"></div>
+  <div class="info" id="info"></div>
+  <div class="card">
+    <div class="kr" id="kr">—</div>
+    <div class="ro" id="ro"></div>
+    <div class="zh" id="zh"></div>
+    <div class="letters" id="letters"></div>
+    <div class="tip" id="tip"></div>
+  </div>
+  <div class="btns">
+    <button class="btn btn-prev" onclick="prev()">← 上一个</button>
+    <button class="btn btn-play" onclick="play()">▶ 发音</button>
+    <button class="btn btn-next" onclick="next()">下一个 →</button>
+  </div>
+  <div class="counter" id="counter"></div>
+</div>
+
+<script>
+var WORDS = [
+  {kr:"아이",ro:"a-i",zh:"小孩",lv:1,letters:[["ㅇ","无音"],["ㅏ","a/啊"],["ㅣ","i/衣"]],tip:"ㅇ在开头不发音，只占位。ㅏ读啊，ㅣ读衣"},
+  {kr:"오이",ro:"o-i",zh:"黄瓜",lv:1,letters:[["ㅗ","o/哦"],["ㅣ","i/衣"]],tip:"ㅗ像竖起的大拇指，读哦"},
+  {kr:"우유",ro:"u-yu",zh:"牛奶",lv:1,letters:[["ㅜ","u/呜"],["ㅠ","yu/优"]],tip:"ㅜ嘴收圆读呜，ㅠ多两笔加y音读优"},
+  {kr:"여우",ro:"yeo-u",zh:"狐狸",lv:1,letters:[["ㅕ","yeo"],["ㅜ","u"]],tip:"ㅕ读哟（轻），比ㅓ多一笔加y音"},
+  {kr:"이유",ro:"i-yu",zh:"理由",lv:1,letters:[["ㅣ","i"],["ㅠ","yu"]],tip:"汉字词理由，发音几乎一样"},
+  {kr:"아야",ro:"a-ya",zh:"哎呀",lv:1,letters:[["ㅏ","a"],["ㅑ","ya/呀"]],tip:"疼的时候喊아야。ㅑ=呀"},
+  {kr:"어",ro:"eo",zh:"呃/嗯",lv:1,letters:[["ㅓ","eo/呃"]],tip:"ㅓ嘴张但不圆，介于啊和哦之间"},
+  {kr:"으",ro:"eu",zh:"嗯",lv:1,letters:[["ㅡ","eu/嗯"]],tip:"ㅡ嘴扁平横拉，发嗯，像横线"},
+  {kr:"나",ro:"na",zh:"我",lv:2,letters:[["ㄴ","n/呢"]],tip:"最常用的我。ㄴ=n"},
+  {kr:"가다",ro:"ga-da",zh:"去",lv:2,letters:[["ㄱ","g/k"],["ㄷ","d/t"]],tip:"ㄱ像直角=g，ㄷ像翻转的C=d"},
+  {kr:"하다",ro:"ha-da",zh:"做",lv:2,letters:[["ㅎ","h/哈"]],tip:"最常用动词。ㅎ像戴帽子的人"},
+  {kr:"바다",ro:"ba-da",zh:"大海",lv:2,letters:[["ㅂ","b/波"]],tip:"ㅂ像门框=b"},
+  {kr:"사다",ro:"sa-da",zh:"买",lv:2,letters:[["ㅅ","s/思"]],tip:"ㅅ像小山/帽子=s"},
+  {kr:"머리",ro:"meo-ri",zh:"头",lv:2,letters:[["ㅁ","m/摸"],["ㄹ","r/l"]],tip:"ㅁ像方框=m，ㄹ介于r和l之间"},
+  {kr:"기차",ro:"gi-cha",zh:"火车",lv:2,letters:[["ㄱ","g"],["ㅊ","ch/吃"]],tip:"汉字词汽车。ㅊ=ㅈ加一横=送气ch"},
+  {kr:"자다",ro:"ja-da",zh:"睡觉",lv:2,letters:[["ㅈ","j/之"]],tip:"ㅈ像帐篷=j"},
+  {kr:"타다",ro:"ta-da",zh:"坐车/骑",lv:2,letters:[["ㅌ","t/特"]],tip:"ㅌ=ㄷ加一横=送气t"},
+  {kr:"카드",ro:"ka-deu",zh:"卡片",lv:2,letters:[["ㅋ","k/科"]],tip:"外来词card。ㅋ=ㄱ加横=送气k"},
+  {kr:"파도",ro:"pa-do",zh:"波涛",lv:2,letters:[["ㅍ","p/怕"]],tip:"ㅍ=ㅂ加横=送气p"},
+  {kr:"두부",ro:"du-bu",zh:"豆腐",lv:2,letters:[["ㄷ","d"],["ㅂ","b"]],tip:"汉字词豆腐，发音几乎一样"},
+  {kr:"한국",ro:"han-guk",zh:"韩国",lv:3,letters:[["ㄴ收音","-n"],["ㄱ收音","-k"]],tip:"한=韩，국=国。收音ㄴ舌抵齿，ㄱ喉咙收住"},
+  {kr:"밥",ro:"bap",zh:"米饭",lv:3,letters:[["ㅂ收音","-p"]],tip:"收音ㅂ双唇轻闭不送气。밥=饭"},
+  {kr:"눈",ro:"nun",zh:"眼睛/雪",lv:3,letters:[["ㄴ收音","-n"]],tip:"一词两义：눈=眼睛=雪"},
+  {kr:"물",ro:"mul",zh:"水",lv:3,letters:[["ㄹ收音","-l"]],tip:"收音ㄹ舌尖抵上颚不弹开"},
+  {kr:"봄",ro:"bom",zh:"春天",lv:3,letters:[["ㅁ收音","-m"]],tip:"收音ㅁ双唇闭。봄=春"},
+  {kr:"공",ro:"gong",zh:"球",lv:3,letters:[["ㅇ收音","-ng"]],tip:"ㅇ在收音位置发ng"},
+  {kr:"산",ro:"san",zh:"山",lv:3,letters:[["ㄴ收音","-n"]],tip:"산=山，发音和中文很像"},
+  {kr:"강",ro:"gang",zh:"江/河",lv:3,letters:[["ㅇ收音","-ng"]],tip:"강=江，汉字词发音一样"},
+  {kr:"집",ro:"jip",zh:"家",lv:3,letters:[["ㅂ收音","-p"]],tip:"집=家"},
+  {kr:"책",ro:"chaek",zh:"书",lv:3,letters:[["ㄱ收音","-k"]],tip:"책=册=书"},
+  {kr:"빵",ro:"ppang",zh:"面包",lv:4,letters:[["ㅃ","pp紧音"]],tip:"双辅音绷紧喉咙发力，比ㅂ更紧"},
+  {kr:"아빠",ro:"a-ppa",zh:"爸爸",lv:4,letters:[["ㅃ","pp"]],tip:"和中文爸爸有点像，紧音要用力"},
+  {kr:"오빠",ro:"o-ppa",zh:"哥哥(女称)",lv:4,letters:[["ㅃ","pp"]],tip:"女生叫哥哥=오빠，韩剧高频"},
+  {kr:"꿈",ro:"kkum",zh:"梦",lv:4,letters:[["ㄲ","kk"]],tip:"ㄲ比ㄱ更紧更用力。꿈=梦想"},
+  {kr:"쓰다",ro:"sseu-da",zh:"写/用/苦",lv:4,letters:[["ㅆ","ss"]],tip:"ㅆ比ㅅ更尖锐。一词三义"},
+  {kr:"싸다",ro:"ssa-da",zh:"便宜",lv:4,letters:[["ㅆ","ss"]],tip:"购物必备词"},
+  {kr:"짜다",ro:"jja-da",zh:"咸",lv:4,letters:[["ㅉ","jj"]],tip:"吃到咸的喊짜！"},
+  {kr:"예쁘다",ro:"ye-ppeu-da",zh:"漂亮",lv:4,letters:[["ㅃ","pp"],["ㅖ","ye/耶"]],tip:"超高频词，称赞用"},
+  {kr:"개",ro:"gae",zh:"狗",lv:5,letters:[["ㅐ","ae/爱"]],tip:"ㅐ读爱的前半。개=狗"},
+  {kr:"네",ro:"ne",zh:"是/好",lv:5,letters:[["ㅔ","e/诶"]],tip:"ㅔ读诶。네=是的"},
+  {kr:"세계",ro:"se-gye",zh:"世界",lv:5,letters:[["ㅔ","e"],["ㅖ","ye"]],tip:"세=世，계=界，汉字词"},
+  {kr:"과일",ro:"gwa-il",zh:"水果",lv:5,letters:[["ㅘ","wa/哇"]],tip:"ㅘ=ㅗ+ㅏ快读=wa。과=果"},
+  {kr:"왜",ro:"wae",zh:"为什么",lv:5,letters:[["ㅙ","wae"]],tip:"왜?=为什么？"},
+  {kr:"외국",ro:"oe-guk",zh:"外国",lv:5,letters:[["ㅚ","oe"]],tip:"외=外，국=国"},
+  {kr:"뭐",ro:"mwo",zh:"什么",lv:5,letters:[["ㅝ","wo/我"]],tip:"뭐?=什么？超常用"},
+  {kr:"귀",ro:"gwi",zh:"耳朵",lv:5,letters:[["ㅟ","wi/位"]],tip:"ㅟ=ㅜ+ㅣ"},
+  {kr:"의사",ro:"ui-sa",zh:"医生",lv:5,letters:[["ㅢ","ui"]],tip:"의=医，사=师"},
+  {kr:"회사",ro:"hoe-sa",zh:"公司",lv:5,letters:[["ㅚ","oe"]],tip:"회=会，사=社=会社=公司"}
+];
+
+var LV_NAMES = {1:"元音",2:"辅音",3:"收音",4:"双辅音",5:"复合元音"};
+var curLv = 0;
+var idx = 0;
+var pool = [];
+
+function buildPool() {
+  if (curLv === 0) {
+    pool = WORDS.slice();
+  } else {
+    pool = [];
+    for (var i = 0; i < WORDS.length; i++) {
+      if (WORDS[i].lv === curLv) pool.push(WORDS[i]);
+    }
+  }
+  idx = 0;
+}
+
+function render() {
+  if (!pool.length) {
+    document.getElementById('kr').textContent = '无数据';
+    return;
+  }
+  var w = pool[idx];
+  document.getElementById('kr').textContent = w.kr;
+  document.getElementById('ro').textContent = w.ro;
+  document.getElementById('zh').textContent = w.zh;
+  document.getElementById('tip').textContent = w.tip;
+  var lt = document.getElementById('letters');
+  lt.innerHTML = '';
+  for (var i = 0; i < w.letters.length; i++) {
+    var d = document.createElement('div');
+    d.className = 'letter';
+    var b = document.createElement('b');
+    b.textContent = w.letters[i][0];
+    var s = document.createElement('span');
+    s.textContent = w.letters[i][1];
+    d.appendChild(b);
+    d.appendChild(s);
+    lt.appendChild(d);
+  }
+  document.getElementById('counter').textContent = (idx+1) + ' / ' + pool.length + '  ·  Lv' + w.lv + ' ' + LV_NAMES[w.lv];
+  document.getElementById('info').textContent = '当前：' + (curLv === 0 ? '全部' : 'Lv'+curLv+' '+LV_NAMES[curLv]) + ' · ' + pool.length + '词';
+}
+
+function next() {
+  if (!pool.length) return;
+  idx = (idx + 1) % pool.length;
+  render();
+  play();
+}
+
+function prev() {
+  if (!pool.length) return;
+  idx = (idx - 1 + pool.length) % pool.length;
+  render();
+  play();
+}
+
+function play() {
+  if (!pool.length) return;
+  if (!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(pool[idx].kr);
+  u.lang = 'ko-KR';
+  u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+
+function setLevel(lv) {
+  curLv = lv;
+  var btns = document.querySelectorAll('#levels .lv');
+  for (var i = 0; i < btns.length; i++) {
+    btns[i].classList.toggle('on', parseInt(btns[i].dataset.lv) === lv);
+  }
+  buildPool();
+  render();
+}
+
+function initLevels() {
+  var box = document.getElementById('levels');
+  var labels = [[0,'全部'],[1,'1·元音'],[2,'2·辅音'],[3,'3·收音'],[4,'4·双辅音'],[5,'5·复合元音']];
+  for (var i = 0; i < labels.length; i++) {
+    (function(lv, name) {
+      var b = document.createElement('div');
+      b.className = 'lv' + (lv === 0 ? ' on' : '');
+      b.textContent = name;
+      b.dataset.lv = lv;
+      b.onclick = function() { setLevel(lv); };
+      box.appendChild(b);
+    })(labels[i][0], labels[i][1]);
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'ArrowRight' || e.key === 'f' || e.key === 'F') next();
+  else if (e.key === 'ArrowLeft') prev();
+  else if (e.key === 'r' || e.key === 'R') play();
+});
+
+initLevels();
+buildPool();
+render();
+</script>
+</body>
+</html>
