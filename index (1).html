@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>韩语速记</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #0f1117;
+  color: #e8eaf0;
+  font-family: -apple-system, "PingFang SC", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+  min-height: 100vh;
+  padding: 0 0 60px;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  height: 50px;
+  background: #0f1117;
+  border-bottom: 1px solid #1e2030;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.logo { font-size: 16px; font-weight: 700; color: #a78bfa; }
+.logo span { color: #9095b0; font-size: 13px; font-weight: 400; margin-left: 6px; }
+.tabs { display: flex; background: #1a1c24; border: 1px solid #2c2f3e; border-radius: 20px; padding: 3px; gap: 2px; }
+.tab {
+  padding: 5px 18px;
+  border-radius: 16px;
+  border: none;
+  background: transparent;
+  color: #9095b0;
+  font-size: 13px;
+  cursor: pointer;
+  font-family: inherit;
+}
+.tab.on { background: #7c6af7; color: #fff; }
+.page { display: none; padding: 14px 16px 0; max-width: 600px; margin: 0 auto; }
+.page.on { display: block; }
+.levels { display: flex; gap: 6px; flex-wrap: wrap; justify-content: center; margin-bottom: 12px; }
+.lv {
+  padding: 5px 12px;
+  background: #1a1c24;
+  border: 1.5px solid #2c2f3e;
+  border-radius: 20px;
+  font-size: 12px;
+  color: #9095b0;
+  cursor: pointer;
+  user-select: none;
+}
+.lv.on { border-color: #7c6af7; color: #a78bfa; background: rgba(124,106,247,0.1); }
+.info { text-align: center; font-size: 12px; color: #5a5f7a; margin-bottom: 10px; }
+.card {
+  background: #1a1c24;
+  border: 1px solid #2c2f3e;
+  border-radius: 16px;
+  padding: 26px 22px 20px;
+  margin-bottom: 14px;
+  text-align: center;
+}
+.kr { font-size: 56px; font-weight: 700; margin-bottom: 8px; letter-spacing: 0.05em; }
+.ro { font-size: 17px; color: #a78bfa; margin-bottom: 5px; font-family: Menlo, "Courier New", monospace; }
+.zh { font-size: 20px; color: #c0c5dd; margin-bottom: 16px; }
+.letters { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 14px; }
+.letter {
+  background: #22242e;
+  border: 1px solid #383b50;
+  border-radius: 8px;
+  padding: 8px 12px;
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.letter b { color: #a78bfa; font-size: 16px; }
+.letter span { color: #5a5f7a; font-size: 10px; margin-top: 2px; font-family: Menlo, "Courier New", monospace; }
+.tip {
+  background: #22242e;
+  border-left: 3px solid #fbbf24;
+  padding: 11px 13px;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  text-align: left;
+  color: #c0c5dd;
+}
+.scard {
+  background: #1a1c24;
+  border: 1px solid #2c2f3e;
+  border-radius: 16px;
+  padding: 22px 20px 18px;
+  margin-bottom: 14px;
+}
+.scene { text-align: center; font-size: 11px; color: #5a5f7a; letter-spacing: 0.06em; margin-bottom: 10px; }
+.skr { font-size: 28px; font-weight: 700; text-align: center; margin-bottom: 6px; line-height: 1.4; }
+.sro { text-align: center; font-size: 13px; color: #a78bfa; font-family: Menlo, "Courier New", monospace; margin-bottom: 5px; }
+.szh { text-align: center; font-size: 18px; font-weight: 600; color: #c0c5dd; margin-bottom: 16px; }
+.breakdown { display: flex; flex-direction: column; gap: 5px; margin-bottom: 14px; }
+.brow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  padding: 7px 10px;
+  background: #22242e;
+  border-radius: 8px;
+  flex-wrap: wrap;
+}
+.bword { font-weight: 700; font-size: 15px; color: #a78bfa; min-width: 56px; }
+.brole { font-size: 11px; color: #5a5f7a; font-family: Menlo, "Courier New", monospace; min-width: 36px; }
+.bdef { font-size: 13px; color: #c0c5dd; }
+.stip {
+  background: #22242e;
+  border-left: 3px solid #34d399;
+  padding: 11px 13px;
+  border-radius: 0 6px 6px 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: #c0c5dd;
+}
+.btns { display: flex; gap: 8px; }
+.btn {
+  flex: 1;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  font-family: inherit;
+}
+.btn:hover { opacity: 0.88; }
+.btn-prev { background: #22242e; color: #c0c5dd; }
+.btn-play { background: #34d399; color: #0f1117; }
+.btn-next { background: #7c6af7; color: #fff; }
+.counter { text-align: center; font-size: 12px; color: #5a5f7a; margin-top: 10px; font-family: Menlo, "Courier New", monospace; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">한글 <span>韩语速记</span></div>
+  <div class="tabs">
+    <button class="tab on" id="tab-w" onclick="showTab('w')">单词</button>
+    <button class="tab" id="tab-s" onclick="showTab('s')">句子</button>
+  </div>
+</div>
+
+<div class="page on" id="page-w">
+  <div class="levels" id="wlevels"></div>
+  <div class="info" id="winfo"></div>
+  <div class="card">
+    <div class="kr" id="wkr">—</div>
+    <div class="ro" id="wro"></div>
+    <div class="zh" id="wzh"></div>
+    <div class="letters" id="wletters"></div>
+    <div class="tip" id="wtip"></div>
+  </div>
+  <div class="btns">
+    <button class="btn btn-prev" onclick="wPrev()">&#8592; 上一个</button>
+    <button class="btn btn-play" onclick="wPlay()">&#9654; 朗读</button>
+    <button class="btn btn-next" onclick="wNext()">下一个 &#8594;</button>
+  </div>
+  <div class="counter" id="wcounter"></div>
+</div>
+
+<div class="page" id="page-s">
+  <div class="levels" id="slevels"></div>
+  <div class="info" id="sinfo"></div>
+  <div class="scard">
+    <div class="scene" id="sscene"></div>
+    <div class="skr" id="skr">—</div>
+    <div class="sro" id="sro"></div>
+    <div class="szh" id="szh"></div>
+    <div class="breakdown" id="sbreakdown"></div>
+    <div class="stip" id="stip"></div>
+  </div>
+  <div class="btns">
+    <button class="btn btn-prev" onclick="sPrev()">&#8592; 上一句</button>
+    <button class="btn btn-play" onclick="sPlay()">&#9654; 朗读</button>
+    <button class="btn btn-next" onclick="sNext()">下一句 &#8594;</button>
+  </div>
+  <div class="counter" id="scounter"></div>
+</div>
+
+<script>
+var WORDS = [
+  {kr:"아이",ro:"a-i",zh:"小孩",lv:1,letters:[["ㅇ","无音"],["ㅏ","a/啊"],["ㅣ","i/衣"]],tip:"ㅇ在开头不发音，只占位。ㅏ读啊，ㅣ读衣"},
+  {kr:"오이",ro:"o-i",zh:"黄瓜",lv:1,letters:[["ㅗ","o/哦"],["ㅣ","i/衣"]],tip:"ㅗ像竖起的大拇指，读哦"},
+  {kr:"우유",ro:"u-yu",zh:"牛奶",lv:1,letters:[["ㅜ","u/呜"],["ㅠ","yu/优"]],tip:"ㅜ嘴收圆读呜，ㅠ多两笔加y音读优"},
+  {kr:"여우",ro:"yeo-u",zh:"狐狸",lv:1,letters:[["ㅕ","yeo"],["ㅜ","u"]],tip:"ㅕ读哟（轻），比ㅓ多一笔加y音"},
+  {kr:"이유",ro:"i-yu",zh:"理由",lv:1,letters:[["ㅣ","i"],["ㅠ","yu"]],tip:"汉字词理由，发音几乎一样"},
+  {kr:"아야",ro:"a-ya",zh:"哎呀",lv:1,letters:[["ㅏ","a"],["ㅑ","ya/呀"]],tip:"疼的时候喊아야。ㅑ=呀"},
+  {kr:"어",ro:"eo",zh:"呃/嗯",lv:1,letters:[["ㅓ","eo/呃"]],tip:"ㅓ嘴张但不圆，介于啊和哦之间"},
+  {kr:"으",ro:"eu",zh:"嗯",lv:1,letters:[["ㅡ","eu/嗯"]],tip:"ㅡ嘴扁平横拉，发嗯，像横线"},
+  {kr:"나",ro:"na",zh:"我",lv:2,letters:[["ㄴ","n/呢"]],tip:"最常用的我。ㄴ=n"},
+  {kr:"가다",ro:"ga-da",zh:"去",lv:2,letters:[["ㄱ","g/k"],["ㄷ","d/t"]],tip:"ㄱ像直角=g，ㄷ像翻转的C=d"},
+  {kr:"하다",ro:"ha-da",zh:"做",lv:2,letters:[["ㅎ","h/哈"]],tip:"最常用动词。ㅎ像戴帽子的人"},
+  {kr:"바다",ro:"ba-da",zh:"大海",lv:2,letters:[["ㅂ","b/波"]],tip:"ㅂ像门框=b"},
+  {kr:"사다",ro:"sa-da",zh:"买",lv:2,letters:[["ㅅ","s/思"]],tip:"ㅅ像小山/帽子=s"},
+  {kr:"머리",ro:"meo-ri",zh:"头",lv:2,letters:[["ㅁ","m/摸"],["ㄹ","r/l"]],tip:"ㅁ像方框=m，ㄹ介于r和l之间"},
+  {kr:"기차",ro:"gi-cha",zh:"火车",lv:2,letters:[["ㄱ","g"],["ㅊ","ch/吃"]],tip:"汉字词汽车。ㅊ=ㅈ加一横=送气ch"},
+  {kr:"자다",ro:"ja-da",zh:"睡觉",lv:2,letters:[["ㅈ","j/之"]],tip:"ㅈ像帐篷=j"},
+  {kr:"타다",ro:"ta-da",zh:"坐车/骑",lv:2,letters:[["ㅌ","t/特"]],tip:"ㅌ=ㄷ加一横=送气t"},
+  {kr:"카드",ro:"ka-deu",zh:"卡片",lv:2,letters:[["ㅋ","k/科"]],tip:"外来词card。ㅋ=ㄱ加横=送气k"},
+  {kr:"파도",ro:"pa-do",zh:"波涛",lv:2,letters:[["ㅍ","p/怕"]],tip:"ㅍ=ㅂ加横=送气p"},
+  {kr:"두부",ro:"du-bu",zh:"豆腐",lv:2,letters:[["ㄷ","d"],["ㅂ","b"]],tip:"汉字词豆腐，发音几乎一样"},
+  {kr:"한국",ro:"han-guk",zh:"韩国",lv:3,letters:[["ㄴ收音","-n"],["ㄱ收音","-k"]],tip:"한=韩，국=国。收音ㄴ舌抵齿，ㄱ喉咙收住"},
+  {kr:"밥",ro:"bap",zh:"米饭",lv:3,letters:[["ㅂ收音","-p"]],tip:"收音ㅂ双唇轻闭不送气。밥=饭"},
+  {kr:"눈",ro:"nun",zh:"眼睛/雪",lv:3,letters:[["ㄴ收音","-n"]],tip:"一词两义：눈=眼睛=雪"},
+  {kr:"물",ro:"mul",zh:"水",lv:3,letters:[["ㄹ收音","-l"]],tip:"收音ㄹ舌尖抵上颚不弹开"},
+  {kr:"봄",ro:"bom",zh:"春天",lv:3,letters:[["ㅁ收音","-m"]],tip:"收音ㅁ双唇闭。봄=春"},
+  {kr:"공",ro:"gong",zh:"球",lv:3,letters:[["ㅇ收音","-ng"]],tip:"ㅇ在收音位置发ng"},
+  {kr:"산",ro:"san",zh:"山",lv:3,letters:[["ㄴ收音","-n"]],tip:"산=山，发音和中文很像"},
+  {kr:"강",ro:"gang",zh:"江/河",lv:3,letters:[["ㅇ收音","-ng"]],tip:"강=江，汉字词发音一样"},
+  {kr:"집",ro:"jip",zh:"家",lv:3,letters:[["ㅂ收音","-p"]],tip:"집=家"},
+  {kr:"책",ro:"chaek",zh:"书",lv:3,letters:[["ㄱ收音","-k"]],tip:"책=册=书"},
+  {kr:"빵",ro:"ppang",zh:"面包",lv:4,letters:[["ㅃ","pp紧音"]],tip:"双辅音绷紧喉咙发力，比ㅂ更紧"},
+  {kr:"아빠",ro:"a-ppa",zh:"爸爸",lv:4,letters:[["ㅃ","pp"]],tip:"和中文爸爸有点像，紧音要用力"},
+  {kr:"오빠",ro:"o-ppa",zh:"哥哥(女称)",lv:4,letters:[["ㅃ","pp"]],tip:"女生叫哥哥=오빠，韩剧高频"},
+  {kr:"꿈",ro:"kkum",zh:"梦",lv:4,letters:[["ㄲ","kk"]],tip:"ㄲ比ㄱ更紧更用力。꿈=梦想"},
+  {kr:"쓰다",ro:"sseu-da",zh:"写/用/苦",lv:4,letters:[["ㅆ","ss"]],tip:"ㅆ比ㅅ更尖锐。一词三义"},
+  {kr:"싸다",ro:"ssa-da",zh:"便宜",lv:4,letters:[["ㅆ","ss"]],tip:"购物必备词"},
+  {kr:"짜다",ro:"jja-da",zh:"咸",lv:4,letters:[["ㅉ","jj"]],tip:"吃到咸的喊짜！"},
+  {kr:"예쁘다",ro:"ye-ppeu-da",zh:"漂亮",lv:4,letters:[["ㅃ","pp"],["ㅖ","ye/耶"]],tip:"超高频词，称赞用"},
+  {kr:"개",ro:"gae",zh:"狗",lv:5,letters:[["ㅐ","ae/爱"]],tip:"ㅐ读爱的前半。개=狗"},
+  {kr:"네",ro:"ne",zh:"是/好",lv:5,letters:[["ㅔ","e/诶"]],tip:"ㅔ读诶。네=是的"},
+  {kr:"세계",ro:"se-gye",zh:"世界",lv:5,letters:[["ㅔ","e"],["ㅖ","ye"]],tip:"세=世，계=界，汉字词"},
+  {kr:"과일",ro:"gwa-il",zh:"水果",lv:5,letters:[["ㅘ","wa/哇"]],tip:"ㅘ=ㅗ+ㅏ快读=wa。과=果"},
+  {kr:"왜",ro:"wae",zh:"为什么",lv:5,letters:[["ㅙ","wae"]],tip:"왜?=为什么？"},
+  {kr:"외국",ro:"oe-guk",zh:"外国",lv:5,letters:[["ㅚ","oe"]],tip:"외=外，국=国"},
+  {kr:"뭐",ro:"mwo",zh:"什么",lv:5,letters:[["ㅝ","wo/我"]],tip:"뭐?=什么？超常用"},
+  {kr:"귀",ro:"gwi",zh:"耳朵",lv:5,letters:[["ㅟ","wi/位"]],tip:"ㅟ=ㅜ+ㅣ"},
+  {kr:"의사",ro:"ui-sa",zh:"医生",lv:5,letters:[["ㅢ","ui"]],tip:"의=医，사=师"},
+  {kr:"회사",ro:"hoe-sa",zh:"公司",lv:5,letters:[["ㅚ","oe"]],tip:"회=会，사=社=会社=公司"}
+];
+
+var SENTENCES = [
+// ── 1. 打招呼 ──
+{kr:"안녕하세요.",ro:"an-nyeong-ha-se-yo.",zh:"你好。",scene:"打招呼",lv:1,bd:[["안녕하세요","","你好（礼貌）"]],tip:"最基础的问候，任何时候都可用"},
+{kr:"안녕!",ro:"an-nyeong!",zh:"嗨！/ 拜拜！",scene:"打招呼",lv:1,bd:[["안녕","","你好/再见（口语）"]],tip:"朋友之间用，见面或分别都说이 안녕"},
+{kr:"처음 뵙겠습니다.",ro:"cheo-eum boep-get-sseum-ni-da.",zh:"初次见面，请多关照。",scene:"打招呼",lv:1,bd:[["처음","副词","第一次"],["뵙겠습니다","敬语","见到您"]],tip:"正式场合初见必说，뵙다是보다的谦让语"},
+{kr:"오랜만이에요!",ro:"o-raen-ma-ni-e-yo!",zh:"好久不见！",scene:"打招呼",lv:1,bd:[["오랜만","名词","好久"],["이에요","","是/（感叹）"]],tip:"久别重逢的标准说法"},
+{kr:"잘 지냈어요?",ro:"jal ji-naes-seo-yo?",zh:"最近过得好吗？",scene:"打招呼",lv:1,bd:[["잘","副词","好"],["지냈어요","动词","过得（过去式）"]],tip:"见面寒暄，相当于How are you"},
+{kr:"덕분에 잘 지냈어요.",ro:"deok-bu-ne jal ji-naess-eo-yo.",zh:"托您的福，过得很好。",scene:"打招呼",lv:1,bd:[["덕분에","","托…的福"],["잘 지냈어요","","过得很好"]],tip:"回答잘 지냈어요的礼貌答法"},
+{kr:"반갑습니다!",ro:"ban-gap-sseum-ni-da!",zh:"很高兴认识你！",scene:"打招呼",lv:1,bd:[["반갑습니다","","很高兴见到您"]],tip:"正式初次见面时说，比반가워요更正式"},
+{kr:"반가워요!",ro:"ban-ga-wo-yo!",zh:"很高兴见到你！",scene:"打招呼",lv:1,bd:[["반가워요","形容词","高兴见到（礼貌）"]],tip:"반갑다→반가워요，ㅂ不规则变化"},
+{kr:"잘 부탁드립니다.",ro:"jal bu-tak-deu-rim-ni-da.",zh:"请多关照。",scene:"打招呼",lv:1,bd:[["잘","副词","好好地"],["부탁드립니다","动词","拜托您/请关照"]],tip:"自我介绍结尾必说，职场、学校都用"},
+{kr:"오늘도 잘 부탁해요.",ro:"o-neul-do jal bu-ta-kae-yo.",zh:"今天也请多关照。",scene:"打招呼",lv:1,bd:[["오늘도","今天也"],["잘 부탁해요","请关照"]],tip:"同事每天见面可以这样说"},
+
+// ── 2. 告别 ──
+{kr:"안녕히 가세요.",ro:"an-nyeong-hi ga-se-yo.",zh:"请慢走。（送别方说）",scene:"告别",lv:2,bd:[["안녕히","副词","平安地"],["가세요","动词","请走"]],tip:"送别人离开时说，自己留下"},
+{kr:"안녕히 계세요.",ro:"an-nyeong-hi gye-se-yo.",zh:"请留步。（离开方说）",scene:"告别",lv:2,bd:[["안녕히","副词","平安地"],["계세요","动词","请留（待）"]],tip:"自己离开时对留下的人说"},
+{kr:"잘 가요!",ro:"jal ga-yo!",zh:"路上小心！/ 拜拜！",scene:"告别",lv:2,bd:[["잘","副词","好好地"],["가요","动词","走"]],tip:"送朋友时说，比안녕히 가세요随意"},
+{kr:"또 봐요!",ro:"do bwa-yo!",zh:"再见！（期待再见）",scene:"告别",lv:2,bd:[["또","副词","再/又"],["봐요","动词","见"]],tip:"또=又，봐요=보다(见)礼貌形，朋友间常用"},
+{kr:"다음에 봐요.",ro:"da-eu-me bwa-yo.",zh:"下次见。",scene:"告别",lv:2,bd:[["다음에","下次"],["봐요","动词","见"]],tip:"다음=下次，에是方向助词"},
+{kr:"조심히 가세요.",ro:"jo-sim-hi ga-se-yo.",zh:"路上注意安全。",scene:"告别",lv:2,bd:[["조심히","副词","小心地"],["가세요","动词","请走"]],tip:"比잘 가세요更有关心意味"},
+{kr:"들어가세요.",ro:"deu-reo-ga-se-yo.",zh:"请进去吧。（目送对方回家）",scene:"告别",lv:2,bd:[["들어가세요","动词","请进入/请回去"]],tip:"送人到门口时说，对方进门前用"},
+{kr:"연락할게요.",ro:"yeol-la-kal-ge-yo.",zh:"我会联系你的。",scene:"告别",lv:2,bd:[["연락","名词","联系"],["할게요","动词","会做…（承诺）"]],tip:"ㄹ게요=我会…，表示说话人的意志"},
+{kr:"잘 자요.",ro:"jal ja-yo.",zh:"晚安。",scene:"告别",lv:2,bd:[["잘","副词","好好地"],["자요","动词","睡觉"]],tip:"睡前告别必备，口语更直接"},
+{kr:"내일 봐요.",ro:"nae-il bwa-yo.",zh:"明天见。",scene:"告别",lv:2,bd:[["내일","名词","明天"],["봐요","动词","见"]],tip:"내일=明天，简洁实用"},
+
+// ── 3. 感谢与道歉 ──
+{kr:"감사합니다.",ro:"gam-sa-ham-ni-da.",zh:"谢谢您。",scene:"感谢道歉",lv:3,bd:[["감사합니다","","谢谢（正式）"]],tip:"正式感谢用，汉字词感謝+합니다"},
+{kr:"고마워요.",ro:"go-ma-wo-yo.",zh:"谢谢。",scene:"感谢道歉",lv:3,bd:[["고마워요","形容词","谢谢（礼貌口语）"]],tip:"고맙다→고마워요，ㅂ不规则变化，朋友间常用"},
+{kr:"천만에요.",ro:"cheon-ma-ne-yo.",zh:"不客气。",scene:"感谢道歉",lv:3,bd:[["천만에요","","哪里/不客气"]],tip:"回应감사합니다，千万=천만，不用谢"},
+{kr:"별말씀을요.",ro:"byeol-mal-sseu-meul-yo.",zh:"哪里的话。",scene:"感谢道歉",lv:3,bd:[["별말씀","名词","哪里的话"],["을요","语气","（强调）"]],tip:"更客气的不用谢，말씀是말的敬语"},
+{kr:"죄송합니다.",ro:"joe-song-ham-ni-da.",zh:"非常抱歉。",scene:"感谢道歉",lv:3,bd:[["죄송합니다","","非常对不起（正式）"]],tip:"比미안해요正式，用于正式道歉场合"},
+{kr:"미안해요.",ro:"mi-an-hae-yo.",zh:"对不起。",scene:"感谢道歉",lv:3,bd:[["미안해요","形容词","对不起（礼貌口语）"]],tip:"朋友间道歉用，汉字词未安"},
+{kr:"괜찮아요.",ro:"gwaen-cha-na-yo.",zh:"没关系。/ 没事。",scene:"感谢道歉",lv:3,bd:[["괜찮아요","形容词","没关系/还好"]],tip:"接受道歉或关心时用，超高频"},
+{kr:"실례합니다.",ro:"sil-lye-ham-ni-da.",zh:"打扰一下。/ 不好意思。",scene:"感谢道歉",lv:3,bd:[["실례합니다","","失礼了（正式）"]],tip:"打断别人或问路时说，汉字词失禮"},
+{kr:"잠깐만요.",ro:"jam-kkan-man-yo.",zh:"请稍等一下。",scene:"感谢道歉",lv:3,bd:[["잠깐만","副词","稍等一下"],["요","语气","礼貌"]],tip:"잠깐=片刻，만=只/仅，很实用"},
+{kr:"수고하셨습니다.",ro:"su-go-ha-syeoss-eum-ni-da.",zh:"您辛苦了。",scene:"感谢道歉",lv:3,bd:[["수고","名词","辛苦"],["하셨습니다","动词","做了（敬语过去）"]],tip:"结束工作或活动时说，韩国职场必备"},
+
+// ── 4. 自我介绍 ──
+{kr:"저는 중국 사람이에요.",ro:"jeo-neun jung-guk sa-ra-mi-e-yo.",zh:"我是中国人。",scene:"自我介绍",lv:4,bd:[["저는","我（主格）"],["중국","中国"],["사람이에요","是人"]],tip:"저=正式的我，는=主格助词（无收音词用）"},
+{kr:"저는 학생이에요.",ro:"jeo-neun hak-saeng-i-e-yo.",zh:"我是学生。",scene:"自我介绍",lv:4,bd:[["저는","我"],["학생","名词","学生"],["이에요","","是"]],tip:"학생有收音ㅇ，用이에요"},
+{kr:"저는 직장인이에요.",ro:"jeo-neun jik-jang-i-ni-e-yo.",zh:"我是上班族。",scene:"自我介绍",lv:4,bd:[["직장인","名词","上班族/职员"]],tip:"직장=职场，인=人，직장인=职场人"},
+{kr:"나이가 어떻게 되세요?",ro:"na-i-ga eo-tteo-ke doe-se-yo?",zh:"请问您多大了？",scene:"自我介绍",lv:4,bd:[["나이","名词","年龄"],["가","助词","主格"],["어떻게 되세요","动词","请问是多少？"]],tip:"어떻게 되세요是韩语礼貌询问的万能句型"},
+{kr:"저는 스물다섯 살이에요.",ro:"jeo-neun seu-mul-da-seot sa-ri-e-yo.",zh:"我二十五岁。",scene:"自我介绍",lv:4,bd:[["스물다섯","数词","二十五"],["살","名词","岁"],["이에요","","是"]],tip:"年龄用固有数词（하나둘셋…），살=岁"},
+{kr:"어디에서 오셨어요?",ro:"eo-di-e-seo o-syeoss-eo-yo?",zh:"您从哪里来？",scene:"自我介绍",lv:4,bd:[["어디에서","从哪里"],["오셨어요","动词","来了（敬语过去）"]],tip:"에서=从/在（动作发生的地方）"},
+{kr:"저는 한국어를 배우고 있어요.",ro:"jeo-neun han-gu-geo-reul bae-u-go i-sseo-yo.",zh:"我正在学韩语。",scene:"自我介绍",lv:4,bd:[["한국어","名词","韩语"],["를","助词","宾格"],["배우고 있어요","动词","正在学"]],tip:"고 있어요=正在…（进行时）"},
+{kr:"한국어를 조금 할 수 있어요.",ro:"han-gu-geo-reul jo-geum hal su i-sseo-yo.",zh:"我会一点韩语。",scene:"自我介绍",lv:4,bd:[["조금","副词","一点"],["할 수 있어요","动词","能做/会"]],tip:"ㄹ/을 수 있어요=能/会，超实用句型"},
+{kr:"아직 잘 못해요.",ro:"a-jik jal mo-tae-yo.",zh:"还不太会。",scene:"自我介绍",lv:4,bd:[["아직","副词","还/尚未"],["잘 못해요","动词","不擅长"]],tip:"아직=还，못해요=做不好，谦虚表达"},
+{kr:"잘 부탁해요.",ro:"jal bu-ta-kae-yo.",zh:"请多关照。",scene:"自我介绍",lv:4,bd:[["잘","副词","好好"],["부탁해요","动词","拜托/请"]],tip:"자기소개 결말 필수句，所有场合通用"},
+
+// ── 5. 餐厅点餐 ──
+{kr:"메뉴 주세요.",ro:"me-nyu ju-se-yo.",zh:"请给我菜单。",scene:"餐厅点餐",lv:5,bd:[["메뉴","名词","菜单"],["주세요","动词","请给"]],tip:"외래어 menu，进店第一句"},
+{kr:"뭐가 맛있어요?",ro:"mwo-ga ma-si-sseo-yo?",zh:"什么好吃？",scene:"餐厅点餐",lv:5,bd:[["뭐가","什么（主格）"],["맛있어요","形容词","好吃"]],tip:"맛있다=好吃，맛없다=不好吃"},
+{kr:"이거 하나 주세요.",ro:"i-geo ha-na ju-se-yo.",zh:"这个来一份。",scene:"餐厅点餐",lv:5,bd:[["이거","这个"],["하나","数词","一"],["주세요","动词","请给"]],tip:"点餐万能句，换数词和食物名即可"},
+{kr:"맵지 않은 걸로 주세요.",ro:"maep-ji a-neun geol-lo ju-se-yo.",zh:"请给我不辣的。",scene:"餐厅点餐",lv:5,bd:[["맵지 않은","不辣的"],["걸로","格式","以…（宾格）"],["주세요","请给"]],tip:"맵다=辣，지 않다=不（否定）"},
+{kr:"물 한 잔 주세요.",ro:"mul han jan ju-se-yo.",zh:"请给我一杯水。",scene:"餐厅点餐",lv:5,bd:[["물","水"],["한 잔","一杯"],["주세요","请给"]],tip:"잔=杯（量词），한=一（固有数词）"},
+{kr:"조금 더 주세요.",ro:"jo-geum deo ju-se-yo.",zh:"请再多给一些。",scene:"餐厅点餐",lv:5,bd:[["조금 더","再多一点"],["주세요","请给"]],tip:"더=更/再，조금 더=再多一点点"},
+{kr:"포장해 주세요.",ro:"po-jang-hae ju-se-yo.",zh:"请打包。",scene:"餐厅点餐",lv:5,bd:[["포장","名词","打包/包装"],["해 주세요","动词","请做"]],tip:"포장=打包，해 주세요=请为我做"},
+{kr:"계산서 주세요.",ro:"gye-san-seo ju-se-yo.",zh:"请给我账单。",scene:"餐厅点餐",lv:5,bd:[["계산서","名词","账单"],["주세요","请给"]],tip:"계산=结算，서=书，结账时说"},
+{kr:"맛있게 드세요.",ro:"ma-si-ke deu-se-yo.",zh:"请慢用。/ 请享用。",scene:"餐厅点餐",lv:5,bd:[["맛있게","副词","美味地"],["드세요","动词","请吃（敬语）"]],tip:"드시다是먹다的敬语，上餐时服务员说"},
+{kr:"잘 먹었습니다.",ro:"jal meo-geoss-eum-ni-da.",zh:"我吃好了。/ 谢谢款待。",scene:"餐厅点餐",lv:5,bd:[["잘","副词","好好地"],["먹었습니다","动词","吃了（正式过去）"]],tip:"饭后感谢款待的固定说法，非常重要"},
+
+// ── 6. 购物 ──
+{kr:"얼마예요?",ro:"eol-ma-ye-yo?",zh:"多少钱？",scene:"购物",lv:6,bd:[["얼마","疑问词","多少"],["예요","动词","是"]],tip:"购物最高频的句子，얼마=多少"},
+{kr:"좀 깎아 주세요.",ro:"jom kka-kka ju-se-yo.",zh:"可以便宜一点吗？",scene:"购物",lv:6,bd:[["좀","副词","稍微"],["깎아 주세요","动词","请打折/请砍价"]],tip:"깎다=削/砍，请对方降价"},
+{kr:"너무 비싸요.",ro:"neo-mu bi-ssa-yo.",zh:"太贵了。",scene:"购物",lv:6,bd:[["너무","副词","太/过于"],["비싸요","形容词","贵"]],tip:"너무=太，비싸다=贵，购物讨价必备"},
+{kr:"다른 색은 없어요?",ro:"da-reun sae-geun eop-seo-yo?",zh:"有别的颜色吗？",scene:"购物",lv:6,bd:[["다른","修饰","其他的"],["색","名词","颜色"],["없어요","动词","没有"]],tip:"색=颜色，없어요=没有，逛店常用"},
+{kr:"입어 봐도 돼요?",ro:"i-beo bwa-do dwae-yo?",zh:"可以试穿吗？",scene:"购物",lv:6,bd:[["입어 봐도 돼요","动词","可以试穿吗"]],tip:"아/어 봐도 돼요=可以试着做…吗？"},
+{kr:"이거 주세요.",ro:"i-geo ju-se-yo.",zh:"我要这个。",scene:"购物",lv:6,bd:[["이거","这个"],["주세요","请给"]],tip:"确定购买时说，简洁有效"},
+{kr:"카드로 계산할게요.",ro:"ka-deu-ro gye-san-hal-ge-yo.",zh:"我要刷卡。",scene:"购物",lv:6,bd:[["카드로","用卡"],["계산할게요","动词","我来结算"]],tip:"로=用/以（方式），카드=信用卡"},
+{kr:"영수증 주세요.",ro:"yeong-su-jeung ju-se-yo.",zh:"请给我收据。",scene:"购物",lv:6,bd:[["영수증","名词","收据"],["주세요","请给"]],tip:"영수증=收据，购物后索要"},
+{kr:"교환할 수 있어요?",ro:"gyo-hwan-hal su i-sseo-yo?",zh:"可以换货吗？",scene:"购物",lv:6,bd:[["교환","名词","换货"],["할 수 있어요","能/可以"]],tip:"교환=交换，환불=退款，购物纠纷用"},
+{kr:"이게 더 잘 어울려요.",ro:"i-ge deo jal eo-ul-lyeo-yo.",zh:"这个更适合。",scene:"购物",lv:6,bd:[["이게","这个（主格）"],["더 잘","更好地"],["어울려요","动词","合适/搭配"]],tip:"어울리다=合适/匹配，服装搭配时说"},
+
+// ── 7. 问路交通 ──
+{kr:"여기가 어디예요?",ro:"yeo-gi-ga eo-di-ye-yo?",zh:"这里是哪里？",scene:"问路交通",lv:7,bd:[["여기가","这里（主格）"],["어디예요","动词","是哪里？"]],tip:"迷路时的第一句，简单直接"},
+{kr:"지하철역이 어디예요?",ro:"ji-ha-cheol-lyeo-gi eo-di-ye-yo?",zh:"地铁站在哪里？",scene:"问路交通",lv:7,bd:[["지하철역","名词","地铁站"],["이","主格助词"],["어디예요","在哪里"]],tip:"지하=地下，철=铁，역=站"},
+{kr:"버스 정류장이 어디예요?",ro:"beo-seu jeong-nyu-jang-i eo-di-ye-yo?",zh:"公交站在哪里？",scene:"问路交通",lv:7,bd:[["버스","名词","公交车"],["정류장","名词","站"],["이 어디예요","在哪里"]],tip:"버스=bus，정류장=停留场/站"},
+{kr:"택시 타는 데가 어디예요?",ro:"taek-si ta-neun de-ga eo-di-ye-yo?",zh:"哪里打出租车？",scene:"问路交通",lv:7,bd:[["택시","出租车"],["타는 데","乘车的地方"],["가 어디예요","在哪里"]],tip:"타다=乘/骑，는 데=做…的地方"},
+{kr:"얼마나 걸려요?",ro:"eol-ma-na geol-lyeo-yo?",zh:"需要多长时间？",scene:"问路交通",lv:7,bd:[["얼마나","多少/多久"],["걸려요","动词","花费时间"]],tip:"걸리다=花时间，问路程时间"},
+{kr:"걸어서 갈 수 있어요?",ro:"geo-reo-seo gal su i-sseo-yo?",zh:"可以走路去吗？",scene:"问路交通",lv:7,bd:[["걸어서","步行"],["갈 수 있어요","动词","可以去"]],tip:"걷다→걸어서，서=以…方式"},
+{kr:"직진하세요.",ro:"jik-jin-ha-se-yo.",zh:"请直走。",scene:"问路交通",lv:7,bd:[["직진","名词","直行"],["하세요","动词","请做"]],tip:"직진=直进，左转=좌회전，右转=우회전"},
+{kr:"저 쪽으로 가세요.",ro:"jeo jjo-geu-ro ga-se-yo.",zh:"请往那边走。",scene:"问路交通",lv:7,bd:[["저 쪽","那边"],["으로","向/往"],["가세요","请走"]],tip:"쪽=方向，으로=朝向（方向助词）"},
+{kr:"다음 역에서 내려요.",ro:"da-eu-myeo-ge-seo nae-ryeo-yo.",zh:"在下一站下车。",scene:"问路交通",lv:7,bd:[["다음 역","下一站"],["에서","在"],["내려요","动词","下车"]],tip:"내리다=下车，乘地铁/公交必备"},
+{kr:"길을 잃었어요.",ro:"gi-reul i-reo-sseo-yo.",zh:"我迷路了。",scene:"问路交通",lv:7,bd:[["길","名词","路"],["을","宾格"],["잃었어요","动词","失去了"]],tip:"길=路，잃다=失去/丢失，紧急求助"},
+
+// ── 8. 住宿酒店 ──
+{kr:"체크인 하고 싶어요.",ro:"che-keu-in ha-go si-peo-yo.",zh:"我想办理入住。",scene:"住宿酒店",lv:8,bd:[["체크인","名词","check-in"],["하고 싶어요","动词","想做"]],tip:"고 싶어요=想…，表达愿望的句型"},
+{kr:"예약했어요.",ro:"ye-ya-kaess-eo-yo.",zh:"我预约了。",scene:"住宿酒店",lv:8,bd:[["예약","名词","预约/预订"],["했어요","动词","做了（过去）"]],tip:"예약=预约，했어요=했다的礼貌过去时"},
+{kr:"방이 있어요?",ro:"bang-i i-sseo-yo?",zh:"有空房间吗？",scene:"住宿酒店",lv:8,bd:[["방","名词","房间"],["이","主格"],["있어요","有"]],tip:"방=房，빈방=空房，없어요=没有"},
+{kr:"더 조용한 방은 없어요?",ro:"deo jo-yong-han bang-eun eop-seo-yo?",zh:"有更安静的房间吗？",scene:"住宿酒店",lv:8,bd:[["더 조용한","更安静的"],["방은","房间（话题）"],["없어요","没有"]],tip:"조용하다=安静，한=修饰词尾"},
+{kr:"와이파이 비밀번호가 뭐예요?",ro:"wa-i-pa-i bi-mil-beon-ho-ga mwo-ye-yo?",zh:"WiFi密码是什么？",scene:"住宿酒店",lv:8,bd:[["와이파이","WiFi"],["비밀번호","密码"],["가 뭐예요","是什么"]],tip:"비밀=秘密，번호=号码，入住必问"},
+{kr:"수건을 더 주세요.",ro:"su-geon-eul deo ju-se-yo.",zh:"请再给我毛巾。",scene:"住宿酒店",lv:8,bd:[["수건","名词","毛巾"],["을 더","更多（宾格）"],["주세요","请给"]],tip:"수건=手巾=毛巾，더=更多"},
+{kr:"에어컨이 안 돼요.",ro:"e-eo-keon-i an dwae-yo.",zh:"空调不好用。",scene:"住宿酒店",lv:8,bd:[["에어컨","空调"],["이 안 돼요","不行/坏了"]],tip:"안 돼요=不行/不起作用，报修万能句"},
+{kr:"체크아웃은 몇 시예요?",ro:"che-keu-a-u-seun myeot si-ye-yo?",zh:"退房是几点？",scene:"住宿酒店",lv:8,bd:[["체크아웃","退房"],["은","话题助词"],["몇 시예요","几点"]],tip:"몇=几，시=时/点，问时间通用句型"},
+{kr:"짐 맡아 주세요.",ro:"jim ma-ta ju-se-yo.",zh:"请帮我保管行李。",scene:"住宿酒店",lv:8,bd:[["짐","名词","行李"],["맡아 주세요","动词","请帮我保管"]],tip:"짐=行李/包袱，맡다=托付/保管"},
+{kr:"근처에 편의점이 있어요?",ro:"geun-cheo-e pyeo-ni-jeom-i i-sseo-yo?",zh:"附近有便利店吗？",scene:"住宿酒店",lv:8,bd:[["근처에","在附近"],["편의점","便利店"],["이 있어요","有吗"]],tip:"편의점=便利店，근처=附近"},
+
+// ── 9. 医院药局 ──
+{kr:"배가 아파요.",ro:"bae-ga a-pa-yo.",zh:"肚子痛。",scene:"医院药局",lv:9,bd:[["배","名词","肚子"],["가","主格"],["아파요","形容词","疼"]],tip:"아프다=疼/难受，身体+가 아파요=…疼"},
+{kr:"머리가 아파요.",ro:"meo-ri-ga a-pa-yo.",zh:"头疼。",scene:"医院药局",lv:9,bd:[["머리","名词","头"],["가","主格"],["아파요","疼"]],tip:"换身体部位就能说各种疼痛"},
+{kr:"열이 있어요.",ro:"yeo-ri i-sseo-yo.",zh:"我发烧了。",scene:"医院药局",lv:9,bd:[["열","名词","发烧/热"],["이","主格"],["있어요","有"]],tip:"열=热/发烧，열이 있다=有发烧"},
+{kr:"기침이 나요.",ro:"gi-chi-mi na-yo.",zh:"我在咳嗽。",scene:"医院药局",lv:9,bd:[["기침","名词","咳嗽"],["이","主格"],["나요","动词","出来/发生"]],tip:"기침이 나다=咳嗽，나다=出/发生"},
+{kr:"어디가 불편하세요?",ro:"eo-di-ga bul-pyeon-ha-se-yo?",zh:"哪里不舒服？",scene:"医院药局",lv:9,bd:[["어디가","哪里（主格）"],["불편하세요","形容词","不舒服（敬语）"]],tip:"불편하다=不方便/不舒服，医生问诊用"},
+{kr:"약을 주세요.",ro:"ya-geul ju-se-yo.",zh:"请给我药。",scene:"医院药局",lv:9,bd:[["약","名词","药"],["을","宾格"],["주세요","请给"]],tip:"약=药，약국=药局，약사=药剂师"},
+{kr:"하루에 몇 번 먹어요?",ro:"ha-ru-e myeot beon meo-geo-yo?",zh:"一天吃几次？",scene:"医院药局",lv:9,bd:[["하루에","一天"],["몇 번","几次"],["먹어요","动词","吃"]],tip:"하루=一天，번=次，确认用药频率"},
+{kr:"알레르기가 있어요.",ro:"al-le-reu-gi-ga i-sseo-yo.",zh:"我有过敏。",scene:"医院药局",lv:9,bd:[["알레르기","名词","过敏"],["가","主格"],["있어요","有"]],tip:"외래어 allergy，医疗必告知信息"},
+{kr:"보험이 있어요?",ro:"bo-heom-i i-sseo-yo?",zh:"有保险吗？",scene:"医院药局",lv:9,bd:[["보험","名词","保险"],["이","主格"],["있어요","有"]],tip:"보험=保险，해외여행보험=海外旅行险"},
+{kr:"처방전 주세요.",ro:"cheo-bang-jeon ju-se-yo.",zh:"请给我处方笺。",scene:"医院药局",lv:9,bd:[["처방전","名词","处方笺"],["주세요","请给"]],tip:"처방=处方，전=单/笺，就医必要"},
+
+// ── 10. 日常寒暄 ──
+{kr:"오늘 날씨가 좋네요.",ro:"o-neul nal-ssi-ga jo-ne-yo.",zh:"今天天气真好啊。",scene:"日常寒暄",lv:10,bd:[["오늘","今天"],["날씨","名词","天气"],["가 좋네요","真好啊"]],tip:"네요=感叹，比요更有感叹语气"},
+{kr:"날씨가 너무 더워요.",ro:"nal-ssi-ga neo-mu deo-wo-yo.",zh:"天气太热了。",scene:"日常寒暄",lv:10,bd:[["날씨가","天气（主格）"],["너무 더워요","太热了"]],tip:"덥다→더워요，ㅂ不规则变化"},
+{kr:"많이 피곤해요.",ro:"ma-ni pi-gon-hae-yo.",zh:"非常累。",scene:"日常寒暄",lv:10,bd:[["많이","副词","很多/非常"],["피곤해요","形容词","累"]],tip:"피곤하다=疲倦，많이=非常（口语常用）"},
+{kr:"요즘 어떻게 지내요?",ro:"yo-jeum eo-tteo-ke ji-nae-yo?",zh:"最近怎么样？",scene:"日常寒暄",lv:10,bd:[["요즘","名词","最近"],["어떻게","疑问","怎么样"],["지내요","动词","过得"]],tip:"요즘=近来，어떻게=如何，见面必问"},
+{kr:"바빠요.",ro:"ba-ppa-yo.",zh:"很忙。",scene:"日常寒暄",lv:10,bd:[["바빠요","形容词","忙"]],tip:"바쁘다→바빠요，ㅡ脱落变化"},
+{kr:"요즘 재미있어요.",ro:"yo-jeum jae-mi-i-sseo-yo.",zh:"最近过得挺有趣的。",scene:"日常寒暄",lv:10,bd:[["요즘","最近"],["재미있어요","形容词","有趣"]],tip:"재미=趣味，재미있다=有趣，재미없다=无聊"},
+{kr:"그냥 그래요.",ro:"geu-nyang geu-rae-yo.",zh:"还那样。/ 马马虎虎。",scene:"日常寒暄",lv:10,bd:[["그냥","副词","就那样"],["그래요","动词","那样"]],tip:"그냥=就那样，그래요=那样/好，超常用"},
+{kr:"어디 가요?",ro:"eo-di ga-yo?",zh:"要去哪儿？",scene:"日常寒暄",lv:10,bd:[["어디","哪里"],["가요","动词","去"]],tip:"碰到熟人时的寒暄，不一定要认真回答"},
+{kr:"뭐 해요?",ro:"mwo hae-yo?",zh:"在做什么？",scene:"日常寒暄",lv:10,bd:[["뭐","什么"],["해요","动词","做"]],tip:"打电话或碰面时的寒暄，超随意"},
+{kr:"별로예요.",ro:"byeol-lo-ye-yo.",zh:"一般般。/ 不怎么样。",scene:"日常寒暄",lv:10,bd:[["별로예요","","一般/不怎样"]],tip:"별로=并不怎么，对不太好的事物的评价"},
+
+// ── 11. 情感表达 ──
+{kr:"좋아요!",ro:"jo-a-yo!",zh:"好！/ 喜欢！",scene:"情感表达",lv:11,bd:[["좋아요","形容词","好/喜欢"]],tip:"좋다=好/喜欢，万能肯定词"},
+{kr:"싫어요.",ro:"si-reo-yo.",zh:"不喜欢。/ 不要。",scene:"情感表达",lv:11,bd:[["싫어요","形容词","讨厌/不喜欢"]],tip:"싫다=讨厌/不要，와좋아요相反"},
+{kr:"좋아해요.",ro:"jo-a-hae-yo.",zh:"喜欢。（持续性）",scene:"情感表达",lv:11,bd:[["좋아해요","动词","喜欢（持续状态）"]],tip:"좋아하다=持续喜欢某人/事，常用于告白"},
+{kr:"사랑해요.",ro:"sa-rang-hae-yo.",zh:"我爱你。",scene:"情感表达",lv:11,bd:[["사랑","名词","爱"],["해요","动词","做/是"]],tip:"사랑=爱，사랑해=口语，사랑해요=礼貌"},
+{kr:"보고 싶어요.",ro:"bo-go si-peo-yo.",zh:"想见你。/ 想念你。",scene:"情感表达",lv:11,bd:[["보고","动词","见/看+连接"],["싶어요","助动词","想"]],tip:"보다=见/看，고 싶다=想做…，超高频"},
+{kr:"행복해요.",ro:"haeng-bo-kae-yo.",zh:"很幸福。/ 很快乐。",scene:"情感表达",lv:11,bd:[["행복해요","形容词","幸福"]],tip:"행복=幸福，汉字词幸福"},
+{kr:"슬퍼요.",ro:"seul-peo-yo.",zh:"很悲伤。",scene:"情感表达",lv:11,bd:[["슬퍼요","形容词","悲伤"]],tip:"슬프다→슬퍼요，ㅡ脱落变化"},
+{kr:"무서워요.",ro:"mu-seo-wo-yo.",zh:"好可怕。",scene:"情感表达",lv:11,bd:[["무서워요","形容词","可怕"]],tip:"무섭다→무서워요，ㅂ不规则变化"},
+{kr:"신나요!",ro:"sin-na-yo!",zh:"好兴奋！/ 真爽！",scene:"情感表达",lv:11,bd:[["신나요","形容词","兴奋/开心"]],tip:"신나다=兴奋/激动，活动前后常说"},
+{kr:"화가 났어요.",ro:"hwa-ga na-sseo-yo.",zh:"我生气了。",scene:"情感表达",lv:11,bd:[["화","名词","怒火"],["가 났어요","动词","出现了"]],tip:"화가 나다=生气，났어요=过去时"},
+
+// ── 12. 学校学习 ──
+{kr:"숙제가 많아요.",ro:"suk-je-ga ma-na-yo.",zh:"作业很多。",scene:"学校学习",lv:12,bd:[["숙제","名词","作业"],["가","主格"],["많아요","形容词","多"]],tip:"숙제=宿題=作业，학생必备句"},
+{kr:"이해가 안 돼요.",ro:"i-hae-ga an dwae-yo.",zh:"我不理解。",scene:"学校学习",lv:12,bd:[["이해","名词","理解"],["가 안 돼요","不行/不了"]],tip:"이해=理解，안 되다=不行，问老师时说"},
+{kr:"다시 한번 말씀해 주세요.",ro:"da-si han-beon mal-sseum-hae ju-se-yo.",zh:"请再说一遍。",scene:"学校学习",lv:12,bd:[["다시","副词","再次"],["한번","一次"],["말씀해 주세요","请说"]],tip:"말씀하다是말하다的敬语，听不懂时用"},
+{kr:"천천히 말해 주세요.",ro:"cheon-cheon-hi mal-hae ju-se-yo.",zh:"请说慢一点。",scene:"学校学习",lv:12,bd:[["천천히","副词","慢慢地"],["말해 주세요","请说"]],tip:"천천히=慢慢地，听不懂时的救命句"},
+{kr:"질문 있어요.",ro:"jil-mun i-sseo-yo.",zh:"我有问题。",scene:"学校学习",lv:12,bd:[["질문","名词","问题/疑问"],["있어요","有"]],tip:"질문=疑问，문제=问题/题目，课堂常用"},
+{kr:"시험이 언제예요?",ro:"si-heom-i eon-je-ye-yo?",zh:"考试是什么时候？",scene:"学校学习",lv:12,bd:[["시험","名词","考试"],["이","主格"],["언제예요","什么时候"]],tip:"언제=什么时候，시험=考试，学生必备"},
+{kr:"같이 공부해요.",ro:"ga-chi gong-bu-hae-yo.",zh:"一起学习吧。",scene:"学校学习",lv:12,bd:[["같이","副词","一起"],["공부해요","动词","学习"]],tip:"같이=一起，공부하다=학습하다=学习"},
+{kr:"도서관에 가요.",ro:"do-seo-gwan-e ga-yo.",zh:"去图书馆。",scene:"学校学习",lv:12,bd:[["도서관","名词","图书馆"],["에","方向"],["가요","去"]],tip:"도서=图书，관=馆，汉字词도서관"},
+{kr:"발표가 있어요.",ro:"bal-pyo-ga i-sseo-yo.",zh:"有发表/演讲。",scene:"学校学习",lv:12,bd:[["발표","名词","发表/演讲"],["가","主格"],["있어요","有"]],tip:"발표=发表，汉字词，学校活动常见"},
+{kr:"성적이 잘 나왔어요.",ro:"seong-jeok-i jal na-wass-eo-yo.",zh:"成绩出来得很好。",scene:"学校学习",lv:12,bd:[["성적","名词","成绩"],["이","主格"],["잘 나왔어요","出来得很好"]],tip:"성적=成绩，나오다=出来，考试后说"},
+
+// ── 13. 工作职场 ──
+{kr:"회의가 있어요.",ro:"hoe-i-ga i-sseo-yo.",zh:"有会议。",scene:"工作职场",lv:13,bd:[["회의","名词","会议"],["가","主格"],["있어요","有"]],tip:"회의=会議，职场每天必说"},
+{kr:"보고서를 써야 해요.",ro:"bo-go-seo-reul sseo-ya hae-yo.",zh:"我得写报告。",scene:"工作职场",lv:13,bd:[["보고서","名词","报告"],["를","宾格"],["써야 해요","必须写"]],tip:"아/어야 하다=必须做…，义务句型"},
+{kr:"언제까지예요?",ro:"eon-je-kka-ji-ye-yo?",zh:"截止到什么时候？",scene:"工作职场",lv:13,bd:[["언제까지","到什么时候"],["예요","是"]],tip:"까지=到/截止，确认截止日期"},
+{kr:"메일 확인했어요?",ro:"me-il hwa-gin-hae-sseo-yo?",zh:"确认邮件了吗？",scene:"工作职场",lv:13,bd:[["메일","邮件"],["확인했어요","动词","确认了吗"]],tip:"확인하다=确认，职场沟通必备"},
+{kr:"잠깐 통화할 수 있어요?",ro:"jam-kkan tong-hwa-hal su i-sseo-yo?",zh:"能简短通话一下吗？",scene:"工作职场",lv:13,bd:[["잠깐","稍微"],["통화할 수 있어요","可以通话吗"]],tip:"통화하다=通话，잠깐=片刻"},
+{kr:"수정해 드릴게요.",ro:"su-jeong-hae deu-ril-ge-yo.",zh:"我来帮您修改。",scene:"工作职场",lv:13,bd:[["수정","修改"],["해 드릴게요","动词","为您做（谦让）"]],tip:"드리다=给（谦让语），ㄹ게요=我会…"},
+{kr:"지금 바빠서 나중에 연락할게요.",ro:"ji-geum ba-ppa-seo na-jung-e yeol-la-kal-ge-yo.",zh:"现在很忙，稍后联系你。",scene:"工作职场",lv:13,bd:[["바빠서","因为忙"],["나중에","稍后"],["연락할게요","会联系"]],tip:"아/어서=因为…，나중에=稍后/以后"},
+{kr:"다음 주에 출장 가요.",ro:"da-eum ju-e chul-jang ga-yo.",zh:"下周出差。",scene:"工作职场",lv:13,bd:[["다음 주에","下周"],["출장","名词","出差"],["가요","去"]],tip:"출장=出張=出差，汉字词，职场常用"},
+{kr:"이 프로젝트 담당이에요.",ro:"i peu-ro-jek-teu dam-dang-i-e-yo.",zh:"我负责这个项目。",scene:"工作职场",lv:13,bd:[["이 프로젝트","这个项目"],["담당이에요","是负责人"]],tip:"담당=担当=负责，프로젝트=project"},
+{kr:"회사에 늦었어요.",ro:"hoe-sa-e neu-jeo-sseo-yo.",zh:"上班迟到了。",scene:"工作职场",lv:13,bd:[["회사에","公司"],["늦었어요","动词","迟到了"]],tip:"늦다=迟到/晚，늦었어요=迟到了"},
+
+// ── 14. 电话短信 ──
+{kr:"여보세요?",ro:"yeo-bo-se-yo?",zh:"喂？",scene:"电话短信",lv:14,bd:[["여보세요","","喂（接电话）"]],tip:"韩语接电话固定开头，不能用안녕하세요"},
+{kr:"누구세요?",ro:"nu-gu-se-yo?",zh:"您是哪位？",scene:"电话短信",lv:14,bd:[["누구","疑问","谁"],["세요","是（敬语）"]],tip:"누구=谁，세요是이세요的缩略，礼貌询问"},
+{kr:"잠깐만 기다려 주세요.",ro:"jam-kkan-man gi-da-ryeo ju-se-yo.",zh:"请稍等一下。",scene:"电话短信",lv:14,bd:[["잠깐만","稍等"],["기다려 주세요","请等待"]],tip:"기다리다=等待，电话中请对方等候"},
+{kr:"다시 전화할게요.",ro:"da-si jeon-hwa-hal-ge-yo.",zh:"我再打过来。",scene:"电话短信",lv:14,bd:[["다시","再次"],["전화할게요","动词","会打电话"]],tip:"전화하다=打电话，ㄹ게요=承诺"},
+{kr:"문자 보내도 돼요?",ro:"mun-ja bo-nae-do dwae-yo?",zh:"可以发短信吗？",scene:"电话短信",lv:14,bd:[["문자","名词","短信/文字"],["보내도 돼요","可以发吗"]],tip:"문자=文字=短信，보내다=发送"},
+{kr:"카카오톡 있어요?",ro:"ka-ka-o-tok i-sseo-yo?",zh:"你有KakaoTalk吗？",scene:"电话短信",lv:14,bd:[["카카오톡","KakaoTalk"],["있어요","有吗"]],tip:"韩国最主流的IM软件，相当于微信"},
+{kr:"아이디가 뭐예요?",ro:"a-i-di-ga mwo-ye-yo?",zh:"ID是什么？",scene:"电话短信",lv:14,bd:[["아이디","名词","ID"],["가 뭐예요","是什么"]],tip:"아이디=ID，加카카오톡好友时问"},
+{kr:"연락이 안 돼요.",ro:"yeol-la-gi an dwae-yo.",zh:"联系不上。",scene:"电话短信",lv:14,bd:[["연락이","联系（主格）"],["안 돼요","不行"]],tip:"连续拨打无人接听时说"},
+{kr:"목소리가 잘 안 들려요.",ro:"mok-so-ri-ga jal an deul-lyeo-yo.",zh:"声音听不太清楚。",scene:"电话短信",lv:14,bd:[["목소리","名词","声音"],["잘 안 들려요","听不清"]],tip:"목소리=声音，들리다=听到/听见"},
+{kr:"나중에 다시 연락해요.",ro:"na-jung-e da-si yeol-la-kae-yo.",zh:"稍后再联系。",scene:"电话短信",lv:14,bd:[["나중에","稍后"],["다시","再次"],["연락해요","动词","联系"]],tip:"挂电话前的常用句，语气友善"},
+
+// ── 15. 天气季节 ──
+{kr:"오늘 날씨 어때요?",ro:"o-neul nal-ssi eo-ttae-yo?",zh:"今天天气怎么样？",scene:"天气季节",lv:15,bd:[["오늘","今天"],["날씨","天气"],["어때요","怎么样"]],tip:"어때요=어떻다礼貌形，询问状态"},
+{kr:"비가 올 것 같아요.",ro:"bi-ga ol geot ga-ta-yo.",zh:"好像要下雨了。",scene:"天气季节",lv:15,bd:[["비가","雨（主格）"],["올 것 같아요","好像要来"]],tip:"ㄹ 것 같다=好像要…，推测句型"},
+{kr:"우산 가져왔어요?",ro:"u-san ga-jyeo-wa-sseo-yo?",zh:"带伞来了吗？",scene:"天气季节",lv:15,bd:[["우산","名词","伞"],["가져왔어요","动词","带来了吗"]],tip:"우산=雨伞，가져오다=带来"},
+{kr:"정말 덥네요.",ro:"jeong-mal deom-ne-yo.",zh:"真的好热啊。",scene:"天气季节",lv:15,bd:[["정말","副词","真的"],["덥네요","形容词","热啊（感叹）"]],tip:"정말=真的，덥다→더워요/덥네요"},
+{kr:"올해 여름은 너무 더워요.",ro:"ol-hae yeo-reum-eun neo-mu deo-wo-yo.",zh:"今年夏天太热了。",scene:"天气季节",lv:15,bd:[["올해","今年"],["여름은","夏天（话题）"],["너무 더워요","太热了"]],tip:"올해=今年，여름=夏，겨울=冬，봄=春，가을=秋"},
+{kr:"눈이 와요.",ro:"nu-ni wa-yo.",zh:"下雪了。",scene:"天气季节",lv:15,bd:[["눈이","雪（主格）"],["와요","动词","来"]],tip:"눈=雪/眼睛，오다=来，비가 와요=下雨"},
+{kr:"바람이 많이 불어요.",ro:"ba-ra-mi ma-ni bu-reo-yo.",zh:"风很大。",scene:"天气季节",lv:15,bd:[["바람이","风（主格）"],["많이 불어요","吹得很大"]],tip:"바람=风，불다=吹，많이=很多"},
+{kr:"날씨가 딱 좋아요.",ro:"nal-ssi-ga ttak jo-a-yo.",zh:"天气刚刚好。",scene:"天气季节",lv:15,bd:[["날씨가","天气"],["딱 좋아요","刚刚好"]],tip:"딱=刚好/恰好，强调程度正合适"},
+{kr:"습해요.",ro:"seu-pae-yo.",zh:"很湿热。/ 很潮。",scene:"天气季节",lv:15,bd:[["습해요","形容词","潮湿/湿热"]],tip:"습하다=潮湿，韩国梅雨季节常说"},
+{kr:"따뜻해요.",ro:"tta-tteu-tae-yo.",zh:"暖和。",scene:"天气季节",lv:15,bd:[["따뜻해요","形容词","温暖"]],tip:"따뜻하다=温暖，春秋季节常用"},
+
+// ── 16. 兴趣爱好 ──
+{kr:"취미가 뭐예요?",ro:"chwi-mi-ga mwo-ye-yo?",zh:"你的爱好是什么？",scene:"兴趣爱好",lv:16,bd:[["취미","名词","兴趣/爱好"],["가 뭐예요","是什么"]],tip:"취미=趣味=爱好，交友必问"},
+{kr:"저는 음악을 좋아해요.",ro:"jeo-neun eu-ma-geul jo-a-hae-yo.",zh:"我喜欢音乐。",scene:"兴趣爱好",lv:16,bd:[["음악","名词","音乐"],["을","宾格"],["좋아해요","喜欢"]],tip:"음악=音乐，을 좋아하다=喜欢（宾格）"},
+{kr:"주말에 뭐 해요?",ro:"ju-ma-re mwo hae-yo?",zh:"周末做什么？",scene:"兴趣爱好",lv:16,bd:[["주말에","周末"],["뭐 해요","做什么"]],tip:"주말=周末，에=时间助词"},
+{kr:"같이 영화 보러 가요.",ro:"ga-chi yeong-hwa bo-reo ga-yo.",zh:"一起去看电影吧。",scene:"兴趣爱好",lv:16,bd:[["같이","一起"],["영화","电影"],["보러 가요","去看"]],tip:"(으)러 가다=去做…，目的用法"},
+{kr:"운동을 자주 해요?",ro:"un-dong-eul ja-ju hae-yo?",zh:"经常运动吗？",scene:"兴趣爱好",lv:16,bd:[["운동","名词","运动"],["을","宾格"],["자주 해요","经常做吗"]],tip:"자주=经常，운동하다=运动"},
+{kr:"여행을 좋아해요.",ro:"yeo-haeng-eul jo-a-hae-yo.",zh:"我喜欢旅行。",scene:"兴趣爱好",lv:16,bd:[["여행","名词","旅行"],["을 좋아해요","喜欢"]],tip:"여행=旅行，여행하다/여행 가다=去旅行"},
+{kr:"맛집 찾는 걸 좋아해요.",ro:"mat-jip chat-neun geol jo-a-hae-yo.",zh:"我喜欢找好吃的餐厅。",scene:"兴趣爱好",lv:16,bd:[["맛집","好吃的餐厅"],["찾는 걸","找的事"],["좋아해요","喜欢"]],tip:"맛집=맛+집，好吃的店，韩国文化关键词"},
+{kr:"사진 찍는 걸 좋아해요.",ro:"sa-jin jjing-neun geol jo-a-hae-yo.",zh:"我喜欢拍照。",scene:"兴趣爱好",lv:16,bd:[["사진","名词","照片"],["찍는 걸","拍的事"],["좋아해요","喜欢"]],tip:"사진 찍다=拍照，찍다=按/拍"},
+{kr:"요리하는 걸 즐겨요.",ro:"yo-ri-ha-neun geol jeul-gyeo-yo.",zh:"我享受做料理。",scene:"兴趣爱好",lv:16,bd:[["요리하는 걸","做料理这件事"],["즐겨요","动词","享受"]],tip:"즐기다=享受/乐于，즐겨요是礼貌形"},
+{kr:"게임을 자주 해요.",ro:"ge-im-eul ja-ju hae-yo.",zh:"经常打游戏。",scene:"兴趣爱好",lv:16,bd:[["게임","名词","游戏"],["을","宾格"],["자주 해요","经常做"]],tip:"게임=game，자주=经常，年轻人必备话题"},
+
+// ── 17. 约定计划 ──
+{kr:"언제 시간 있어요?",ro:"eon-je si-gan i-sseo-yo?",zh:"你什么时候有时间？",scene:"约定计划",lv:17,bd:[["언제","什么时候"],["시간 있어요","有时间吗"]],tip:"约人必问，시간=时间，있어요=有"},
+{kr:"토요일 어때요?",ro:"to-yo-il eo-ttae-yo?",zh:"周六怎么样？",scene:"约定计划",lv:17,bd:[["토요일","名词","周六"],["어때요","怎么样"]],tip:"일요일=周日，월=月，화=火，수=水，목=木，금=金，토=土"},
+{kr:"몇 시에 만날까요?",ro:"myeot si-e man-nal-kka-yo?",zh:"几点见面？",scene:"约定计划",lv:17,bd:[["몇 시에","几点"],["만날까요","动词","见面吧？（提议）"]],tip:"ㄹ까요=要…吗？提议或询问对方意见"},
+{kr:"거기서 만나요.",ro:"geo-gi-seo man-na-yo.",zh:"在那里见。",scene:"约定计划",lv:17,bd:[["거기서","在那里"],["만나요","动词","见面"]],tip:"거기=那里，에서=在（动作地点）"},
+{kr:"약속 있어요.",ro:"yak-ssok i-sseo-yo.",zh:"我有约。",scene:"约定计划",lv:17,bd:[["약속","名词","约定/约会"],["있어요","有"]],tip:"약속=约束/约定，有约时说"},
+{kr:"약속을 바꿀 수 있어요?",ro:"yak-sso-geul ba-kkul su i-sseo-yo?",zh:"可以改约吗？",scene:"约定计划",lv:17,bd:[["약속을","约定（宾格）"],["바꿀 수 있어요","可以改吗"]],tip:"바꾸다=换/改，ㄹ 수 있다=可以…"},
+{kr:"내일 일정이 어떻게 돼요?",ro:"nae-il il-jeong-i eo-tteo-ke dwae-yo?",zh:"明天的日程怎么样？",scene:"约定计划",lv:17,bd:[["내일","明天"],["일정","日程"],["이 어떻게 돼요","怎么样"]],tip:"일정=日程，어떻게 돼요=怎么样/如何"},
+{kr:"늦을 것 같아요.",ro:"neu-jeul geot ga-ta-yo.",zh:"好像要迟到了。",scene:"约定计划",lv:17,bd:[["늦을","会迟的"],["것 같아요","好像"]],tip:"늦다=迟，ㄹ 것 같다=好像要…"},
+{kr:"조금 일찍 와 주세요.",ro:"jo-geum il-jjik wa ju-se-yo.",zh:"请早一点来。",scene:"约定计划",lv:17,bd:[["조금 일찍","早一点"],["와 주세요","请来"]],tip:"일찍=早，와 주세요=请来（오다的）"},
+{kr:"다음 주에 같이 밥 먹어요.",ro:"da-eum ju-e ga-chi bap meo-geo-yo.",zh:"下周一起吃饭吧。",scene:"约定计划",lv:17,bd:[["다음 주에","下周"],["같이","一起"],["밥 먹어요","吃饭"]],tip:"吃饭邀约，韩国人最常用的约会方式"},
+
+// ── 18. 超市便利店 ──
+{kr:"이거 어디 있어요?",ro:"i-geo eo-di i-sseo-yo?",zh:"这个在哪里？",scene:"超市便利店",lv:18,bd:[["이거","这个"],["어디 있어요","在哪里"]],tip:"在超市找东西时最常用"},
+{kr:"봉투 주세요.",ro:"bong-tu ju-se-yo.",zh:"请给我袋子。",scene:"超市便利店",lv:18,bd:[["봉투","名词","袋子"],["주세요","请给"]],tip:"봉투=信封/袋子，결제후 必要"},
+{kr:"현금으로 할게요.",ro:"hyeon-geu-meu-ro hal-ge-yo.",zh:"用现金付。",scene:"超市便利店",lv:18,bd:[["현금으로","用现金"],["할게요","动词","我来做"]],tip:"현금=现金，카드로=用卡，로=用/以"},
+{kr:"포인트 카드 있어요?",ro:"po-in-teu ka-deu i-sseo-yo?",zh:"有积分卡吗？",scene:"超市便利店",lv:18,bd:[["포인트 카드","积分卡"],["있어요","有吗"]],tip:"韩国超市常见问，없어요=没有"},
+{kr:"영수증 필요 없어요.",ro:"yeong-su-jeung pil-lyo eop-seo-yo.",zh:"不需要收据。",scene:"超市便利店",lv:18,bd:[["영수증","收据"],["필요 없어요","不需要"]],tip:"필요 없다=不需要，필요하다=需要"},
+{kr:"이거 얼마예요?",ro:"i-geo eol-ma-ye-yo?",zh:"这个多少钱？",scene:"超市便利店",lv:18,bd:[["이거","这个"],["얼마예요","多少钱"]],tip:"价格询问，얼마=多少，超高频"},
+{kr:"할인 중이에요?",ro:"ha-rin jung-i-e-yo?",zh:"在打折吗？",scene:"超市便利店",lv:18,bd:[["할인","名词","折扣"],["중이에요","正在…中"]],tip:"할인=割引=折扣，중=中/正在"},
+{kr:"유통기한이 언제예요?",ro:"yu-tong-gi-ha-ni eon-je-ye-yo?",zh:"保质期是什么时候？",scene:"超市便利店",lv:18,bd:[["유통기한","保质期"],["이 언제예요","是什么时候"]],tip:"유통기한=保质期，购买食品前确认"},
+{kr:"전자레인지 있어요?",ro:"jeon-ja-re-in-ji i-sseo-yo?",zh:"有微波炉吗？",scene:"超市便利店",lv:18,bd:[["전자레인지","微波炉"],["있어요","有吗"]],tip:"전자레인지=电子range=微波炉，便利店必问"},
+{kr:"영업시간이 몇 시까지예요?",ro:"yeong-eop-si-ga-ni myeot si-kka-ji-ye-yo?",zh:"营业到几点？",scene:"超市便利店",lv:18,bd:[["영업시간","营业时间"],["몇 시까지예요","到几点"]],tip:"영업=营业，까지=到/截止，확인 필수"},
+
+// ── 19. 娱乐K-POP ──
+{kr:"이 노래 뭐예요?",ro:"i no-rae mwo-ye-yo?",zh:"这首歌是什么？",scene:"娱乐KPOP",lv:19,bd:[["이 노래","这首歌"],["뭐예요","是什么"]],tip:"노래=歌，노래하다=唱歌"},
+{kr:"노래방 가고 싶어요.",ro:"no-rae-bang ga-go si-peo-yo.",zh:"我想去KTV。",scene:"娱乐KPOP",lv:19,bd:[["노래방","KTV/卡拉OK"],["가고 싶어요","想去"]],tip:"노래방=歌房=KTV，韩国娱乐必去"},
+{kr:"이 드라마 봤어요?",ro:"i deu-ra-ma bwass-eo-yo?",zh:"你看了这部剧吗？",scene:"娱乐KPOP",lv:19,bd:[["이 드라마","这部剧"],["봤어요","动词","看了吗"]],tip:"드라마=drama=电视剧，봤어요=보다过去时"},
+{kr:"최애가 누구예요?",ro:"choe-ae-ga nu-gu-ye-yo?",zh:"你最爱的是谁？",scene:"娱乐KPOP",lv:19,bd:[["최애","名词","最爱"],["가 누구예요","是谁"]],tip:"최애=最愛，粉丝必用，누구=谁"},
+{kr:"콘서트 가고 싶어요.",ro:"kon-seo-teu ga-go si-peo-yo.",zh:"想去演唱会。",scene:"娱乐KPOP",lv:19,bd:[["콘서트","名词","演唱会"],["가고 싶어요","想去"]],tip:"콘서트=concert，和朋友聊偶像时说"},
+{kr:"이 노래 가사 알아요?",ro:"i no-rae ga-sa a-ra-yo?",zh:"你知道这首歌的歌词吗？",scene:"娱乐KPOP",lv:19,bd:[["노래 가사","歌词"],["알아요","动词","知道吗"]],tip:"가사=歌词/歌辞，알다=知道/了解"},
+{kr:"한국 드라마를 자주 봐요.",ro:"han-guk deu-ra-ma-reul ja-ju bwa-yo.",zh:"我经常看韩剧。",scene:"娱乐KPOP",lv:19,bd:[["한국 드라마를","韩剧（宾格）"],["자주 봐요","经常看"]],tip:"자주=经常，봐요=보다礼貌形"},
+{kr:"춤을 잘 춰요.",ro:"chu-meul jal chwo-yo.",zh:"舞跳得很好。",scene:"娱乐KPOP",lv:19,bd:[["춤을","舞（宾格）"],["잘 춰요","动词","跳得好"]],tip:"춤=舞，추다=跳（舞），춰요是口语形"},
+{kr:"팬 미팅에 갔다 왔어요.",ro:"paen mi-ting-e gat-da wa-sseo-yo.",zh:"去了粉丝见面会回来了。",scene:"娱乐KPOP",lv:19,bd:[["팬 미팅에","粉丝见面会"],["갔다 왔어요","去了回来了"]],tip:"갔다 오다=去了回来，完成往返动作"},
+{kr:"이 영화 재미있었어요?",ro:"i yeong-hwa jae-mi-i-sseo-sseo-yo?",zh:"这部电影有趣吗？",scene:"娱乐KPOP",lv:19,bd:[["이 영화","这部电影"],["재미있었어요","有趣吗（过去）"]],tip:"재미있었어요=재미있다的过去时礼貌形"},
+
+// ── 20. 紧急情况 ──
+{kr:"도와주세요!",ro:"do-wa-ju-se-yo!",zh:"救命！/ 请帮助我！",scene:"紧急情况",lv:20,bd:[["도와주세요","动词","请帮我"]],tip:"도와주다=帮助，最紧急的求救"},
+{kr:"경찰을 불러 주세요.",ro:"gyeong-cha-reul bul-leo ju-se-yo.",zh:"请叫警察。",scene:"紧急情况",lv:20,bd:[["경찰","名词","警察"],["을","宾格"],["불러 주세요","请叫"]],tip:"불르다=呼唤，경찰=警察"},
+{kr:"구급차를 불러 주세요.",ro:"gu-geup-cha-reul bul-leo ju-se-yo.",zh:"请叫救护车。",scene:"紧急情况",lv:20,bd:[["구급차","名词","救护车"],["불러 주세요","请叫"]],tip:"구급=急救，차=车，紧急情况必备"},
+{kr:"불이야!",ro:"bu-ri-ya!",zh:"失火了！",scene:"紧急情况",lv:20,bd:[["불","名词","火"],["이야","感叹语气","是！"]],tip:"불=火，火灾时大喊这个"},
+{kr:"잃어버렸어요.",ro:"i-reo-beo-ryeoss-eo-yo.",zh:"我丢了/弄丢了。",scene:"紧急情况",lv:20,bd:[["잃어버렸어요","动词","丢失了"]],tip:"잃어버리다=丢失，물건/가방/여권 앞에 붙여서"},
+{kr:"지갑을 잃어버렸어요.",ro:"ji-ga-beul i-reo-beo-ryeoss-eo-yo.",zh:"我的钱包丢了。",scene:"紧急情况",lv:20,bd:[["지갑","名词","钱包"],["을","宾格"],["잃어버렸어요","丢失了"]],tip:"지갑=钱包，向路人求助或报警时说"},
+{kr:"여권을 잃어버렸어요.",ro:"yeo-gwon-eul i-reo-beo-ryeoss-eo-yo.",zh:"护照丢了。",scene:"紧急情况",lv:20,bd:[["여권","名词","护照"],["잃어버렸어요","丢失了"]],tip:"여권=旅券=护照，海外旅行最怕的事"},
+{kr:"한국 대사관이 어디예요?",ro:"han-guk dae-sa-gwan-i eo-di-ye-yo?",zh:"韩国大使馆在哪里？",scene:"紧急情况",lv:20,bd:[["대사관","名词","大使馆"],["이 어디예요","在哪里"]],tip:"대사관=大使館，遇到紧急状况联系"},
+{kr:"사고가 났어요.",ro:"sa-go-ga na-sseo-yo.",zh:"出事故了。",scene:"紧急情况",lv:20,bd:[["사고","名词","事故"],["가","主格"],["났어요","动词","发生了"]],tip:"사고=事故，나다=发生，交通事故等"},
+{kr:"빨리 와 주세요!",ro:"ppal-li wa ju-se-yo!",zh:"请快来！",scene:"紧急情况",lv:20,bd:[["빨리","副词","快点"],["와 주세요","请来"]],tip:"빨리=快，오다→와，紧急呼救通用"},
+
+// ── 21. 比较选择 ──
+{kr:"어느 게 더 좋아요?",ro:"eo-neu ge deo jo-a-yo?",zh:"哪个更好？",scene:"比较选择",lv:21,bd:[["어느 게","哪个（主格）"],["더 좋아요","更好"]],tip:"어느=哪个，더=更，比较时必用"},
+{kr:"이게 저보다 싸요.",ro:"i-ge jeo-bo-da ssa-yo.",zh:"这个比那个便宜。",scene:"比较选择",lv:21,bd:[["이게","这个（主格）"],["저보다","比那个"],["싸요","便宜"]],tip:"보다=比（比较助词），A보다 B=比A更B"},
+{kr:"둘 다 좋아요.",ro:"dul da jo-a-yo.",zh:"两个都好。",scene:"比较选择",lv:21,bd:[["둘 다","两个都"],["좋아요","好"]],tip:"둘=两个（固有数词），다=都/全部"},
+{kr:"어느 걸로 할게요?",ro:"eo-neu geol-lo hal-ge-yo?",zh:"选哪个？",scene:"比较选择",lv:21,bd:[["어느 걸로","选哪个"],["할게요","我来做"]],tip:"걸로=으로的口语，选择时说"},
+{kr:"그냥 아무거나 주세요.",ro:"geu-nyang a-mu-geo-na ju-se-yo.",zh:"随便给我什么都行。",scene:"比较选择",lv:21,bd:[["그냥","就那样/随便"],["아무거나","什么都行"],["주세요","请给"]],tip:"아무거나=任何东西都行，拿不定主意时"},
+{kr:"이게 더 맛있어요.",ro:"i-ge deo ma-si-sseo-yo.",zh:"这个更好吃。",scene:"比较选择",lv:21,bd:[["이게","这个"],["더 맛있어요","更好吃"]],tip:"더=更，比较形容词时，더+形容词"},
+{kr:"작은 사이즈로 주세요.",ro:"ja-geun sa-i-jeu-ro ju-se-yo.",zh:"请给我小码。",scene:"比较选择",lv:21,bd:[["작은","小的"],["사이즈로","以…尺码"],["주세요","请给"]],tip:"사이즈=size，작다=小，크다=大"},
+{kr:"이거랑 저거 비교해 줘요.",ro:"i-geo-rang jeo-geo bi-gyo-hae jwo-yo.",zh:"帮我比较这个和那个。",scene:"比较选择",lv:21,bd:[["이거랑 저거","这个和那个"],["비교해 줘요","帮我比较"]],tip:"랑=和（口语），비교하다=比较"},
+{kr:"추천해 주세요.",ro:"chu-cheon-hae ju-se-yo.",zh:"请推荐。",scene:"比较选择",lv:21,bd:[["추천","名词","推荐"],["해 주세요","请为我做"]],tip:"추천하다=推荐，拿不定主意时请人推荐"},
+{kr:"마음에 들어요.",ro:"ma-eu-me deu-reo-yo.",zh:"我很喜欢。/ 合我心意。",scene:"比较选择",lv:21,bd:[["마음에","心里"],["들어요","动词","入/合"]],tip:"마음에 들다=合心意/喜欢，购物确认时说"},
+
+// ── 22. 家庭日常 ──
+{kr:"밥 됐어요?",ro:"bap dwae-sseo-yo?",zh:"饭好了吗？",scene:"家庭日常",lv:22,bd:[["밥","米饭"],["됐어요","动词","好了吗"]],tip:"되다=成/好，饭做好时확인"},
+{kr:"청소 좀 해 줘요.",ro:"cheong-so jom hae jwo-yo.",zh:"帮我打扫一下。",scene:"家庭日常",lv:22,bd:[["청소","名词","打扫"],["좀 해 줘요","帮我做一下"]],tip:"청소하다=打扫，좀=稍微，家里常说"},
+{kr:"불 꺼 주세요.",ro:"bul kkeo ju-se-yo.",zh:"请关灯。",scene:"家庭日常",lv:22,bd:[["불","名词","灯/火"],["꺼 주세요","请关"]],tip:"끄다=关/灭，켜다=开/点，불=灯"},
+{kr:"창문 열어도 돼요?",ro:"chang-mun yeo-reo-do dwae-yo?",zh:"可以开窗吗？",scene:"家庭日常",lv:22,bd:[["창문","名词","窗户"],["열어도 돼요","可以开吗"]],tip:"열다=打开，닫다=关，창문=窗门"},
+{kr:"쓰레기 버려 주세요.",ro:"sseu-re-gi beo-ryeo ju-se-yo.",zh:"请帮我倒垃圾。",scene:"家庭日常",lv:22,bd:[["쓰레기","名词","垃圾"],["버려 주세요","请丢弃"]],tip:"쓰레기=垃圾，버리다=丢弃"},
+{kr:"세탁기 돌렸어요?",ro:"se-tak-gi dol-lyeoss-eo-yo?",zh:"洗衣机开了吗？",scene:"家庭日常",lv:22,bd:[["세탁기","洗衣机"],["돌렸어요","动词","转了/开了吗"]],tip:"세탁=洗涤，기=机，돌리다=转动"},
+{kr:"오늘 뭐 먹을까요?",ro:"o-neul mwo meo-geul-kka-yo?",zh:"今天吃什么呢？",scene:"家庭日常",lv:22,bd:[["오늘","今天"],["뭐 먹을까요","吃什么呢？（商量）"]],tip:"ㄹ까요=要不要…？商量建议句型"},
+{kr:"냉장고에 뭐 있어요?",ro:"naeng-jang-go-e mwo i-sseo-yo?",zh:"冰箱里有什么？",scene:"家庭日常",lv:22,bd:[["냉장고에","在冰箱里"],["뭐 있어요","有什么"]],tip:"냉장고=冷藏庫=冰箱，에=在（位置）"},
+{kr:"빨래 걷어 주세요.",ro:"ppal-lae geo-deo ju-se-yo.",zh:"请把衣服收回来。",scene:"家庭日常",lv:22,bd:[["빨래","名词","洗好的衣物"],["걷어 주세요","请收起来"]],tip:"빨래=洗衣/晾晒的衣物，걷다=收起"},
+{kr:"먼저 자요.",ro:"meon-jeo ja-yo.",zh:"我先睡了。",scene:"家庭日常",lv:22,bd:[["먼저","副词","先"],["자요","动词","睡觉"]],tip:"먼저=先，自己先去睡时跟家人说"},
+
+// ── 23. 咖啡厅 ──
+{kr:"아메리카노 한 잔 주세요.",ro:"a-me-ri-ka-no han jan ju-se-yo.",zh:"请给我一杯美式咖啡。",scene:"咖啡厅",lv:23,bd:[["아메리카노","美式咖啡"],["한 잔","一杯"],["주세요","请给"]],tip:"韩国咖啡文化发达，아메리카노=最常点"},
+{kr:"따뜻한 걸로 주세요.",ro:"tta-tteu-tan geol-lo ju-se-yo.",zh:"请给我热的。",scene:"咖啡厅",lv:23,bd:[["따뜻한 걸로","热的"],["주세요","请给"]],tip:"따뜻하다=暖/热，차가운=冷的"},
+{kr:"아이스로 주세요.",ro:"a-i-seu-ro ju-se-yo.",zh:"请给我冰的。",scene:"咖啡厅",lv:23,bd:[["아이스로","冰的（以）"],["주세요","请给"]],tip:"아이스=ice，로=以…形式"},
+{kr:"시럽은 빼 주세요.",ro:"si-reo-beun ppae ju-se-yo.",zh:"请不要加糖浆。",scene:"咖啡厅",lv:23,bd:[["시럽은","糖浆（话题）"],["빼 주세요","请去掉"]],tip:"빼다=去掉/减去，追加=추가，빼다=去除"},
+{kr:"사이즈 업 해 주세요.",ro:"sa-i-jeu eop hae ju-se-yo.",zh:"请升杯。",scene:"咖啡厅",lv:23,bd:[["사이즈 업","升杯"],["해 주세요","请做"]],tip:"사이즈=size，업=up，매장 자주 쓰는 표현"},
+{kr:"여기서 마실게요.",ro:"yeo-gi-seo ma-sil-ge-yo.",zh:"我在这里喝。",scene:"咖啡厅",lv:23,bd:[["여기서","在这里"],["마실게요","动词","我来喝"]],tip:"마시다=喝，ㄹ게요=我来…（我的决定）"},
+{kr:"테이크아웃으로 주세요.",ro:"te-i-keu-a-u-seu-ro ju-se-yo.",zh:"请打包带走。",scene:"咖啡厅",lv:23,bd:[["테이크아웃으로","外带"],["주세요","请"]],tip:"테이크아웃=takeout，매장 vs 테이크아웃"},
+{kr:"콘센트 있어요?",ro:"kon-sen-teu i-sseo-yo?",zh:"有插座吗？",scene:"咖啡厅",lv:23,bd:[["콘센트","名词","插座"],["있어요","有吗"]],tip:"콘센트=콘센트(concentric plug)=插座，카페 필수"},
+{kr:"와이파이 돼요?",ro:"wa-i-pa-i dwae-yo?",zh:"有WiFi吗？",scene:"咖啡厅",lv:23,bd:[["와이파이","WiFi"],["돼요","动词","可以/好用吗"]],tip:"돼요=되다礼貌形，=可以/运作"},
+{kr:"조용한 자리 있어요?",ro:"jo-yong-han ja-ri i-sseo-yo?",zh:"有安静的座位吗？",scene:"咖啡厅",lv:23,bd:[["조용한","安静的"],["자리","名词","座位"],["있어요","有吗"]],tip:"자리=位置/座位，조용하다=安静"},
+
+// ── 24. 外貌称赞 ──
+{kr:"오늘 옷 예쁘네요.",ro:"o-neul ot ye-ppeu-ne-yo.",zh:"今天的衣服好漂亮。",scene:"外貌称赞",lv:24,bd:[["오늘 옷","今天的衣服"],["예쁘네요","形容词","好漂亮啊"]],tip:"옷=衣服，예쁘다=漂亮，네요=感叹"},
+{kr:"살 빠졌어요?",ro:"sal ppa-jyeo-sseo-yo?",zh:"你瘦了吗？",scene:"外貌称赞",lv:24,bd:[["살","名词","肉/体重"],["빠졌어요","动词","减少了吗"]],tip:"살이 빠지다=变瘦，살이 찌다=变胖"},
+{kr:"피부가 좋아 보여요.",ro:"pi-bu-ga jo-a bo-yeo-yo.",zh:"皮肤看起来很好。",scene:"外貌称赞",lv:24,bd:[["피부가","皮肤（主格）"],["좋아 보여요","看起来好"]],tip:"아/어 보이다=看起来…，보여요礼貌形"},
+{kr:"머리 잘랐어요?",ro:"meo-ri jal-la-sseo-yo?",zh:"你剪头发了吗？",scene:"外貌称赞",lv:24,bd:[["머리","头发"],["잘랐어요","动词","剪了吗"]],tip:"자르다=剪，머리를 자르다=剪头发"},
+{kr:"정말 잘 어울려요.",ro:"jeong-mal jal eo-ul-lyeo-yo.",zh:"真的很适合你。",scene:"外貌称赞",lv:24,bd:[["정말","真的"],["잘 어울려요","很合适"]],tip:"어울리다=合适/相配，최고의 칭찬"},
+{kr:"오늘따라 더 예쁜 것 같아요.",ro:"o-neul-tta-ra deo ye-ppeun geot ga-ta-yo.",zh:"今天看起来特别漂亮。",scene:"外貌称赞",lv:24,bd:[["오늘따라","今天特别"],["더 예쁜 것 같아요","看起来更漂亮"]],tip:"따라=特别/跟随，오늘따라=今天特别地"},
+{kr:"어려 보여요.",ro:"eo-ryeo bo-yeo-yo.",zh:"你看起来很年轻。",scene:"外貌称赞",lv:24,bd:[["어려 보여요","看起来年轻"]],tip:"어리다=年幼，아/어 보이다=看起来…"},
+{kr:"키가 크네요.",ro:"ki-ga keu-ne-yo.",zh:"个子真高啊。",scene:"外貌称赞",lv:24,bd:[["키가","身高（主格）"],["크네요","形容词","高啊"]],tip:"키=身高，크다=高/大，네요=感叹"},
+{kr:"눈이 정말 크고 예뻐요.",ro:"nu-ni jeong-mal keu-go ye-ppeo-yo.",zh:"眼睛真的又大又漂亮。",scene:"外貌称赞",lv:24,bd:[["눈이","眼睛（主格）"],["크고","大并且"],["예뻐요","漂亮"]],tip:"고=并且/而且（连接两个形容词）"},
+{kr:"분위기가 좋아요.",ro:"bun-wi-gi-ga jo-a-yo.",zh:"气质真好。",scene:"外貌称赞",lv:24,bd:[["분위기","名词","氛围/气质"],["가 좋아요","好"]],tip:"분위기=氛围，也指一个人的气质感"},
+
+// ── 25. 表达意见 ──
+{kr:"제 생각에는요...",ro:"je saeng-ga-ge-neun-yo...",zh:"我觉得…",scene:"表达意见",lv:25,bd:[["제 생각에는","在我看来"],["요","礼貌"]],tip:"生각=想法，제=我的（谦让），表达意见开头"},
+{kr:"맞아요!",ro:"ma-ja-yo!",zh:"对！/ 就是！",scene:"表达意见",lv:25,bd:[["맞아요","形容词","对/准确"]],tip:"맞다=对/准确，强烈同意时说"},
+{kr:"아닌 것 같아요.",ro:"a-nin geot ga-ta-yo.",zh:"好像不是那样。",scene:"表达意见",lv:25,bd:[["아닌 것 같아요","好像不是"]],tip:"아니다=不是，것 같다=好像/感觉，婉转否定"},
+{kr:"저도 그렇게 생각해요.",ro:"jeo-do geu-reo-ke saeng-ga-kae-yo.",zh:"我也这么想。",scene:"表达意见",lv:25,bd:[["저도","我也"],["그렇게","那样"],["생각해요","想/认为"]],tip:"도=也，그렇게=那样地，表示赞同"},
+{kr:"글쎄요...",ro:"geul-sse-yo...",zh:"这个嘛…/ 不好说…",scene:"表达意见",lv:25,bd:[["글쎄요","","这个嘛/不一定"]],tip:"拿不准或有点不同意时用，语气模糊"},
+{kr:"사실은요...",ro:"sa-si-reun-yo...",zh:"其实是这样…",scene:"表达意见",lv:25,bd:[["사실은","其实"],["요","礼貌"]],tip:"사실=事实，要说真心话或转折时用"},
+{kr:"잘 모르겠어요.",ro:"jal mo-reu-ge-sseo-yo.",zh:"我不太清楚。",scene:"表达意见",lv:25,bd:[["잘","好好/清楚"],["모르겠어요","动词","不知道/不清楚"]],tip:"모르다=不知道，겠=不确定语气"},
+{kr:"반드시 그런 건 아니에요.",ro:"ban-deu-si geu-reon geon a-ni-e-yo.",zh:"不一定是那样。",scene:"表达意见",lv:25,bd:[["반드시","副词","一定"],["그런 건","那样的事"],["아니에요","不是"]],tip:"반드시=必定，그런 건=那样的事，否定句型"},
+{kr:"동의해요.",ro:"dong-i-hae-yo.",zh:"我同意。",scene:"表达意见",lv:25,bd:[["동의","名词","同意"],["해요","动词","做"]],tip:"동의=同意，汉字词，正式同意时说"},
+{kr:"좋은 생각이에요!",ro:"jo-eun saeng-ga-gi-e-yo!",zh:"好主意！",scene:"表达意见",lv:25,bd:[["좋은","好的"],["생각이에요","动词","是想法"]],tip:"좋은=좋다的修饰形，생각=想法/主意"},
+
+// ── 26. 时间日期 ──
+{kr:"지금 몇 시예요?",ro:"ji-geum myeot si-ye-yo?",zh:"现在几点？",scene:"时间日期",lv:26,bd:[["지금","现在"],["몇 시예요","几点？"]],tip:"몇=几，시=时/点，고유수사+시"},
+{kr:"오전이에요? 오후예요?",ro:"o-jeo-ni-e-yo? o-hu-ye-yo?",zh:"是上午还是下午？",scene:"时间日期",lv:26,bd:[["오전","名词","上午"],["오후","名词","下午"]],tip:"오전=午前，오후=午后，汉字词"},
+{kr:"오늘 며칠이에요?",ro:"o-neul myeo-chi-ri-e-yo?",zh:"今天几号？",scene:"时间日期",lv:26,bd:[["오늘","今天"],["며칠이에요","几号？"]],tip:"며칠=几日，日期用漢字數詞"},
+{kr:"무슨 요일이에요?",ro:"mu-seun yo-i-ri-e-yo?",zh:"今天星期几？",scene:"时间日期",lv:26,bd:[["무슨","什么（修饰）"],["요일이에요","是星期几？"]],tip:"무슨=什么样的，요일=曜日=星期"},
+{kr:"몇 월이에요?",ro:"myeot wo-ri-e-yo?",zh:"几月？",scene:"时间日期",lv:26,bd:[["몇 월","几月"],["이에요","是"]],tip:"월=月，1월=一月，漢字数词+월"},
+{kr:"생일이 언제예요?",ro:"saeng-i-ri eon-je-ye-yo?",zh:"生日是什么时候？",scene:"时间日期",lv:26,bd:[["생일","名词","生日"],["이 언제예요","是什么时候？"]],tip:"생일=生日，汉字词，친구나 연인에게"},
+{kr:"새해 복 많이 받으세요.",ro:"sae-hae bok ma-ni ba-deu-se-yo.",zh:"新年快乐。",scene:"时间日期",lv:26,bd:[["새해","新年"],["복 많이 받으세요","请多多得福"]],tip:"새해=新年，복=福，年初必说的祝福"},
+{kr:"추석 잘 보내세요.",ro:"chu-seok jal bo-nae-se-yo.",zh:"中秋节快乐。",scene:"时间日期",lv:26,bd:[["추석","中秋节"],["잘 보내세요","请好好度过"]],tip:"추석=韩国中秋，잘 보내다=好好度过"},
+{kr:"연말이 다가오고 있어요.",ro:"yeon-ma-ri da-ga-o-go i-sseo-yo.",zh:"年末快到了。",scene:"时间日期",lv:26,bd:[["연말","名词","年末"],["다가오고 있어요","动词","正在临近"]],tip:"연말=年末，다가오다=临近/接近"},
+{kr:"벌써 이렇게 됐어요.",ro:"beol-sseo i-reo-ke dwaess-eo-yo.",zh:"已经这样了。/ 时间过得真快。",scene:"时间日期",lv:26,bd:[["벌써","副词","已经/这么快"],["이렇게 됐어요","变成这样了"]],tip:"벌써=已经/这么快，时间感慨时说"},
+
+// ── 27. 健身运动 ──
+{kr:"운동 같이 해요.",ro:"un-dong ga-chi hae-yo.",zh:"一起运动吧。",scene:"健身运动",lv:27,bd:[["운동","名词","运动"],["같이 해요","一起做"]],tip:"같이=一起，운동하다=运动，邀约运动"},
+{kr:"헬스장에 등록했어요.",ro:"hel-seu-jang-e deung-no-kaess-eo-yo.",zh:"注册健身房了。",scene:"健身运动",lv:27,bd:[["헬스장","健身房"],["에","在"],["등록했어요","注册了"]],tip:"헬스=health，장=场，등록하다=注册"},
+{kr:"오늘 몇 세트 했어요?",ro:"o-neul myeot se-teu haess-eo-yo?",zh:"今天做了几组？",scene:"健身运动",lv:27,bd:[["몇 세트","几组"],["했어요","做了"]],tip:"세트=set，健身时的组数，运动话题"},
+{kr:"다리가 너무 아파요.",ro:"da-ri-ga neo-mu a-pa-yo.",zh:"腿太疼了。",scene:"健身运动",lv:27,bd:[["다리가","腿（主格）"],["너무 아파요","太疼了"]],tip:"다리=腿，아프다=疼，운동 후에 자주"},
+{kr:"스트레칭 꼭 해야 해요.",ro:"seu-teu-re-ching kkok hae-ya hae-yo.",zh:"一定要做拉伸。",scene:"健身运动",lv:27,bd:[["스트레칭","拉伸"],["꼭","副词","一定"],["해야 해요","必须做"]],tip:"스트레칭=stretching，꼭=一定，아/어야 해요=必须"},
+{kr:"몇 킬로 뛰었어요?",ro:"myeot kil-lo twi-eoss-eo-yo?",zh:"跑了几公里？",scene:"健身运动",lv:27,bd:[["몇 킬로","几公里"],["뛰었어요","动词","跑了"]],tip:"킬로=km，뛰다=跑/跳，运动打卡问句"},
+{kr:"단백질 챙겨 드세요.",ro:"dan-baek-jil chaeng-gyeo deu-se-yo.",zh:"请注意补充蛋白质。",scene:"健身运动",lv:27,bd:[["단백질","名词","蛋白质"],["챙겨 드세요","请注意摄取"]],tip:"단백질=蛋白質，챙기다=照顾/注意"},
+{kr:"오늘은 쉬는 날이에요.",ro:"o-neu-reun swi-neun na-ri-e-yo.",zh:"今天是休息日。",scene:"健身运动",lv:27,bd:[["오늘은","今天"],["쉬는 날이에요","是休息日"]],tip:"쉬다=休息，날=日，健身休息日"},
+{kr:"근육통이 있어요.",ro:"geu-nyuk-tong-i i-sseo-yo.",zh:"肌肉酸痛。",scene:"健身运动",lv:27,bd:[["근육통","肌肉酸痛"],["이 있어요","有"]],tip:"근육=筋肉=肌肉，통=痛，운동 다음날"},
+{kr:"유산소 운동 좋아해요?",ro:"yu-san-so un-dong jo-a-hae-yo?",zh:"你喜欢有氧运动吗？",scene:"健身运动",lv:27,bd:[["유산소 운동","有氧运动"],["좋아해요","喜欢吗"]],tip:"유산소=有酸素=有氧，무산소=无氧"},
+
+// ── 28. 网络社交 ──
+{kr:"팔로우해 주세요.",ro:"pal-lo-u-hae ju-se-yo.",zh:"请关注我。",scene:"网络社交",lv:28,bd:[["팔로우","关注/follow"],["해 주세요","请做"]],tip:"SNS必用语，인스타그램/유튜브 등에서"},
+{kr:"사진 보내 줘요.",ro:"sa-jin bo-nae jwo-yo.",zh:"发张照片给我。",scene:"网络社交",lv:28,bd:[["사진","名词","照片"],["보내 줘요","发给我"]],tip:"보내다=发送，사진=照片，카카오톡에서"},
+{kr:"좋아요 눌렀어요.",ro:"jo-a-yo nul-leoss-eo-yo.",zh:"我点赞了。",scene:"网络社交",lv:28,bd:[["좋아요","点赞"],["눌렀어요","动词","按了"]],tip:"좋아요=点赞，누르다=按，SNS用语"},
+{kr:"댓글 달았어요.",ro:"daet-ggeul da-ra-sseo-yo.",zh:"我留言了。",scene:"网络社交",lv:28,bd:[["댓글","名词","评论/留言"],["달았어요","动词","留了"]],tip:"댓글=comment，달다=挂/留，网络用语"},
+{kr:"공유해 줄게요.",ro:"gong-yu-hae jul-ge-yo.",zh:"我来分享给你。",scene:"网络社交",lv:28,bd:[["공유","名词","共享/分享"],["해 줄게요","我来做给你"]],tip:"공유=共有=分享，SNS에서 자주"},
+{kr:"라이브 중이에요.",ro:"ra-i-beu jung-i-e-yo.",zh:"正在直播。",scene:"网络社交",lv:28,bd:[["라이브","直播"],["중이에요","正在…中"]],tip:"라이브=live，중=中/正在，유튜브/틱톡"},
+{kr:"이거 바이럴이에요.",ro:"i-geo ba-i-reol-i-e-yo.",zh:"这个在病毒式传播。",scene:"网络社交",lv:28,bd:[["이거","这个"],["바이럴이에요","是viral"]],tip:"바이럴=viral，인터넷에서 유행하는 콘텐츠"},
+{kr:"스크린샷 찍었어요.",ro:"seu-keu-rin-syat jji-geos-seo-yo.",zh:"截图了。",scene:"网络社交",lv:28,bd:[["스크린샷","截图"],["찍었어요","动词","拍了/截了"]],tip:"스크린샷=screenshot，찍다=拍/截"},
+{kr:"알림이 왔어요.",ro:"al-li-mi wa-sseo-yo.",zh:"通知来了。",scene:"网络社交",lv:28,bd:[["알림","名词","通知/提醒"],["이 왔어요","来了"]],tip:"알리다=通知，알림=通知，手机提醒"},
+{kr:"이 게시물 공감 돼요.",ro:"i ge-si-mul gong-gam dwae-yo.",zh:"这个帖子引起共鸣。",scene:"网络社交",lv:28,bd:[["게시물","帖子/文章"],["공감 돼요","有共鸣"]],tip:"게시물=post，공감=共感=共鸣，SNS용어"},
+
+// ── 29. 气候环境 ──
+{kr:"환경을 보호해야 해요.",ro:"hwan-gyeong-eul bo-ho-hae-ya hae-yo.",zh:"必须保护环境。",scene:"气候环境",lv:29,bd:[["환경","名词","环境"],["을","宾格"],["보호해야 해요","必须保护"]],tip:"환경=環境，보호하다=保护，아야 해요=必须"},
+{kr:"분리수거 해야 해요.",ro:"bun-ni-su-geo hae-ya hae-yo.",zh:"要做垃圾分类。",scene:"气候环境",lv:29,bd:[["분리수거","垃圾分类"],["해야 해요","必须做"]],tip:"분리=分离，수거=收去=回收，한국 의무"},
+{kr:"일회용품 쓰지 마세요.",ro:"il-hoe-yong-pum sseu-ji ma-se-yo.",zh:"请不要使用一次性产品。",scene:"气候环境",lv:29,bd:[["일회용품","一次性用品"],["쓰지 마세요","请不要使用"]],tip:"지 마세요=请不要…，禁止句型"},
+{kr:"오늘 미세먼지가 심해요.",ro:"o-neul mi-se-meon-ji-ga sim-hae-yo.",zh:"今天雾霾很严重。",scene:"气候环境",lv:29,bd:[["미세먼지","PM2.5/细粉尘"],["가 심해요","很严重"]],tip:"미세먼지=细尘=PM2.5，한국生활 필수단어"},
+{kr:"마스크 꼭 써야 해요.",ro:"ma-seu-keu kkok sseo-ya hae-yo.",zh:"一定要戴口罩。",scene:"气候环境",lv:29,bd:[["마스크","口罩"],["꼭","一定"],["써야 해요","必须戴"]],tip:"마스크=mask，쓰다=戴（帽/眼镜/口罩）"},
+{kr:"기후 변화가 심각해요.",ro:"gi-hu byeon-hwa-ga sim-ga-kae-yo.",zh:"气候变化很严峻。",scene:"气候环境",lv:29,bd:[["기후 변화","气候变化"],["가 심각해요","很严峻"]],tip:"기후=气候，변화=变化，심각하다=严峻"},
+{kr:"에너지를 아껴야 해요.",ro:"e-neo-ji-reul a-kkyeo-ya hae-yo.",zh:"要节约能源。",scene:"气候环境",lv:29,bd:[["에너지","能源"],["를 아껴야 해요","必须节约"]],tip:"아끼다=节约/珍惜，에너지=energy"},
+{kr:"재활용 가능해요?",ro:"jae-hwal-lyong ga-neung-hae-yo?",zh:"可以再利用吗？",scene:"气候环境",lv:29,bd:[["재활용","재利用/recyclable"],["가능해요","可以/可能吗"]],tip:"재활용=再活用=回收利用，가능하다=可能"},
+{kr:"텀블러를 사용해요.",ro:"teom-beul-leo-reul sa-yong-hae-yo.",zh:"我使用保温杯。",scene:"气候环境",lv:29,bd:[["텀블러","保温杯/tumbler"],["를 사용해요","使用"]],tip:"텀블러=tumbler，环保消费的代表行为"},
+{kr:"자전거로 출퇴근해요.",ro:"ja-jeon-geo-ro chul-twe-geu-nae-yo.",zh:"骑自行车上下班。",scene:"气候环境",lv:29,bd:[["자전거로","骑自行车"],["출퇴근해요","动词","上下班"]],tip:"자전거=自転車=自行车，출퇴근=上下班"},
+
+// ── 30. 旅行观光 ──
+{kr:"관광지가 어디예요?",ro:"gwan-gwang-ji-ga eo-di-ye-yo?",zh:"观光地在哪里？",scene:"旅行观光",lv:30,bd:[["관광지","名词","观光地"],["가 어디예요","在哪里"]],tip:"관광=观光，지=地，旅游问路常用"},
+{kr:"사진 찍어 주시겠어요?",ro:"sa-jin jji-geo ju-si-ge-sseo-yo?",zh:"可以帮我拍照吗？",scene:"旅行观光",lv:30,bd:[["사진 찍어","拍照"],["주시겠어요","可以为我做吗"]],tip:"주시겠어요=주세요的更礼貌形式"},
+{kr:"여기가 맞아요?",ro:"yeo-gi-ga ma-ja-yo?",zh:"这里对吗？",scene:"旅行观光",lv:30,bd:[["여기가","这里（主格）"],["맞아요","对/正确"]],tip:"맞다=对/正确，确认地点时使用"},
+{kr:"입장료가 얼마예요?",ro:"ip-jang-nyo-ga eol-ma-ye-yo?",zh:"入场费是多少？",scene:"旅行观光",lv:30,bd:[["입장료","入场费"],["가 얼마예요","多少钱"]],tip:"입장=入場，요=料/费，관광지 필수"},
+{kr:"몇 시에 문 닫아요?",ro:"myeot si-e mun da-da-yo?",zh:"几点关门？",scene:"旅行观光",lv:30,bd:[["몇 시에","几点"],["문 닫아요","关门"]],tip:"문=门，닫다=关，열다=开，관광 필수"},
+{kr:"여기서 사진 찍어도 돼요?",ro:"yeo-gi-seo sa-jin jji-geo-do dwae-yo?",zh:"这里可以拍照吗？",scene:"旅行观光",lv:30,bd:[["여기서","在这里"],["사진 찍어도 돼요","可以拍照吗"]],tip:"아/어도 돼요=可以做…吗，허가 요청"},
+{kr:"한국 음식 추천해 주세요.",ro:"han-guk eum-sik chu-cheon-hae ju-se-yo.",zh:"请推荐韩国食物。",scene:"旅行观光",lv:30,bd:[["한국 음식","韩国料理"],["추천해 주세요","请推荐"]],tip:"음식=饮食/食物，추천하다=推荐"},
+{kr:"기념품 파는 데가 어디예요?",ro:"gi-nyeom-pum pa-neun de-ga eo-di-ye-yo?",zh:"哪里有卖纪念品的地方？",scene:"旅行观光",lv:30,bd:[["기념품","纪念品"],["파는 데","卖的地方"],["가 어디예요","在哪里"]],tip:"기념품=紀念品，파다=卖，는 데=做的地方"},
+{kr:"가이드 투어 있어요?",ro:"ga-i-deu tu-eo i-sseo-yo?",zh:"有导游游览吗？",scene:"旅行观光",lv:30,bd:[["가이드 투어","导游游览"],["있어요","有吗"]],tip:"가이드=guide，투어=tour，观光地필수"},
+{kr:"정말 아름다워요.",ro:"jeong-mal a-reum-da-wo-yo.",zh:"真的好美。",scene:"旅行观光",lv:30,bd:[["정말","副词","真的"],["아름다워요","形容词","美丽"]],tip:"아름답다→아름다워요，ㅂ不规则，旅行感叹"},
+
+// ── 31. 美容美发 ──
+{kr:"머리 좀 잘라 주세요.",ro:"meo-ri jom jal-la ju-se-yo.",zh:"请帮我剪一下头发。",scene:"美容美发",lv:31,bd:[["머리","头发"],["좀 잘라 주세요","请帮我剪一下"]],tip:"자르다=剪，주세요=请为我，미용실 必用"},
+{kr:"얼마나 자를까요?",ro:"eol-ma-na ja-reul-kka-yo?",zh:"剪多少？",scene:"美容美发",lv:31,bd:[["얼마나","多少/多少量"],["자를까요","动词","要剪多少？"]],tip:"얼마나=多少，ㄹ까요=要…吗"},
+{kr:"염색하고 싶어요.",ro:"yeom-saek-a-go si-peo-yo.",zh:"我想染发。",scene:"美容美发",lv:31,bd:[["염색","名词","染色"],["하고 싶어요","想做"]],tip:"염색=染色，머리 염색=染发"},
+{kr:"파마 해 주세요.",ro:"pa-ma hae ju-se-yo.",zh:"请帮我烫发。",scene:"美容美发",lv:31,bd:[["파마","烫发/perm"],["해 주세요","请做"]],tip:"파마=perm=烫发，미용실 필수어"},
+{kr:"이 스타일로 해 주세요.",ro:"i seu-ta-il-lo hae ju-se-yo.",zh:"请做这个发型。",scene:"美容美发",lv:31,bd:[["이 스타일로","按这个发型"],["해 주세요","请做"]],tip:"스타일=style，로=以/按照，拿图给发型师"},
+{kr:"피부과에 가요.",ro:"pi-bu-gwa-e ga-yo.",zh:"去皮肤科。",scene:"美容美发",lv:31,bd:[["피부과","皮肤科"],["에","方向"],["가요","去"]],tip:"피부과=皮膚科，한국 문화必去"},
+{kr:"마사지 예약했어요.",ro:"ma-sa-ji ye-ya-kaess-eo-yo.",zh:"我预约了按摩。",scene:"美容美发",lv:31,bd:[["마사지","按摩"],["예약했어요","预约了"]],tip:"마사지=massage，예약하다=预约"},
+{kr:"네일 받으러 가요.",ro:"ne-il ba-deu-reo ga-yo.",zh:"去做美甲。",scene:"美容美发",lv:31,bd:[["네일","美甲/nail"],["받으러 가요","去接受/去做"]],tip:"네일=nail，받다=接受，으러 가다=去做…"},
+{kr:"선크림 바르는 거 잊지 마세요.",ro:"seon-keu-rim ba-reu-neun geo it-ji ma-se-yo.",zh:"别忘了涂防晒霜。",scene:"美容美发",lv:31,bd:[["선크림","防晒霜"],["바르는 거","涂的事"],["잊지 마세요","请不要忘"]],tip:"선크림=sun cream，바르다=涂抹，지 마세요=别"},
+{kr:"피부가 건조해요.",ro:"pi-bu-ga geon-jo-hae-yo.",zh:"皮肤很干燥。",scene:"美容美发",lv:31,bd:[["피부가","皮肤（主格）"],["건조해요","形容词","干燥"]],tip:"피부=皮膚=皮肤，건조하다=干燥，肌膚护理必备"},
+
+// ── 32. 学韩语 ──
+{kr:"이게 무슨 뜻이에요?",ro:"i-ge mu-seun ddeu-si-e-yo?",zh:"这是什么意思？",scene:"学韩语",lv:32,bd:[["이게","这个（主格）"],["무슨 뜻이에요","什么意思？"]],tip:"뜻=意思/含义，学语言最常问"},
+{kr:"한국어로 뭐라고 해요?",ro:"han-gu-geo-ro mwo-ra-go hae-yo?",zh:"韩语怎么说？",scene:"学韩语",lv:32,bd:[["한국어로","用韩语"],["뭐라고 해요","怎么说？"]],tip:"로=用/以（方式），라고=叫做/说"},
+{kr:"천천히 말해 주세요.",ro:"cheon-cheon-hi mal-hae ju-se-yo.",zh:"请说慢一点。",scene:"学韩语",lv:32,bd:[["천천히","慢慢地"],["말해 주세요","请说"]],tip:"천천히=慢慢地，학습자의 필수문장"},
+{kr:"다시 한번 말해 주세요.",ro:"da-si han-beon mal-hae ju-se-yo.",zh:"请再说一遍。",scene:"学韩语",lv:32,bd:[["다시","再次"],["한번","一次"],["말해 주세요","请说"]],tip:"다시=再次，한번=一次，听不懂时救命句"},
+{kr:"이거 맞아요?",ro:"i-geo ma-ja-yo?",zh:"这个对吗？",scene:"学韩语",lv:32,bd:[["이거","这个"],["맞아요","对吗"]],tip:"맞다=对/正确，语言학습 확인할 때"},
+{kr:"한국어가 너무 어려워요.",ro:"han-gu-geo-ga neo-mu eo-ryeo-wo-yo.",zh:"韩语太难了。",scene:"学韩语",lv:32,bd:[["한국어가","韩语（主格）"],["너무 어려워요","太难了"]],tip:"어렵다→어려워요，ㅂ不규则，학습자의 마음"},
+{kr:"조금씩 늘고 있어요.",ro:"jo-geum-ssik neul-go i-sseo-yo.",zh:"在慢慢进步。",scene:"学韩语",lv:32,bd:[["조금씩","一点一点地"],["늘고 있어요","动词","在增长"]],tip:"씩=每/各，늘다=增加/进步，고 있어요=正在"},
+{kr:"발음 연습이 중요해요.",ro:"ba-reum yeon-seu-bi jung-yo-hae-yo.",zh:"发音练习很重要。",scene:"学韩语",lv:32,bd:[["발음 연습","发音练习"],["이 중요해요","很重要"]],tip:"발음=발음=发音，연습=연습=练习，중요하다=重要"},
+{kr:"문법이 헷갈려요.",ro:"mun-beop-i het-gal-lyeo-yo.",zh:"语法让我很困惑。",scene:"学韩语",lv:32,bd:[["문법이","语法（主格）"],["헷갈려요","动词","弄混/困惑"]],tip:"문법=문법=语法，헷갈리다=弄混/困惑"},
+{kr:"원어민하고 연습하고 싶어요.",ro:"wo-neo-min-ha-go yeon-seu-pa-go si-peo-yo.",zh:"我想和母语者练习。",scene:"学韩语",lv:32,bd:[["원어민하고","和母语者"],["연습하고 싶어요","想练习"]],tip:"원어민=原語民=母语者，하고=和，语言학습 목표"},
+
+// ── 33. 交通出行 ──
+{kr:"택시 불러 주세요.",ro:"taek-si bul-leo ju-se-yo.",zh:"请叫出租车。",scene:"交通出行",lv:33,bd:[["택시","出租车"],["불러 주세요","请叫"]],tip:"불르다=呼叫，카카오 T로 부르는 경우 많아"},
+{kr:"공항까지 얼마나 걸려요?",ro:"gong-hang-kka-ji eol-ma-na geol-lyeo-yo?",zh:"到机场要多久？",scene:"交通出行",lv:33,bd:[["공항까지","到机场"],["얼마나 걸려요","要多久"]],tip:"공항=空港=机场，까지=到，걸리다=花时间"},
+{kr:"버스 몇 번 타요?",ro:"beo-seu myeot beon ta-yo?",zh:"坐几路公交车？",scene:"交通出行",lv:33,bd:[["버스 몇 번","几路公交"],["타요","动词","坐"]],tip:"몇=几，번=번=路/号，타다=乘坐"},
+{kr:"다음 정류장이 어디예요?",ro:"da-eum jeong-nyu-jang-i eo-di-ye-yo?",zh:"下一站是哪里？",scene:"交通出行",lv:33,bd:[["다음 정류장이","下一站（主格）"],["어디예요","在哪里"]],tip:"다음=下个，정류장=停留场=站，버스에서"},
+{kr:"환승할 수 있어요?",ro:"hwan-seung-hal su i-sseo-yo?",zh:"可以换乘吗？",scene:"交通出行",lv:33,bd:[["환승","名词","换乘"],["할 수 있어요","可以吗"]],tip:"환승=換乘，지하철 환승 자주 해"},
+{kr:"교통카드 충전해야 해요.",ro:"gyo-tong-ka-deu chung-jeon-hae-ya hae-yo.",zh:"需要给交通卡充值。",scene:"交通出行",lv:33,bd:[["교통카드","交通卡"],["충전해야 해요","必须充值"]],tip:"충전=充電=充值，교통카드=T-money같은 교통카드"},
+{kr:"막차가 몇 시예요?",ro:"mak-cha-ga myeot si-ye-yo?",zh:"末班车是几点？",scene:"交通出行",lv:33,bd:[["막차","名词","末班车"],["가 몇 시예요","几点"]],tip:"막=末/最后，차=车，늦게 놀다 귀가할 때"},
+{kr:"주차장이 있어요?",ro:"ju-cha-jang-i i-sseo-yo?",zh:"有停车场吗？",scene:"交通出行",lv:33,bd:[["주차장","名词","停车场"],["이 있어요","有吗"]],tip:"주차=駐車=停车，장=场，운전할 때 필수"},
+{kr:"내비 찍어 줘요.",ro:"nae-bi jji-geo jwo-yo.",zh:"帮我导航一下。",scene:"交通出行",lv:33,bd:[["내비","导航/navigation"],["찍어 줘요","帮我弄"]],tip:"내비=navigation，찍다=设置/标记，한국 口語"},
+{kr:"자동차로 세 시간 걸려요.",ro:"ja-dong-cha-ro se si-gan geol-lyeo-yo.",zh:"开车要三个小时。",scene:"交通出行",lv:33,bd:[["자동차로","开车"],["세 시간","三个小时"],["걸려요","花费"]],tip:"자동차=自動車=汽车，로=以/用，시간=小时"},
+
+// ── 34. 社交礼仪 ──
+{kr:"어서 오세요!",ro:"eo-seo o-se-yo!",zh:"欢迎光临！",scene:"社交礼仪",lv:34,bd:[["어서","副词","赶快/欢迎"],["오세요","请来"]],tip:"店里迎接客人的固定说法，어서=快来"},
+{kr:"먼저 드세요.",ro:"meon-jeo deu-se-yo.",zh:"请您先用。",scene:"社交礼仪",lv:34,bd:[["먼저","先"],["드세요","动词","请吃/请用（敬语）"]],tip:"드시다=먹다的敬语，먼저=先，長者优先"},
+{kr:"나이가 어떻게 되세요?",ro:"na-i-ga eo-tteo-ke doe-se-yo?",zh:"请问您多大年纪？",scene:"社交礼仪",lv:34,bd:[["나이","名词","年龄"],["어떻게 되세요","请问是多少"]],tip:"韩国初见常问年龄以确定称谓"},
+{kr:"말씀 놓으세요.",ro:"mal-sseum no-eu-se-yo.",zh:"请说敬语就好了。/ 别客气。",scene:"社交礼仪",lv:34,bd:[["말씀","话（敬语）"],["놓으세요","请放下"]],tip:"말을 놓다=说平语，允许对方不用客套敬语"},
+{kr:"축하해요!",ro:"chu-ka-hae-yo!",zh:"恭喜！",scene:"社交礼仪",lv:34,bd:[["축하해요","动词","恭喜"]],tip:"축하하다=恭喜，생일/결혼/합격 때 다 씀"},
+{kr:"괜히 폐 끼쳤네요.",ro:"gwaen-hi pye kki-chyeos-ne-yo.",zh:"真是给您添麻烦了。",scene:"社交礼仪",lv:34,bd:[["괜히","副词","枉/白白地"],["폐 끼쳤네요","添麻烦了"]],tip:"폐=弊=麻烦，끼치다=造成，礼貌道歉"},
+{kr:"덕분이에요.",ro:"deok-bu-ni-e-yo.",zh:"都是托您的福。",scene:"社交礼仪",lv:34,bd:[["덕분이에요","动词","是托您的福"]],tip:"덕분=托…的福，감사의 인사에서 자주"},
+{kr:"양해 부탁드려요.",ro:"yang-hae bu-tak-deu-ryeo-yo.",zh:"请多包涵。",scene:"社交礼仪",lv:34,bd:[["양해","名词","谅解/包涵"],["부탁드려요","请求"]],tip:"양해=谅解，부탁드리다=拜托（谦让），정중한 부탁"},
+{kr:"먼저 실례할게요.",ro:"meon-jeo sil-lye-hal-ge-yo.",zh:"我先失陪了。",scene:"社交礼仪",lv:34,bd:[["먼저","先"],["실례할게요","动词","我来失礼/先走"]],tip:"실례하다=失礼/打扰，먼저 일어날 때 쓰는 예의"},
+{kr:"잘 됐으면 좋겠어요.",ro:"jal dwae-sseu-myeon jo-ke-sseo-yo.",zh:"希望进展顺利。",scene:"社交礼仪",lv:34,bd:[["잘 됐으면","进展顺利的话"],["좋겠어요","希望"]],tip:"으면 좋겠다=如果…就好了，表达希望"},
+
+// ── 35. 心情状态 ──
+{kr:"기분이 좋아요.",ro:"gi-bu-ni jo-a-yo.",zh:"心情很好。",scene:"心情状态",lv:35,bd:[["기분이","心情（主格）"],["좋아요","好"]],tip:"기분=気分=心情/感觉，好心情时说"},
+{kr:"기분이 안 좋아요.",ro:"gi-bu-ni an jo-a-yo.",zh:"心情不好。",scene:"心情状态",lv:35,bd:[["기분이","心情（主格）"],["안 좋아요","不好"]],tip:"안=不，否定副词直接放在形容词前"},
+{kr:"스트레스 받아요.",ro:"seu-teu-re-seu ba-da-yo.",zh:"压力很大。",scene:"心情状态",lv:35,bd:[["스트레스","压力"],["받아요","动词","受到"]],tip:"스트레스=stress，받다=受，职场/学习常说"},
+{kr:"우울해요.",ro:"u-ul-hae-yo.",zh:"很忧郁。/ 心情很低落。",scene:"心情状态",lv:35,bd:[["우울해요","形容词","忧郁/低落"]],tip:"우울하다=忧郁，汉字词忧鬱"},
+{kr:"설레요.",ro:"seol-le-yo.",zh:"心里怦怦跳。/ 很期待。",scene:"心情状态",lv:35,bd:[["설레요","形容词","心动/期待"]],tip:"설레다=心跳加速/期待，恋爱/活动前说"},
+{kr:"긴장돼요.",ro:"gin-jang-dwae-yo.",zh:"很紧张。",scene:"心情状态",lv:35,bd:[["긴장","名词","紧张"],["돼요","动词","变得"]],tip:"긴장하다=긴张/紧张，되다=变得，考试발표 전"},
+{kr:"지쳤어요.",ro:"ji-chyeo-sseo-yo.",zh:"累垮了。/ 精疲力竭了。",scene:"心情状态",lv:35,bd:[["지쳤어요","动词","累垮了"]],tip:"지치다=精疲力竭，강한 피로감 표현"},
+{kr:"위로가 돼요.",ro:"wi-ro-ga dwae-yo.",zh:"感到被安慰了。",scene:"心情状态",lv:35,bd:[["위로","名词","安慰"],["가 돼요","成为"]],tip:"위로=위로=安慰，가 되다=成为/有效"},
+{kr:"후련해요.",ro:"hu-ryeon-hae-yo.",zh:"很畅快。/ 如释重负。",scene:"心情状态",lv:35,bd:[["후련해요","형容词","畅快/如释重负"]],tip:"후련하다=畅快，완료나 고백 후에 说"},
+{kr:"뿌듯해요.",ro:"ppu-deu-tae-yo.",zh:"很有成就感。",scene:"心情状态",lv:35,bd:[["뿌듯해요","形容词","有成就感/满足"]],tip:"뿌듯하다=满满的成就感，목표 달성 후"},
+
+// ── 36. 饮食喜好 ──
+{kr:"뭐 드시고 싶어요?",ro:"mwo deu-si-go si-peo-yo?",zh:"您想吃什么？",scene:"饮食喜好",lv:36,bd:[["뭐","什么"],["드시고 싶어요","想吃（敬语）"]],tip:"드시다=먹다敬语，고 싶다=想…"},
+{kr:"매운 거 잘 먹어요?",ro:"mae-un geo jal meo-geo-yo?",zh:"你能吃辣吗？",scene:"饮食喜好",lv:36,bd:[["매운 거","辣的东西"],["잘 먹어요","能吃吗/吃得习惯"]],tip:"맵다=辣，잘 먹다=吃得好/能吃，询问口味"},
+{kr:"저는 채식주의자예요.",ro:"jeo-neun chae-sik-jju-ui-ja-ye-yo.",zh:"我是素食者。",scene:"饮食喜好",lv:36,bd:[["채식주의자","素食者"],["예요","是"]],tip:"채식=菜食=素食，주의자=主义者，식당 필수 알림"},
+{kr:"이거 알레르기 있어요.",ro:"i-geo al-le-reu-gi i-sseo-yo.",zh:"这个我过敏。",scene:"饮食喜好",lv:36,bd:[["이거","这个"],["알레르기 있어요","有过敏"]],tip:"식당에서 재료 확인할 때 필수"},
+{kr:"오늘은 치킨이 당겨요.",ro:"o-neu-reun chi-ki-ni dang-gyeo-yo.",zh:"今天想吃炸鸡。",scene:"饮食喜好",lv:36,bd:[["치킨이","炸鸡（主格）"],["당겨요","动词","馋/想吃"]],tip:"치킨=韩式炸鸡，당기다=被吸引/馋"},
+{kr:"달콤한 게 먹고 싶어요.",ro:"dal-kom-han ge meo-go si-peo-yo.",zh:"想吃甜的东西。",scene:"饮食喜好",lv:36,bd:[["달콤한 게","甜的东西（主格）"],["먹고 싶어요","想吃"]],tip:"달콤하다=甜蜜/香甜，고 싶다=想"},
+{kr:"너무 짜요.",ro:"neo-mu jja-yo.",zh:"太咸了。",scene:"饮食喜好",lv:36,bd:[["너무","太"],["짜요","形容词","咸"]],tip:"짜다=咸，싱겁다=淡，맵다=辣，요리 평가"},
+{kr:"딱 제 입맛이에요.",ro:"ttak je im-ma-si-e-yo.",zh:"正合我口味。",scene:"饮食喜好",lv:36,bd:[["딱","副词","刚好"],["제 입맛이에요","是我的口味"]],tip:"입맛=口味/食欲，딱=刚好，최고의 맛 평가"},
+{kr:"음식이 식었어요.",ro:"eum-si-gi si-geo-sseo-yo.",zh:"食物凉了。",scene:"饮食喜好",lv:36,bd:[["음식이","食物（主格）"],["식었어요","动词","冷了"]],tip:"식다=变凉，식었어요=凉了（过去时）"},
+{kr:"양이 적어요.",ro:"yang-i jeo-geo-yo.",zh:"量太少了。",scene:"饮食喜好",lv:36,bd:[["양이","量（主格）"],["적어요","形容词","少"]],tip:"양=量，적다=少，많다=多，식당 불만"},
+
+// ── 37. 性格描述 ──
+{kr:"성격이 좋아요.",ro:"seong-gyeo-gi jo-a-yo.",zh:"性格很好。",scene:"性格描述",lv:37,bd:[["성격이","性格（主格）"],["좋아요","好"]],tip:"성격=性格，人品好时这样说"},
+{kr:"내성적이에요.",ro:"nae-seong-jeo-gi-e-yo.",zh:"是内向的人。",scene:"性格描述",lv:37,bd:[["내성적이에요","形容词","是内向的"]],tip:"내성적=內省的=内向，외향적=外向"},
+{kr:"활발해요.",ro:"hwal-bal-hae-yo.",zh:"很活泼。",scene:"性格描述",lv:37,bd:[["활발해요","形容词","活泼"]],tip:"활발하다=活泼/开朗，긍정적 성격 표현"},
+{kr:"꼼꼼해요.",ro:"kkom-kkom-hae-yo.",zh:"很细心/认真。",scene:"性格描述",lv:37,bd:[["꼼꼼해요","形容词","细心/一丝不苟"]],tip:"꼼꼼하다=细心/仔细，칭찬으로 자주 사용"},
+{kr:"배려심이 있어요.",ro:"bae-ryeo-si-mi i-sseo-yo.",zh:"很体贴。",scene:"性格描述",lv:37,bd:[["배려심","名词","体贴心/关怀"],["이 있어요","有"]],tip:"배려=体贴/关怀，심=心，性格好的表达"},
+{kr:"솔직한 편이에요.",ro:"sol-ji-kan pyeo-ni-e-yo.",zh:"算是比较直率的。",scene:"性格描述",lv:37,bd:[["솔직한","直率的"],["편이에요","是…那类"]],tip:"편=边/类，편이다=属于…那类，性格자기소개"},
+{kr:"좀 내성적인 것 같아요.",ro:"jom nae-seong-jeo-gin geot ga-ta-yo.",zh:"好像有点内向。",scene:"性格描述",lv:37,bd:[["좀","有点"],["내성적인 것 같아요","好像是内向的"]],tip:"것 같다=好像是，ㄴ 것 같다=好像（现在状态）"},
+{kr:"유머 감각이 있어요.",ro:"yu-meo gam-ga-gi i-sseo-yo.",zh:"有幽默感。",scene:"性格描述",lv:37,bd:[["유머 감각","幽默感"],["이 있어요","有"]],tip:"유머=humor，감각=感覚=感觉，칭찬 표현"},
+{kr:"참을성이 있어요.",ro:"cha-meul-seong-i i-sseo-yo.",zh:"很有耐心。",scene:"性格描述",lv:37,bd:[["참을성","耐心/忍耐力"],["이 있어요","有"]],tip:"참다=忍，을성=忍耐力，긍정적 성격"},
+{kr:"책임감이 강해요.",ro:"chae-gim-ga-mi gang-hae-yo.",zh:"责任感很强。",scene:"性格描述",lv:37,bd:[["책임감","名词","责任感"],["이 강해요","很强"]],tip:"책임=責任，감=感，강하다=强，직장인 덕목"},
+
+// ── 38. 学习方法 ──
+{kr:"복습이 중요해요.",ro:"bok-sseu-bi jung-yo-hae-yo.",zh:"复习很重要。",scene:"学习方法",lv:38,bd:[["복습","名词","复习"],["이 중요해요","很重要"]],tip:"복습=復習，예습=예습=预习，중요하다=重要"},
+{kr:"단어를 외워야 해요.",ro:"da-neo-reul oe-wo-ya hae-yo.",zh:"必须背单词。",scene:"学习方法",lv:38,bd:[["단어를","单词（宾格）"],["외워야 해요","必须背"]],tip:"단어=单語=单词，외우다=背/记，아야 해요=必须"},
+{kr:"매일 조금씩 연습해요.",ro:"mae-il jo-geum-ssik yeon-seu-pae-yo.",zh:"每天一点一点地练习。",scene:"学习方法",lv:38,bd:[["매일","每天"],["조금씩","一点一点地"],["연습해요","练习"]],tip:"매일=每日，씩=各/每次，연습하다=练习"},
+{kr:"소리 내서 읽어요.",ro:"so-ri nae-seo il-geo-yo.",zh:"出声朗读。",scene:"学习方法",lv:38,bd:[["소리 내서","出声地"],["읽어요","动词","读"]],tip:"소리 내다=发出声音，외국어 학습에 중요"},
+{kr:"받아쓰기 연습을 해요.",ro:"ba-da-sseu-gi yeon-seu-geul hae-yo.",zh:"练习听写。",scene:"学习方法",lv:38,bd:[["받아쓰기","听写"],["연습을 해요","练习"]],tip:"받아쓰기=받아+쓰기=听写，语言학습 방법"},
+{kr:"한국 드라마로 공부해요.",ro:"han-guk deu-ra-ma-ro gong-bu-hae-yo.",zh:"用韩剧学习。",scene:"学习方法",lv:38,bd:[["드라마로","用韩剧"],["공부해요","学습"]],tip:"로=用/以，드라마=有趣的학습 방법"},
+{kr:"언어 교환 파트너를 찾아요.",ro:"eo-neo gyo-hwan pa-teu-neo-reul cha-ja-yo.",zh:"在找语言交换伙伴。",scene:"学习方法",lv:38,bd:[["언어 교환 파트너","语言交换伙伴"],["를 찾아요","在找"]],tip:"언어 교환=language exchange，学外语의 방법"},
+{kr:"앱으로 매일 공부해요.",ro:"ae-beu-ro mae-il gong-bu-hae-yo.",zh:"每天用app学习。",scene:"学习方法",lv:38,bd:[["앱으로","用app"],["매일 공부해요","每天学习"]],tip:"앱=app，로=用/以，디지털 학습 방법"},
+{kr:"노트 정리를 잘 해요.",ro:"no-teu jeong-ni-reul jal hae-yo.",zh:"笔记整理得很好。",scene:"学习方法",lv:38,bd:[["노트 정리","笔记整理"],["를 잘 해요","做得很好"]],tip:"노트=笔记，정리=整理，학습 습관"},
+{kr:"모르면 바로 물어봐요.",ro:"mo-reu-myeon ba-ro mu-reo-bwa-yo.",zh:"不懂的话马上问。",scene:"学习方法",lv:38,bd:[["모르면","如果不知道"],["바로 물어봐요","马上问"]],tip:"으면=如果，바로=마上，물어보다=询问"},
+
+// ── 39. 友情关系 ──
+{kr:"친하게 지내요.",ro:"chi-na-ke ji-nae-yo.",zh:"我们相处很好/关系亲密。",scene:"友情关系",lv:39,bd:[["친하게","亲密地"],["지내요","动词","相处"]],tip:"친하다=亲密，친하게 지내다=亲密相处"},
+{kr:"오랜 친구예요.",ro:"o-raen chin-gu-ye-yo.",zh:"是老朋友了。",scene:"友情关系",lv:39,bd:[["오랜","老/长久的"],["친구예요","是朋友"]],tip:"오래=长久，친구=朋友，오랜 친구=老友"},
+{kr:"우리 금방 친해졌어요.",ro:"u-ri geum-bang chi-nae-jyeo-sseo-yo.",zh:"我们很快就熟了。",scene:"友情关系",lv:39,bd:[["우리","我们"],["금방","马上/很快"],["친해졌어요","变亲密了"]],tip:"금방=马上/很快，아/어지다=变得…"},
+{kr:"의지가 돼요.",ro:"ui-ji-ga dwae-yo.",zh:"很依靠你。/ 你是我的支柱。",scene:"友情关系",lv:39,bd:[["의지","名词","依靠"],["가 돼요","成为/起到作用"]],tip:"의지하다=依靠，의지가 되다=成为依靠"},
+{kr:"말 잘 통해요.",ro:"mal jal tong-hae-yo.",zh:"很聊得来。",scene:"友情关系",lv:39,bd:[["말","话/话题"],["잘 통해요","很通/很合"]],tip:"말이 통하다=话得上/聊得来，친구 사이 필수"},
+{kr:"항상 곁에 있을게요.",ro:"hang-sang gyeo-te i-sseul-ge-yo.",zh:"我会一直在你身边。",scene:"友情关系",lv:39,bd:[["항상","副词","一直/总是"],["곁에","身边"],["있을게요","我会在"]],tip:"항상=總是，곁=身边，ㄹ게요=我来/我会，心里话"},
+{kr:"덕분에 즐거웠어요.",ro:"deok-bu-ne jeul-geo-wo-sseo-yo.",zh:"因为有你才这么开心。",scene:"友情关系",lv:39,bd:[["덕분에","托…的福"],["즐거웠어요","形容词","开心了（过去）"]],tip:"즐겁다→즐거웠어요，ㅂ不规则过去时"},
+{kr:"연락하고 지내요.",ro:"yeol-la-ka-go ji-nae-yo.",zh:"要保持联系啊。",scene:"友情关系",lv:39,bd:[["연락하고","保持联系"],["지내요","动词","相处/维持"]],tip:"연락하다=联系，고 지내다=保持…状态"},
+{kr:"소중한 친구예요.",ro:"so-jung-han chin-gu-ye-yo.",zh:"是珍贵的朋友。",scene:"友情关系",lv:39,bd:[["소중한","珍贵的"],["친구예요","是朋友"]],tip:"소중하다=珍贵/重要，最真挚的友情表达"},
+{kr:"우정이 진짜 소중해요.",ro:"u-jeong-i jin-jja so-jung-hae-yo.",zh:"友情真的很珍贵。",scene:"友情关系",lv:39,bd:[["우정","名词","友情"],["이 진짜 소중해요","真的珍贵"]],tip:"진짜=真的/真正，强调程度，소중하다=珍贵"},
+
+// ── 40. 读书阅读 ──
+{kr:"요즘 어떤 책 읽어요?",ro:"yo-jeum eo-tteon chaek il-geo-yo?",zh:"最近在读什么书？",scene:"读书阅读",lv:40,bd:[["요즘","最近"],["어떤 책","什么样的书"],["읽어요","在读"]],tip:"어떤=什么样的，읽다=读，독서话题"},
+{kr:"책 추천해 줄게요.",ro:"chaek chu-cheon-hae jul-ge-yo.",zh:"我来推荐一本书给你。",scene:"读书阅读",lv:40,bd:[["책","书"],["추천해 줄게요","动词","我来推荐"]],tip:"줄게요=ㄹ게요表示我来…，做给你"},
+{kr:"서점에 가고 싶어요.",ro:"seo-jeom-e ga-go si-peo-yo.",zh:"我想去书店。",scene:"读书阅读",lv:40,bd:[["서점에","去书店"],["가고 싶어요","想去"]],tip:"서점=書店=书店，고 싶다=想"},
+{kr:"한 번에 다 읽었어요.",ro:"han beo-ne da il-geo-sseo-yo.",zh:"一口气读完了。",scene:"读书阅读",lv:40,bd:[["한 번에","一次/一口气"],["다 읽었어요","全读完了"]],tip:"한 번에=一次/一口气，다=全部，몰입해서 읽을 때"},
+{kr:"이 책 감동적이에요.",ro:"i chaek gam-dong-jeo-gi-e-yo.",zh:"这本书很感人。",scene:"读书阅读",lv:40,bd:[["이 책","这本书"],["감동적이에요","是感人的"]],tip:"감동=感動，감동적이다=感人的，독서 소감"},
+{kr:"도서관 카드 있어요?",ro:"do-seo-gwan ka-deu i-sseo-yo?",zh:"有图书馆借书证吗？",scene:"读书阅读",lv:40,bd:[["도서관 카드","图书馆借书证"],["있어요","有吗"]],tip:"도서관=图書館，카드=证/卡，책 빌리기 前"},
+{kr:"이 소설 재미있어요.",ro:"i so-seol jae-mi-i-sseo-yo.",zh:"这部小说很有趣。",scene:"读书阅读",lv:40,bd:[["이 소설","这部小说"],["재미있어요","有趣"]],tip:"소설=小說，재미있다=有趣，독서 평가"},
+{kr:"전자책으로 읽어요.",ro:"jeon-ja-chae-geu-ro il-geo-yo.",zh:"用电子书读。",scene:"读书阅读",lv:40,bd:[["전자책으로","用电子书"],["읽어요","在读"]],tip:"전자책=電子冊=电子书，로=用/以，요즘 독서 방법"},
+{kr:"밑줄 쳤어요.",ro:"mit-jjul chyeo-sseo-yo.",zh:"我划了下划线。",scene:"读书阅读",lv:40,bd:[["밑줄","下划线"],["쳤어요","动词","划了"]],tip:"밑=下，줄=线，치다=击/划，독서 습관"},
+{kr:"책장이 가득 찼어요.",ro:"chaek-jjang-i ga-deuk cha-sseo-yo.",zh:"书架满了。",scene:"读书阅读",lv:40,bd:[["책장이","书架（主格）"],["가득 찼어요","满了"]],tip:"책장=책+장=书架，가득=满满的，차다=满/充满"},
+
+// ── 41. 恋爱约会 ──
+{kr:"마음에 드는 사람이 있어요.",ro:"ma-eu-me deu-neun sa-ra-mi i-sseo-yo.",zh:"有喜欢的人。",scene:"恋爱约会",lv:41,bd:[["마음에 드는","中意的/喜欢的"],["사람이 있어요","有人"]],tip:"마음에 들다=中意/喜欢，恋애 화제"},
+{kr:"사귈래요?",ro:"sa-gwil-lae-yo?",zh:"要不要交往？",scene:"恋爱约会",lv:41,bd:[["사귈래요","动词","要交往吗"]],tip:"사귀다=交往，ㄹ래요=要…吗，告白용 표현"},
+{kr:"같이 밥 먹어요.",ro:"ga-chi bap meo-geo-yo.",zh:"一起吃饭吧。",scene:"恋爱约会",lv:41,bd:[["같이","一起"],["밥 먹어요","吃饭"]],tip:"最常见的约会开场，자연스러운 데이트 제안"},
+{kr:"어디서 만날까요?",ro:"eo-di-seo man-nal-kka-yo?",zh:"在哪里见？",scene:"恋爱约会",lv:41,bd:[["어디서","在哪里"],["만날까요","要见面吗"]],tip:"ㄹ까요=要…吗/提议，约定地点时"},
+{kr:"너무 보고 싶었어요.",ro:"neo-mu bo-go si-peo-sseo-yo.",zh:"好想你啊。",scene:"恋爱约会",lv:41,bd:[["너무","太/非常"],["보고 싶었어요","想见（过去）"]],tip:"보고 싶다=想见/想念，고 싶었어요=过去的想念"},
+{kr:"꽃 선물해도 돼요?",ro:"kkot seon-mu-rae-do dwae-yo?",zh:"可以送花吗？",scene:"恋爱约会",lv:41,bd:[["꽃","花"],["선물해도 돼요","可以当礼物送吗"]],tip:"꽃=花，선물하다=送礼物，아도 돼요=可以吗"},
+{kr:"오늘 정말 예뻐요.",ro:"o-neul jeong-mal ye-ppeo-yo.",zh:"今天真的很漂亮。",scene:"恋爱约会",lv:41,bd:[["오늘","今天"],["정말 예뻐요","真的漂亮"]],tip:"约会时的칭찬，자연스럽게 건네기"},
+{kr:"손 잡아도 돼요?",ro:"son ja-ba-do dwae-yo?",zh:"可以牵手吗？",scene:"恋爱约会",lv:41,bd:[["손","手"],["잡아도 돼요","可以握吗"]],tip:"잡다=抓/握，아도 돼요=可以吗，데이트 중"},
+{kr:"다음에 또 만나요.",ro:"da-eu-me do man-na-yo.",zh:"下次再见。",scene:"恋爱约会",lv:41,bd:[["다음에","下次"],["또 만나요","再见面"]],tip:"약속 잡기 위한 자연스러운 마무리 문장"},
+{kr:"나만 좋아하는 거죠?",ro:"na-man jo-a-ha-neun geo-jyo?",zh:"你只喜欢我吧？",scene:"恋爱约会",lv:41,bd:[["나만","只有我"],["좋아하는 거죠","喜欢的嘛"]],tip:"만=只/仅，죠=吧（确认），恋애 중 확인 질문"},
+
+// ── 42. 分歧争论 ──
+{kr:"그건 아닌 것 같아요.",ro:"geu-geon a-nin geot ga-ta-yo.",zh:"那个好像不对。",scene:"分歧争论",lv:42,bd:[["그건","那个"],["아닌 것 같아요","好像不是"]],tip:"婉转表示不同意，아니다+ㄴ 것 같다"},
+{kr:"제 말이 맞잖아요.",ro:"je ma-ri mat-ja-na-yo.",zh:"我说的对吧。",scene:"分歧争论",lv:42,bd:[["제 말이","我说的"],["맞잖아요","对吧"]],tip:"잖아요=你知道吧/对吧，要对方承认"},
+{kr:"오해한 것 같아요.",ro:"o-hae-han geot ga-ta-yo.",zh:"好像是误会了。",scene:"分歧争论",lv:42,bd:[["오해한","误会的"],["것 같아요","好像"]],tip:"오해하다=误解/误会，缓和争执时用"},
+{kr:"한번 생각해 볼게요.",ro:"han-beon saeng-ga-kae bol-ge-yo.",zh:"我会想一想的。",scene:"分歧争论",lv:42,bd:[["한번","一次/一下"],["생각해 볼게요","会想想的"]],tip:"아/어 보다=尝试/试着做，볼게요=我会试着"},
+{kr:"서로 이해해요.",ro:"seo-ro i-hae-hae-yo.",zh:"互相理解吧。",scene:"分歧争论",lv:42,bd:[["서로","互相"],["이해해요","动词","理解"]],tip:"서로=互相，이해하다=理解，冲突해결"},
+{kr:"왜 그렇게 생각해요?",ro:"wae geu-reo-ke saeng-ga-kae-yo?",zh:"为什么这么想？",scene:"分歧争论",lv:42,bd:[["왜","为什么"],["그렇게","那样"],["생각해요","想/认为"]],tip:"왜=为什么，그렇게=那样地，追问立场时"},
+{kr:"제 입장도 들어 주세요.",ro:"je ip-jang-do deu-reo ju-se-yo.",zh:"也请听听我的立场。",scene:"分歧争论",lv:42,bd:[["제 입장도","我的立场也"],["들어 주세요","请听"]],tip:"입장=立場，도=也，를 듣다=听，主张自己的观点"},
+{kr:"둘 다 맞을 수 있어요.",ro:"dul da ma-jeul su i-sseo-yo.",zh:"两个都可以是对的。",scene:"分歧争论",lv:42,bd:[["둘 다","两个都"],["맞을 수 있어요","可以是对的"]],tip:"ㄹ 수 있다=可以/有可能，중립적 화해"},
+{kr:"좀 더 얘기해요.",ro:"jom deo yae-gi-hae-yo.",zh:"再多说说吧。",scene:"分歧争论",lv:42,bd:[["좀 더","再多一点"],["얘기해요","动词","说话/聊"]],tip:"얘기하다=이야기하다的口語，더=更多"},
+{kr:"화 풀었어요?",ro:"hwa pu-reo-sseo-yo?",zh:"气消了吗？",scene:"分歧争论",lv:42,bd:[["화","名词","怒/气"],["풀었어요","动词","解开了/消了吗"]],tip:"화가 풀리다=气消，풀었어요=过去时，冲突後"},
+
+// ── 43. 音乐欣赏 ──
+{kr:"이 노래 너무 좋아요.",ro:"i no-rae neo-mu jo-a-yo.",zh:"这首歌太好听了。",scene:"音乐欣赏",lv:43,bd:[["이 노래","这首歌"],["너무 좋아요","太好了/太喜欢了"]],tip:"너무=太，非常喜欢时说"},
+{kr:"어떤 장르를 좋아해요?",ro:"eo-tteon jang-neu-reul jo-a-hae-yo?",zh:"你喜欢什么音乐类型？",scene:"音乐欣赏",lv:43,bd:[["어떤 장르를","什么类型（宾格）"],["좋아해요","喜欢"]],tip:"장르=genre=风格/类型，음악 话题"},
+{kr:"이 노래 가사가 감동적이에요.",ro:"i no-rae ga-sa-ga gam-dong-jeo-gi-e-yo.",zh:"这首歌的歌词很感人。",scene:"音乐欣赏",lv:43,bd:[["가사가","歌词（主格）"],["감동적이에요","感人"]],tip:"가사=歌辭=歌词，감동적이다=感人的"},
+{kr:"이어폰 빌려줄 수 있어요?",ro:"i-eo-pon bil-lyeo-jul su i-sseo-yo?",zh:"可以借我耳机吗？",scene:"音乐欣赏",lv:43,bd:[["이어폰","耳机"],["빌려줄 수 있어요","可以借给吗"]],tip:"이어폰=earphone，빌려주다=借给，ㄹ 수 있다=可以"},
+{kr:"멜론에서 찾아봐요.",ro:"mel-lon-e-seo cha-ja-bwa-yo.",zh:"在Melon上找找看。",scene:"音乐欣赏",lv:43,bd:[["멜론에서","在Melon上"],["찾아봐요","动词","找找看"]],tip:"멜론=한국 최대 음원 스트리밍 플랫폼"},
+{kr:"이 앨범 정말 완성도가 높아요.",ro:"i ael-beom jeong-mal wan-seong-do-ga no-pa-yo.",zh:"这张专辑完成度真的很高。",scene:"音乐欣赏",lv:43,bd:[["이 앨범","这张专辑"],["완성도가 높아요","完成度高"]],tip:"앨범=album，완성도=完成度，높다=高"},
+{kr:"음악으로 기분 전환해요.",ro:"eu-ma-geu-ro gi-bun jeon-hwan-hae-yo.",zh:"用音乐转换心情。",scene:"音乐欣赏",lv:43,bd:[["음악으로","用音乐"],["기분 전환해요","转换心情"]],tip:"기분 전환=心情转换，전환하다=转换"},
+{kr:"라이브로 들으면 더 좋아요.",ro:"ra-i-beu-ro deu-reu-myeon deo jo-a-yo.",zh:"现场听更好。",scene:"音乐欣赏",lv:43,bd:[["라이브로","现场"],["들으면","如果听的话"],["더 좋아요","更好"]],tip:"라이브=live，으면=如果，더=更"},
+{kr:"악기 다룰 줄 알아요?",ro:"ak-gi da-rul jul a-ra-yo?",zh:"你会乐器吗？",scene:"音乐欣赏",lv:43,bd:[["악기","乐器"],["다룰 줄 알아요","会/懂得"]],tip:"악기=樂器，ㄹ 줄 알다=会/懂得，技能表达"},
+{kr:"플레이리스트 공유해 줄 수 있어요?",ro:"peul-le-i-ri-seu-teu gong-yu-hae jul su i-sseo-yo?",zh:"可以分享播放列表给我吗？",scene:"音乐欣赏",lv:43,bd:[["플레이리스트","播放列表"],["공유해 줄 수 있어요","可以分享给我吗"]],tip:"플레이리스트=playlist，공유하다=分享"},
+
+// ── 44. 科技数码 ──
+{kr:"폰이 방전됐어요.",ro:"po-ni bang-jeon-dwaess-eo-yo.",zh:"手机没电了。",scene:"科技数码",lv:44,bd:[["폰이","手机（主格）"],["방전됐어요","没电了"]],tip:"폰=phone，방전=放電=放电，配件 필수"},
+{kr:"충전기 빌려주실 수 있어요?",ro:"chung-jeon-gi bil-lyeo-ju-sil su i-sseo-yo?",zh:"可以借我充电器吗？",scene:"科技数码",lv:44,bd:[["충전기","充电器"],["빌려주실 수 있어요","可以借我吗"]],tip:"충전기=充電器，빌려주다=借给"},
+{kr:"앱을 업데이트해야 해요.",ro:"ae-beul eop-de-i-teu-hae-ya hae-yo.",zh:"必须更新app。",scene:"科技数码",lv:44,bd:[["앱을","app（宾格）"],["업데이트해야 해요","必须更新"]],tip:"업데이트=update，아야 해요=必须"},
+{kr:"블루투스 연결이 안 돼요.",ro:"beul-lu-tu-seu yeol-gyeo-ri an dwae-yo.",zh:"蓝牙连接不上。",scene:"科技数码",lv:44,bd:[["블루투스 연결이","蓝牙连接（主格）"],["안 돼요","不行"]],tip:"블루투스=Bluetooth，연결=연결=连接"},
+{kr:"비밀번호가 뭐예요?",ro:"bi-mil-beon-ho-ga mwo-ye-yo?",zh:"密码是什么？",scene:"科技数码",lv:44,bd:[["비밀번호","密码"],["가 뭐예요","是什么"]],tip:"비밀=秘密，번호=番号=号码，와이파이 등"},
+{kr:"클라우드에 저장해요.",ro:"keul-la-u-deu-e jeo-jang-hae-yo.",zh:"保存到云端。",scene:"科技数码",lv:44,bd:[["클라우드에","到云端"],["저장해요","动词","保存"]],tip:"클라우드=cloud，저장하다=保存/存储"},
+{kr:"화면이 깨졌어요.",ro:"hwa-myeo-ni kkae-jyeo-sseo-yo.",zh:"屏幕碎了。",scene:"科技数码",lv:44,bd:[["화면이","屏幕（主格）"],["깨졌어요","动词","碎了"]],tip:"화면=画面=屏幕，깨지다=碎/裂"},
+{kr:"속도가 너무 느려요.",ro:"sok-do-ga neo-mu neu-ryeo-yo.",zh:"速度太慢了。",scene:"科技数码",lv:44,bd:[["속도가","速度（主格）"],["너무 느려요","太慢了"]],tip:"속도=速度，느리다=慢，빠르다=快"},
+{kr:"스마트워치 샀어요.",ro:"seu-ma-teu-wo-chi sa-sseo-yo.",zh:"买了智能手表。",scene:"科技数码",lv:44,bd:[["스마트워치","智能手表"],["샀어요","动词","买了"]],tip:"스마트워치=smartwatch，사다→샀어요过去时"},
+{kr:"노트북 새로 바꿨어요.",ro:"no-teu-buk sae-ro ba-kkwo-sseo-yo.",zh:"换了新笔记本电脑。",scene:"科技数码",lv:44,bd:[["노트북","笔记本电脑"],["새로 바꿨어요","换新了"]],tip:"노트북=notebook=笔记本，바꾸다=换/改"},
+
+// ── 45. 赞美鼓励 ──
+{kr:"정말 잘했어요!",ro:"jeong-mal jal-hae-sseo-yo!",zh:"真的做得很好！",scene:"赞美鼓励",lv:45,bd:[["정말","真的"],["잘했어요","做得好了（过去）"]],tip:"잘하다=做得好，最直接的肯定赞美"},
+{kr:"대단해요!",ro:"dae-dan-hae-yo!",zh:"太厉害了！",scene:"赞美鼓励",lv:45,bd:[["대단해요","形容词","了不起/厉害"]],tip:"대단하다=了不起，感叹对方的능력时"},
+{kr:"포기하지 마세요.",ro:"po-gi-ha-ji ma-se-yo.",zh:"不要放弃。",scene:"赞美鼓励",lv:45,bd:[["포기하지 마세요","动词","请不要放弃"]],tip:"포기하다=放弃，지 마세요=请不要…"},
+{kr:"할 수 있어요!",ro:"hal su i-sseo-yo!",zh:"你可以的！",scene:"赞美鼓励",lv:45,bd:[["할 수 있어요","能做/可以"]],tip:"수 있다=可以/能，最鼓励的呐喊"},
+{kr:"노력이 보여요.",ro:"no-ryeo-gi bo-yeo-yo.",zh:"能看出你的努力。",scene:"赞美鼓励",lv:45,bd:[["노력이","努力（主格）"],["보여요","动词","看见"]],tip:"노력=努力，보이다=看到/显现，真诚的肯定"},
+{kr:"많이 성장했네요.",ro:"ma-ni seong-jang-haes-ne-yo.",zh:"进步好多啊。",scene:"赞美鼓励",lv:45,bd:[["많이","很多"],["성장했네요","成长了啊（感叹）"]],tip:"성장하다=成长，네요=感叹语气，真诚赞美"},
+{kr:"꿈을 포기하지 마세요.",ro:"kku-meul po-gi-ha-ji ma-se-yo.",zh:"不要放弃梦想。",scene:"赞美鼓励",lv:45,bd:[["꿈을","梦想（宾格）"],["포기하지 마세요","请不要放弃"]],tip:"꿈=梦想，지 마세요=请不要，激励用语"},
+{kr:"자신감을 가지세요.",ro:"ja-sin-ga-meul ga-ji-se-yo.",zh:"请有自信。",scene:"赞美鼓励",lv:45,bd:[["자신감을","自信心（宾格）"],["가지세요","请拥有"]],tip:"자신감=自信感，가지다=拥有，가지세요=请拥有"},
+{kr:"천천히 해도 돼요.",ro:"cheon-cheon-hi hae-do dwae-yo.",zh:"慢慢来就好。",scene:"赞美鼓励",lv:45,bd:[["천천히","慢慢地"],["해도 돼요","也可以做"]],tip:"천천히=慢慢地，아/어도 되다=即使…也行"},
+{kr:"조금만 더 힘내요.",ro:"jo-geum-man deo him-nae-yo.",zh:"再加把劲。",scene:"赞美鼓励",lv:45,bd:[["조금만 더","再一点点"],["힘내요","动词","加油"]],tip:"힘내다=加油/打起精神，최고의 응원 문구"},
+
+// ── 46. 文化差异 ──
+{kr:"한국 문화가 재미있어요.",ro:"han-guk mun-hwa-ga jae-mi-i-sseo-yo.",zh:"韩国文化很有趣。",scene:"文化差异",lv:46,bd:[["한국 문화가","韩国文化（主格）"],["재미있어요","有趣"]],tip:"문화=文化，재미있다=有趣"},
+{kr:"한국에서는 나이를 많이 따져요.",ro:"han-gu-ge-seo-neun na-i-reul ma-ni tta-jyeo-yo.",zh:"在韩国非常重视年龄。",scene:"文化差异",lv:46,bd:[["한국에서는","在韩国"],["나이를 많이 따져요","很看重年龄"]],tip:"따지다=讲究/追究，韩国文化特点"},
+{kr:"존댓말을 써야 해요.",ro:"jon-daet-ma-reul sseo-ya hae-yo.",zh:"必须使用敬语。",scene:"文化差异",lv:46,bd:[["존댓말","敬语"],["을 써야 해요","必须用"]],tip:"존댓말=尊待말=敬语，반말=半말=平语"},
+{kr:"장유유서가 중요해요.",ro:"jang-yu-yu-seo-ga jung-yo-hae-yo.",zh:"长幼有序很重要。",scene:"文化差异",lv:46,bd:[["장유유서","长幼有序"],["가 중요해요","很重要"]],tip:"장유유서=長幼有序，韩国儒家文化的核心"},
+{kr:"한국 음식은 반찬이 많아요.",ro:"han-guk eum-si-geun ban-cha-ni ma-na-yo.",zh:"韩国料理小菜很多。",scene:"文化差异",lv:46,bd:[["한국 음식은","韩国料理（话题）"],["반찬이 많아요","小菜很多"]],tip:"반찬=飯饌=小菜/配菜，韩国餐桌문화"},
+{kr:"빨리빨리 문화예요.",ro:"ppal-li-ppal-li mun-hwa-ye-yo.",zh:"是快快的文化。",scene:"文化差异",lv:46,bd:[["빨리빨리","快快的"],["문화예요","是文化"]],tip:"빨리빨리=韩国的快节奏文화，高效但有压力"},
+{kr:"눈치가 빨라야 해요.",ro:"nun-chi-ga ppal-la-ya hae-yo.",zh:"要有眼力/要察言观色。",scene:"文化差异",lv:46,bd:[["눈치가","眼力/察觉力（主格）"],["빨라야 해요","要快才行"]],tip:"눈치=눈+치=看眼色，韩国社交의 핵심 능력"},
+{kr:"선물 문화가 달라요.",ro:"seon-mul mun-hwa-ga dal-la-yo.",zh:"送礼文化不一样。",scene:"文化差异",lv:46,bd:[["선물 문화가","送礼文化（主格）"],["달라요","不同"]],tip:"선물=宣物=礼物，다르다=不同，文화비교"},
+{kr:"한국은 커피 문화가 발달했어요.",ro:"han-gu-geun keo-pi mun-hwa-ga bal-dal-haess-eo-yo.",zh:"韩国的咖啡文化很发达。",scene:"文化差异",lv:46,bd:[["커피 문화가","咖啡文化（主格）"],["발달했어요","发达了"]],tip:"발달하다=发达/发展，카페가 많은 이유"},
+{kr:"한국인은 공동체 의식이 강해요.",ro:"han-gu-gi-neun gong-dong-che ui-si-gi gang-hae-yo.",zh:"韩国人集体意识很强。",scene:"文化差异",lv:46,bd:[["한국인은","韩国人（话题）"],["공동체 의식이 강해요","集体意识强"]],tip:"공동체=共同體=共同体，의식=意識，文化특징"},
+
+// ── 47. 网购外卖 ──
+{kr:"배달 시킬까요?",ro:"bae-dal si-kil-kka-yo?",zh:"叫外卖吧？",scene:"网购外卖",lv:47,bd:[["배달","名词","外卖/配送"],["시킬까요","要叫吗"]],tip:"배달=配達=外卖，시키다=叫/叫来，배달의민족"},
+{kr:"배달비가 얼마예요?",ro:"bae-dal-bi-ga eol-ma-ye-yo?",zh:"外卖费是多少？",scene:"网购外卖",lv:47,bd:[["배달비","外卖费"],["가 얼마예요","是多少"]],tip:"배달비=外卖费/配送费，비=費=费"},
+{kr:"언제 도착해요?",ro:"eon-je do-cha-kae-yo?",zh:"什么时候到？",scene:"网购外卖",lv:47,bd:[["언제","什么时候"],["도착해요","动词","到达"]],tip:"도착하다=到达，배달/택배 확인 시"},
+{kr:"택배가 왔어요.",ro:"taek-bae-ga wa-sseo-yo.",zh:"快递来了。",scene:"网购外卖",lv:47,bd:[["택배가","快递（主格）"],["왔어요","来了"]],tip:"택배=宅配=快递，왔어요=오다过去时"},
+{kr:"쿠폰 있어요?",ro:"ku-pon i-sseo-yo?",zh:"有优惠券吗？",scene:"网购外卖",lv:47,bd:[["쿠폰","优惠券/coupon"],["있어요","有吗"]],tip:"쿠폰=coupon，网购和外卖时必问"},
+{kr:"후기 남겼어요.",ro:"hu-gi nam-gyeo-sseo-yo.",zh:"留了评价。",scene:"网购外卖",lv:47,bd:[["후기","评价/review"],["남겼어요","动词","留了"]],tip:"후기=後記=评价，남기다=留下，구매 후 리뷰"},
+{kr:"교환 신청했어요.",ro:"gyo-hwan sin-cheong-haess-eo-yo.",zh:"申请换货了。",scene:"网购外卖",lv:47,bd:[["교환","换货"],["신청했어요","申请了"]],tip:"교환=交換，신청하다=申请，온라인 쇼핑 AS"},
+{kr:"반품하고 싶어요.",ro:"ban-pum-ha-go si-peo-yo.",zh:"我想退货。",scene:"网购外卖",lv:47,bd:[["반품","退货/返品"],["하고 싶어요","想做"]],tip:"반품=返品=退货，온라인 쇼핑 불만 처리"},
+{kr:"포장이 잘 됐어요.",ro:"po-jang-i jal dwaess-eo-yo.",zh:"包装得很好。",scene:"网购外卖",lv:47,bd:[["포장이","包装（主格）"],["잘 됐어요","很好"]],tip:"포장=包裝，잘 됐다=好，网购评价"},
+{kr:"별점 다섯 개 드릴게요.",ro:"byeol-jeom da-seot gae deu-ril-ge-yo.",zh:"我给五星好评。",scene:"网购外卖",lv:47,bd:[["별점","星评"],["다섯 개","五个"],["드릴게요","我来给"]],tip:"별점=星評，다섯=五，드리다=给（谦让），评价"},
+
+// ── 48. 健康养生 ──
+{kr:"건강이 최고예요.",ro:"geon-gang-i choe-go-ye-yo.",zh:"健康最重要。",scene:"健康养生",lv:48,bd:[["건강이","健康（主格）"],["최고예요","是最高/最重要"]],tip:"건강=健康，최고=最高/最棒"},
+{kr:"잠을 잘 자야 해요.",ro:"ja-meul jal ja-ya hae-yo.",zh:"要睡好觉。",scene:"健康养生",lv:48,bd:[["잠을","睡眠（宾格）"],["잘 자야 해요","必须睡好"]],tip:"잠=睡眠，잘 자다=睡得好，아야 해요=必须"},
+{kr:"물을 많이 마셔야 해요.",ro:"mu-reul ma-ni ma-syeo-ya hae-yo.",zh:"必须多喝水。",scene:"健康养生",lv:48,bd:[["물을","水（宾格）"],["많이 마셔야 해요","必须多喝"]],tip:"물=水，마시다=喝，많이=多，健康의 기본"},
+{kr:"스트레스 관리가 중요해요.",ro:"seu-teu-re-seu gwan-ni-ga jung-yo-hae-yo.",zh:"压力管理很重要。",scene:"健康养生",lv:48,bd:[["스트레스 관리","压力管理"],["가 중요해요","很重要"]],tip:"관리=管理，중요하다=重要，现代人健康课题"},
+{kr:"균형 잡힌 식단이 중요해요.",ro:"gyun-hyeong ja-pin sik-da-ni jung-yo-hae-yo.",zh:"均衡饮食很重要。",scene:"健康养生",lv:48,bd:[["균형 잡힌 식단이","均衡饮食（主格）"],["중요해요","重要"]],tip:"균형=均衡，식단=食단=饮食计划"},
+{kr:"정기 검진 받았어요?",ro:"jeong-gi geom-jin ba-da-sseo-yo?",zh:"做了定期检查吗？",scene:"健康养生",lv:48,bd:[["정기 검진","定期检查"],["받았어요","动词","接受了吗"]],tip:"정기=定期，검진=검진=体检，매년 필요"},
+{kr:"비타민 챙겨 먹어요.",ro:"bi-ta-min chaeng-gyeo meo-geo-yo.",zh:"记得吃维生素。",scene:"健康养生",lv:48,bd:[["비타민","维生素"],["챙겨 먹어요","注意吃"]],tip:"비타민=vitamin，챙기다=注意照顾，건강 습관"},
+{kr:"과식하면 안 돼요.",ro:"gwa-si-ka-myeon an dwae-yo.",zh:"不能暴饮暴食。",scene:"健康养生",lv:48,bd:[["과식하면","如果暴食的话"],["안 돼요","不行"]],tip:"과식=過食=暴食，으면 안 되다=不可以…"},
+{kr:"금연하고 싶어요.",ro:"geum-yeon-ha-go si-peo-yo.",zh:"我想戒烟。",scene:"健康养生",lv:48,bd:[["금연","禁烟/戒烟"],["하고 싶어요","想做"]],tip:"금연=禁煙=戒烟，금주=禁酒，建康목표"},
+{kr:"걷기 운동이 제일 좋아요.",ro:"geot-gi un-dong-i je-il jo-a-yo.",zh:"步行运动最好。",scene:"健康养生",lv:48,bd:[["걷기 운동이","步行运动（主格）"],["제일 좋아요","最好"]],tip:"걷기=步行，제일=第一/最，건강에 좋은 운동"},
+
+// ── 49. 娱乐活动 ──
+{kr:"주말에 뭐 할 거예요?",ro:"ju-ma-re mwo hal geo-ye-yo?",zh:"周末打算做什么？",scene:"娱乐活动",lv:49,bd:[["주말에","周末"],["뭐 할 거예요","要做什么？"]],tip:"ㄹ 거예요=打算/要…，未来计划"},
+{kr:"놀이공원에 가고 싶어요.",ro:"no-ri-gong-wo-ne ga-go si-peo-yo.",zh:"想去游乐园。",scene:"娱乐活动",lv:49,bd:[["놀이공원에","去游乐园"],["가고 싶어요","想去"]],tip:"놀이공원=游乐园，놀다=玩，고 싶다=想"},
+{kr:"방탈출 해 본 적 있어요?",ro:"bang-tal-chul hae bon jeok i-sseo-yo?",zh:"玩过密室逃脱吗？",scene:"娱乐活动",lv:49,bd:[["방탈출","密室逃脱"],["해 본 적 있어요","有过做的经历吗"]],tip:"ㄴ/은 적 있다=有过…的经历"},
+{kr:"게임방에 가요.",ro:"ge-im-bang-e ga-yo.",zh:"去游戏房（网吧）。",scene:"娱乐活动",lv:49,bd:[["게임방에","去游戏房"],["가요","去"]],tip:"게임방=PC방=网吧/游戏房，韩国文化"},
+{kr:"볼링 칠 줄 알아요?",ro:"bol-ling chil jul a-ra-yo?",zh:"你会打保龄球吗？",scene:"娱乐活动",lv:49,bd:[["볼링","保龄球"],["칠 줄 알아요","会打吗"]],tip:"볼링=bowling，ㄹ 줄 알다=会/懂得"},
+{kr:"빈백에 앉아서 영화 봐요.",ro:"bin-baek-e an-ja-seo yeong-hwa bwa-yo.",zh:"坐在懒人沙发上看电影。",scene:"娱乐活动",lv:49,bd:[["빈백에 앉아서","坐在懒人沙发上"],["영화 봐요","看电影"]],tip:"빈백=beanbag=懒人沙发，아/어서=然后/并且"},
+{kr:"야구장에 가 봤어요?",ro:"ya-gu-jang-e ga bwa-sseo-yo?",zh:"去过棒球场吗？",scene:"娱乐活动",lv:49,bd:[["야구장에","去棒球场"],["가 봤어요","去过吗（经历）"]],tip:"야구=棒球，장=场，아 봤다=有经历过"},
+{kr:"K리그 경기 보러 가요.",ro:"ke-ri-geu gyeong-gi bo-reo ga-yo.",zh:"去看K联赛比赛。",scene:"娱乐活动",lv:49,bd:[["K리그 경기","K联赛比赛"],["보러 가요","去看"]],tip:"K리그=韩国足球联赛，으러 가다=去做…"},
+{kr:"사우나 가고 싶어요.",ro:"sa-u-na ga-go si-peo-yo.",zh:"想去桑拿。",scene:"娱乐活动",lv:49,bd:[["사우나","桑拿/찜질방"],["가고 싶어요","想去"]],tip:"사우나/찜질방=韩国汗蒸房，休闲娱乐"},
+{kr:"노래 한 곡 불러 주세요.",ro:"no-rae han gok bul-leo ju-se-yo.",zh:"请唱一首歌。",scene:"娱乐活动",lv:49,bd:[["노래 한 곡","一首歌"],["불러 주세요","请唱给我听"]],tip:"곡=曲=首，부르다=唱/叫，노래방에서"},
+
+// ── 50. 生活感悟 ──
+{kr:"하루하루가 소중해요.",ro:"ha-ru-ha-ru-ga so-jung-hae-yo.",zh:"每一天都很珍贵。",scene:"生活感悟",lv:50,bd:[["하루하루가","每天（主格）"],["소중해요","珍贵"]],tip:"하루하루=每一天，소중하다=珍贵/重要"},
+{kr:"지금 이 순간이 행복해요.",ro:"ji-geum i sun-ga-ni haeng-bo-kae-yo.",zh:"现在这一刻很幸福。",scene:"生活感悟",lv:50,bd:[["지금 이 순간이","现在这一刻（主格）"],["행복해요","幸福"]],tip:"순간=瞬間=瞬间，행복하다=幸福"},
+{kr:"작은 것에 감사해요.",ro:"ja-geun geo-se gam-sa-hae-yo.",zh:"对小事心存感谢。",scene:"生活感悟",lv:50,bd:[["작은 것에","对小事"],["감사해요","感谢"]],tip:"작다=小，감사하다=感谢，삶의 자세"},
+{kr:"실수도 경험이에요.",ro:"sil-su-do gyeong-heo-mi-e-yo.",zh:"失误也是经历。",scene:"生活感悟",lv:50,bd:[["실수도","失误也"],["경험이에요","是经验"]],tip:"실수=失手=失误，경험=经验/体验"},
+{kr:"매일이 새로운 시작이에요.",ro:"mae-i-ri sae-ro-un si-ja-gi-e-yo.",zh:"每天都是新的开始。",scene:"生活感悟",lv:50,bd:[["매일이","每天（主格）"],["새로운 시작이에요","是新的开始"]],tip:"새롭다=新的，시작=开始，긍정적 생활관"},
+{kr:"천천히 가도 괜찮아요.",ro:"cheon-cheon-hi ga-do gwaen-cha-na-yo.",zh:"慢慢来也没关系。",scene:"生活感悟",lv:50,bd:[["천천히 가도","慢慢走也"],["괜찮아요","没关系"]],tip:"아도 괜찮다=即使…也没关系，편한 인생관"},
+{kr:"비교하지 말고 나만의 길을 가요.",ro:"bi-gyo-ha-ji mal-go na-ma-nui gi-reul ga-yo.",zh:"不要比较，走自己的路。",scene:"生活感悟",lv:50,bd:[["비교하지 말고","不要比较"],["나만의 길을 가요","走我自己的路"]],tip:"지 말고=不要做…并且，나만의=只属于我的"},
+{kr:"좋은 사람들이 곁에 있어서 행복해요.",ro:"jo-eun sa-ram-deu-ri gyeo-te i-sseo-seo haeng-bo-kae-yo.",zh:"有好人在身边很幸福。",scene:"生活感悟",lv:50,bd:[["좋은 사람들이","好人们（主格）"],["곁에 있어서","在身边因此"],["행복해요","幸福"]],tip:"곁=旁边/身边，아/어서=因此，幸福感의 표현"},
+{kr:"오늘 하루도 수고했어요.",ro:"o-neul ha-ru-do su-go-haess-eo-yo.",zh:"今天一天也辛苦了。",scene:"生活感悟",lv:50,bd:[["오늘 하루도","今天一天也"],["수고했어요","辛苦了"]],tip:"수고하다=辛苦/努力，하루가 끝날 때 最常用句"},
+{kr:"내일은 더 잘 될 거예요.",ro:"nae-i-reun deo jal doel geo-ye-yo.",zh:"明天会更好的。",scene:"生活感悟",lv:50,bd:[["내일은","明天"],["더 잘 될 거예요","会更好（未来推测）"]],tip:"ㄹ 거예요=会/打算，未来肯定推测，最温暖的결말"}
+];
+
+var W_LV = {1:"元音",2:"辅音",3:"收音",4:"双辅音",5:"复合元音"};
+var S_SCENES = ["全部","打招呼","告别","感谢道歉","自我介绍","餐厅点餐","购物","问路交通","住宿酒店","医院药局","日常寒暄","情感表达","学校学习","工作职场","电话短信","天气季节","兴趣爱好","约定计划","超市便利店","娱乐KPOP","紧急情况","比较选择","家庭日常","咖啡厅","外貌称赞","表达意见","时间日期","健身运动","网络社交","气候环境","旅行观光","美容美发","学韩语","交通出行","社交礼仪","心情状态","饮食喜好","性格描述","学习方法","友情关系","读书阅读","恋爱约会","分歧争论","音乐欣赏","科技数码","赞美鼓励","文化差异","网购外卖","健康养生","娱乐活动","生活感悟"];
+
+var wLv = 0, wIdx = 0, wPool = [];
+var sScene = "", sIdx = 0, sPool = [];
+
+function showTab(t) {
+  document.getElementById('page-w').className = 'page' + (t === 'w' ? ' on' : '');
+  document.getElementById('page-s').className = 'page' + (t === 's' ? ' on' : '');
+  document.getElementById('tab-w').className = 'tab' + (t === 'w' ? ' on' : '');
+  document.getElementById('tab-s').className = 'tab' + (t === 's' ? ' on' : '');
+}
+
+function wBuild() {
+  wPool = wLv === 0 ? WORDS.slice() : WORDS.filter(function(x) { return x.lv === wLv; });
+  wIdx = 0;
+}
+function wRender() {
+  if (!wPool.length) return;
+  var w = wPool[wIdx];
+  document.getElementById('wkr').textContent = w.kr;
+  document.getElementById('wro').textContent = w.ro;
+  document.getElementById('wzh').textContent = w.zh;
+  document.getElementById('wtip').textContent = w.tip;
+  var lt = document.getElementById('wletters');
+  lt.innerHTML = '';
+  for (var i = 0; i < w.letters.length; i++) {
+    var d = document.createElement('div');
+    d.className = 'letter';
+    var b = document.createElement('b');
+    b.textContent = w.letters[i][0];
+    var s = document.createElement('span');
+    s.textContent = w.letters[i][1];
+    d.appendChild(b);
+    d.appendChild(s);
+    lt.appendChild(d);
+  }
+  document.getElementById('wcounter').textContent = (wIdx + 1) + ' / ' + wPool.length + '  ·  Lv' + w.lv + ' ' + W_LV[w.lv];
+  document.getElementById('winfo').textContent = '当前：' + (wLv === 0 ? '全部' : 'Lv' + wLv + ' ' + W_LV[wLv]) + ' · ' + wPool.length + '个单词';
+}
+function wNext() { if (!wPool.length) return; wIdx = (wIdx + 1) % wPool.length; wRender(); wPlay(); }
+function wPrev() { if (!wPool.length) return; wIdx = (wIdx - 1 + wPool.length) % wPool.length; wRender(); wPlay(); }
+function wPlay() {
+  if (!wPool.length || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(wPool[wIdx].kr);
+  u.lang = 'ko-KR'; u.rate = 0.85;
+  window.speechSynthesis.speak(u);
+}
+function wSetLv(lv) {
+  wLv = lv;
+  document.querySelectorAll('#wlevels .lv').forEach(function(b) {
+    b.className = 'lv' + (parseInt(b.dataset.lv) === lv ? ' on' : '');
+  });
+  wBuild(); wRender();
+}
+
+function sBuild() {
+  sPool = sScene === "" ? SENTENCES.slice() : SENTENCES.filter(function(x) { return x.scene === sScene; });
+  sIdx = 0;
+}
+function sRender() {
+  if (!sPool.length) return;
+  var s = sPool[sIdx];
+  document.getElementById('sscene').textContent = '▸ ' + s.scene;
+  document.getElementById('skr').textContent = s.kr;
+  document.getElementById('sro').textContent = s.ro;
+  document.getElementById('szh').textContent = s.zh;
+  document.getElementById('stip').textContent = s.tip;
+  var bd = document.getElementById('sbreakdown');
+  bd.innerHTML = '';
+  for (var i = 0; i < s.bd.length; i++) {
+    var row = document.createElement('div');
+    row.className = 'brow';
+    var w1 = document.createElement('span'); w1.className = 'bword'; w1.textContent = s.bd[i][0];
+    var w2 = document.createElement('span'); w2.className = 'brole'; w2.textContent = s.bd[i][1];
+    var w3 = document.createElement('span'); w3.className = 'bdef'; w3.textContent = s.bd[i][2];
+    row.appendChild(w1); row.appendChild(w2); row.appendChild(w3);
+    bd.appendChild(row);
+  }
+  document.getElementById('scounter').textContent = (sIdx + 1) + ' / ' + sPool.length + '  ·  ' + s.scene;
+  document.getElementById('sinfo').textContent = '场景：' + (sScene === "" ? '全部' : sScene) + ' · ' + sPool.length + '句';
+}
+function sNext() { if (!sPool.length) return; sIdx = (sIdx + 1) % sPool.length; sRender(); sPlay(); }
+function sPrev() { if (!sPool.length) return; sIdx = (sIdx - 1 + sPool.length) % sPool.length; sRender(); sPlay(); }
+function sPlay() {
+  if (!sPool.length || !('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var u = new SpeechSynthesisUtterance(sPool[sIdx].kr);
+  u.lang = 'ko-KR'; u.rate = 0.8;
+  window.speechSynthesis.speak(u);
+}
+function sSetScene(scene) {
+  sScene = scene;
+  document.querySelectorAll('#slevels .lv').forEach(function(b) {
+    b.className = 'lv' + (b.dataset.scene === scene ? ' on' : '');
+  });
+  sBuild(); sRender();
+}
+
+function initLv(containerId, lvMap, setFn) {
+  var box = document.getElementById(containerId);
+  var list = [[0,'全部'],[1,'1·'+lvMap[1]],[2,'2·'+lvMap[2]],[3,'3·'+lvMap[3]],[4,'4·'+lvMap[4]],[5,'5·'+lvMap[5]]];
+  for (var i = 0; i < list.length; i++) {
+    (function(lv, name) {
+      var b = document.createElement('div');
+      b.className = 'lv' + (lv === 0 ? ' on' : '');
+      b.textContent = name;
+      b.dataset.lv = lv;
+      b.onclick = function() { setFn(lv); };
+      box.appendChild(b);
+    })(list[i][0], list[i][1]);
+  }
+}
+function initScene(containerId, scenes, setFn) {
+  var box = document.getElementById(containerId);
+  for (var i = 0; i < scenes.length; i++) {
+    (function(scene) {
+      var b = document.createElement('div');
+      b.className = 'lv' + (scene === '全部' ? ' on' : '');
+      b.textContent = scene;
+      b.dataset.scene = scene === '全部' ? '' : scene;
+      b.onclick = function() { setFn(scene === '全部' ? '' : scene); };
+      box.appendChild(b);
+    })(scenes[i]);
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  var onW = document.getElementById('page-w').className.indexOf('on') >= 0;
+  if (e.key === 'ArrowRight' || e.key === 'f' || e.key === 'F') { onW ? wNext() : sNext(); }
+  else if (e.key === 'ArrowLeft') { onW ? wPrev() : sPrev(); }
+  else if (e.key === 'r' || e.key === 'R') { onW ? wPlay() : sPlay(); }
+});
+
+initLv('wlevels', W_LV, wSetLv);
+initScene('slevels', S_SCENES, sSetScene);
+wBuild(); wRender();
+sBuild(); sRender();
+</script>
+</body>
+</html>
