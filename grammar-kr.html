@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>한국어 문법 · 韩语语法</title>
+<style>
+:root{--bg:#0e0f14;--surface:#16181f;--surface2:#1d1f28;--border:#252836;--accent:#4ade80;--accent2:#f59e0b;--accent3:#60a5fa;--text:#e8eaf2;--muted:#52566e;--dim:#2a2d3d;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,"PingFang SC","Apple SD Gothic Neo","Malgun Gothic",sans-serif;min-height:100vh;padding-bottom:80px;}
+.topbar{position:sticky;top:0;z-index:100;background:rgba(14,15,20,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 16px;height:50px;}
+.logo{font-size:15px;font-weight:700;color:var(--accent);}
+.logo small{color:var(--muted);font-weight:400;font-size:11px;margin-left:6px;}
+.shuffle-btn{padding:5px 12px;border-radius:16px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.shuffle-btn:hover{border-color:var(--accent2);color:var(--accent2);}
+.back-link{padding:5px 12px;border-radius:16px;border:1px solid var(--border);background:var(--surface2);color:var(--muted);font-size:11px;text-decoration:none;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.back-link:hover{border-color:var(--accent);color:var(--accent);}
+.level-bar{display:flex;gap:6px;flex-wrap:wrap;padding:10px 14px 6px;max-width:660px;margin:0 auto;}
+.lv-btn{padding:5px 13px;border-radius:16px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);font-size:11px;cursor:pointer;font-family:inherit;transition:all .15s;}
+.lv-btn.on{border-color:var(--accent);color:var(--accent);background:rgba(74,222,128,.07);}
+.stat{text-align:center;font-size:11px;color:var(--muted);margin-bottom:6px;font-family:Menlo,monospace;}
+.prog{height:2px;background:var(--border);margin:0 auto 12px;border-radius:2px;overflow:hidden;max-width:632px;}
+.prog-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent3));border-radius:2px;transition:width .35s ease;}
+.wrap{max-width:660px;margin:0 auto;padding:0 14px;}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:18px;padding:22px 20px 18px;margin-bottom:12px;position:relative;overflow:hidden;animation:up .2s ease;}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent3));}
+@keyframes up{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}
+.badge-row{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:12px;}
+.badge{font-size:10px;padding:2px 8px;border-radius:9px;border:1px solid;font-family:Menlo,monospace;}
+.blv{border-color:var(--accent);color:var(--accent);}
+.bcat{border-color:var(--accent3);color:var(--accent3);}
+.struct{text-align:center;font-size:24px;font-weight:700;color:var(--accent);letter-spacing:.04em;margin-bottom:5px;font-family:"Apple SD Gothic Neo","Malgun Gothic",sans-serif;}
+.gname{text-align:center;font-size:14px;font-weight:600;color:var(--text);margin-bottom:3px;}
+.gmeaning{text-align:center;font-size:12px;color:var(--muted);line-height:1.6;margin-bottom:15px;}
+.rule{background:var(--surface2);border-left:3px solid var(--accent2);border-radius:0 8px 8px 0;padding:9px 13px;font-size:12px;line-height:1.75;color:#c5c7d8;margin-bottom:13px;}
+.rule b{color:var(--accent2);}
+.exs{display:flex;flex-direction:column;gap:7px;margin-bottom:13px;}
+.ex{background:var(--surface2);border-radius:10px;padding:10px 12px;display:flex;gap:9px;align-items:flex-start;cursor:pointer;border:1px solid transparent;transition:border-color .15s;}
+.ex:hover{border-color:var(--dim);}
+.play{width:24px;height:24px;border-radius:50%;background:rgba(74,222,128,.1);border:1px solid var(--accent);color:var(--accent);font-size:9px;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;transition:background .15s;}
+.play:hover{background:rgba(74,222,128,.22);}
+.et{flex:1;}
+.ekr{font-size:14px;font-weight:600;color:var(--text);margin-bottom:2px;line-height:1.4;}
+.ekr b{color:var(--accent);}
+.ero{font-size:10px;color:var(--muted);font-family:Menlo,monospace;margin-bottom:2px;}
+.ezh{font-size:12px;color:#9699b5;}
+.tip{background:var(--surface2);border-left:3px solid var(--accent3);border-radius:0 8px 8px 0;padding:9px 13px;font-size:12px;line-height:1.75;color:#c5c7d8;}
+.tip b{color:var(--accent3);}
+.btns{display:grid;grid-template-columns:1fr 1fr 1fr;gap:7px;margin-bottom:6px;}
+.btn{padding:13px 6px;border:none;border-radius:12px;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:opacity .15s,transform .1s;display:flex;align-items:center;justify-content:center;gap:4px;}
+.btn:active{transform:scale(.96);}
+.btn-prev{background:var(--surface2);color:var(--text);border:1px solid var(--border);}
+.btn-play{background:rgba(74,222,128,.12);color:var(--accent);border:1px solid var(--accent);}
+.btn-next{background:var(--accent);color:#0e0f14;}
+.btn:hover{opacity:.83;}
+.ctr{text-align:center;font-size:11px;color:var(--muted);font-family:Menlo,monospace;margin-top:4px;}
+</style>
+</head>
+<body>
+<div class="topbar">
+  <a class="back-link" href="index.html">&#8592; 速记</a>
+  <div class="logo">한국어 문법 <small>TOPIK 1-2</small></div>
+  <button class="shuffle-btn" onclick="doShuffle()">&#128256; 随机</button>
+</div>
+<div class="level-bar" id="lvBar"></div>
+<div class="wrap">
+  <div class="stat" id="stat"></div>
+  <div class="prog"><div class="prog-fill" id="pf"></div></div>
+  <div id="area"></div>
+  <div class="btns">
+    <button class="btn btn-prev" onclick="prev()">&#8592; 上一条</button>
+    <button class="btn btn-play" onclick="playEx()">&#9654; 朗读</button>
+    <button class="btn btn-next" onclick="next()">下一条 &#8594;</button>
+  </div>
+  <div class="ctr" id="ctr"></div>
+</div>
+<script>
+var G=[
+{lv:1,cat:"助词",struct:"은/는",name:"话题助词",meaning:"标记句子话题，常含对比意味",rule:"<b>有收音+은</b>，<b>无收音+는</b><br>강조 对比用은/는，单纯主格用이/가",exs:[{kr:"저<b>는</b> 중국 사람이에요.",ro:"jeo-neun jung-guk sa-ra-mi-e-yo.",zh:"我是中国人。"},{kr:"오늘<b>은</b> 날씨가 좋아요.",ro:"o-neu-reun nal-ssi-ga jo-a-yo.",zh:"今天天气很好。"}],tip:"은/는标话题，常含对比；이/가标主语，강조动作发出者"},
+{lv:1,cat:"助词",struct:"이/가",name:"主格助词",meaning:"标记主语，引入新信息或强调主语",rule:"<b>有收音+이</b>，<b>无收音+가</b>",exs:[{kr:"고양이<b>가</b> 귀여워요.",ro:"go-yang-i-ga gwi-yeo-wo-yo.",zh:"猫咪好可爱。"},{kr:"밥<b>이</b> 맛있어요.",ro:"ba-bi ma-si-sseo-yo.",zh:"饭很好吃。"}],tip:"이/가强调「是谁」；은/는强调「关于谁」"},
+{lv:1,cat:"助词",struct:"을/를",name:"宾格助词",meaning:"标记宾语（动作对象）",rule:"<b>有收音+을</b>，<b>无收音+를</b><br>口语中常省略",exs:[{kr:"한국어<b>를</b> 공부해요.",ro:"han-gu-geo-reul gong-bu-hae-yo.",zh:"学习韩语。"},{kr:"밥<b>을</b> 먹어요.",ro:"ba-beul meo-geo-yo.",zh:"吃饭。"}],tip:"口语可省略：밥 먹어요 ✓；书写时加上比较正式"},
+{lv:1,cat:"助词",struct:"에",name:"位置/方向助词",meaning:"静态位置「在…」或移动方向「去/到…」",rule:"<b>名词+에</b>（不区分收音）<br>에 있다=在那里 / 에 가다=去那里",exs:[{kr:"학교<b>에</b> 가요.",ro:"hak-gyo-e ga-yo.",zh:"去学校。"},{kr:"방<b>에</b> 있어요.",ro:"bang-e i-sseo-yo.",zh:"在房间里。"}],tip:"에=静态位置或方向；에서=动作发生的场所"},
+{lv:1,cat:"助词",struct:"에서",name:"动作场所/出发点",meaning:"动作发生的场所「在…做」或出发点「从…」",rule:"<b>名词+에서</b>（不区分收音）<br>에서 오다=从…来",exs:[{kr:"도서관<b>에서</b> 공부해요.",ro:"do-seo-gwan-e-seo gong-bu-hae-yo.",zh:"在图书馆学习。"},{kr:"중국<b>에서</b> 왔어요.",ro:"jung-guk-e-seo wa-sseo-yo.",zh:"从中国来的。"}],tip:"에 있다 ✓，에서 있다 ✗；에서 뒤엔 동작 동사"},
+{lv:1,cat:"助词",struct:"의",name:"所有格助词",meaning:"表示所属「…的」",rule:"<b>名词+의</b>，口语常省略<br>저의→제，너의→네",exs:[{kr:"<b>제</b> 친구예요.",ro:"je chin-gu-ye-yo.",zh:"是我的朋友。"},{kr:"한국<b>의</b> 음식이 맛있어요.",ro:"han-gu-gui eum-si-gi ma-si-sseo-yo.",zh:"韩国的食物很好吃。"}],tip:"의 在口语中常省略：내 친구 比 나의 친구 更自然"},
+{lv:1,cat:"助词",struct:"와/과·하고·(이)랑",name:"并列助词「和」",meaning:"连接名词「和/与」",rule:"<b>와</b>（无收音）/ <b>과</b>（有收音）：正式<br><b>하고</b>：口语通用，<b>랑/이랑</b>：最随意",exs:[{kr:"사과<b>와</b> 바나나를 먹어요.",ro:"sa-gwa-wa ba-na-na-reul meo-geo-yo.",zh:"吃苹果和香蕉。"},{kr:"친구<b>하고</b> 같이 가요.",ro:"chin-gu-ha-go ga-chi ga-yo.",zh:"和朋友一起去。"}],tip:"书面/공식→와/과；일상 대화→하고；친한 사이→이랑/랑"},
+{lv:1,cat:"助词",struct:"도",name:"也/同样助词",meaning:"表示「也」，添加同类信息",rule:"<b>名词+도</b>，替代은/는·이/가（不叠加）",exs:[{kr:"저<b>도</b> 한국어를 배워요.",ro:"jeo-do han-gu-geo-reul bae-wo-yo.",zh:"我也学韩语。"},{kr:"커피<b>도</b> 주세요.",ro:"keo-pi-do ju-se-yo.",zh:"咖啡也给我一杯。"}],tip:"도 替换 은/는/이/가：저도 ✓，저는도 ✗"},
+{lv:1,cat:"助词",struct:"만",name:"只/仅助词",meaning:"限定「只有…」，接肯定句",rule:"<b>名词+만</b>（不区分收音）<br>만=只（肯정），밖에=只（부정）",exs:[{kr:"물<b>만</b> 마셔요.",ro:"mul-man ma-syeo-yo.",zh:"只喝水。"},{kr:"오늘<b>만</b> 특별해요.",ro:"o-neul-man teuk-byeo-lae-yo.",zh:"只有今天特别。"}],tip:"만→肯정；밖에+부정（밖에 없어요=只有…）"},
+{lv:1,cat:"助词",struct:"(으)로",name:"方向/方式/材料助词",meaning:"方向「向/往」、手段「用/以」",rule:"<b>有收음（除ㄹ）+으로</b>，<b>无收음/ㄹ+로</b>",exs:[{kr:"버스<b>로</b> 가요.",ro:"beo-seu-ro ga-yo.",zh:"坐公交车去。"},{kr:"왼쪽<b>으로</b> 가세요.",ro:"wen-jjo-geu-ro ga-se-yo.",zh:"请往左走。"}],tip:"로=交通工具/方向/材料 三合一；매우 자주 씀"},
+{lv:1,cat:"判断",struct:"이다/아니다",name:"是/不是",meaning:"判断句「是」或「不是」",rule:"<b>有收음+이에요/입니다</b>，<b>无收음+예요/입니다</b><br>부정: <b>이/가 아니에요</b>",exs:[{kr:"저는 학생<b>이에요</b>.",ro:"jeo-neun hak-saeng-i-e-yo.",zh:"我是学生。"},{kr:"이것은 책<b>이 아니에요</b>.",ro:"i-geo-seun chae-gi a-ni-e-yo.",zh:"这不是书。"}],tip:"무수음 뒤→예요（친구예요）；유수음 뒤→이에요（학생이에요）"},
+{lv:1,cat:"存在",struct:"있다/없다",name:"有/没有·在/不在",meaning:"表示存在「有/在」或不存在「没有/不在」",rule:"<b>이/가 있다</b>=有/在，<b>이/가 없다</b>=没有/不在",exs:[{kr:"가방에 책이 <b>있어요</b>.",ro:"ga-bang-e chae-gi i-sseo-yo.",zh:"包里有书。"},{kr:"시간이 <b>없어요</b>.",ro:"si-ga-ni eop-seo-yo.",zh:"没有时间。"}],tip:"재미있다/맛있다/멋있다는 있다 합성어，不能拆开否定"},
+{lv:1,cat:"否定",struct:"안+동사",name:"短否定「不」",meaning:"主观否定「不做/不是」",rule:"<b>안</b>放在动词/형容词前<br>하다动词：공부 안 해요（拆开）",exs:[{kr:"오늘은 학교에 <b>안</b> 가요.",ro:"o-neu-reun hak-gyo-e an ga-yo.",zh:"今天不去学校。"},{kr:"밥을 <b>안</b> 먹어요.",ro:"ba-beul an meo-geo-yo.",zh:"不吃饭。"}],tip:"하다動詞拆開：공부 안 해요 ✓，안 공부해요 ✗"},
+{lv:1,cat:"否定",struct:"못+동사",name:"能力否定「不能」",meaning:"客观能力否定「做不到」",rule:"<b>못</b>放在动词前<br>하다动词：수영 못 해요（拆开）",exs:[{kr:"매운 거 <b>못</b> 먹어요.",ro:"mae-un geo mot meo-geo-yo.",zh:"辣的吃不了。"},{kr:"수영을 <b>못</b> 해요.",ro:"su-yeong-eul mot hae-yo.",zh:"不会游泳。"}],tip:"안=主观不做；못=客观不能。두 가지 차이 중요"},
+{lv:1,cat:"否定",struct:"-지 않다",name:"长否定「不」",meaning:"否定动词/형容词，语气较正式",rule:"<b>词干+지 않다</b>，礼貌→지 않아요",exs:[{kr:"오늘은 가<b>지 않아요</b>.",ro:"o-neu-reun ga-ji a-na-yo.",zh:"今天不去。"},{kr:"비싸<b>지 않아요</b>.",ro:"bi-ssa-ji a-na-yo.",zh:"不贵。"}],tip:"안+동사=短부정（口語）；동사+지 않다=長부정（正式/강조）"},
+{lv:1,cat:"时态",struct:"았/었어요",name:"过去时（礼貌体）",meaning:"过去发生的动作或状态",rule:"阳性元音（ㅏ/ㅗ）→<b>았어요</b><br>其他→<b>었어요</b>，하다→<b>했어요</b>",exs:[{kr:"어제 밥을 먹<b>었어요</b>.",ro:"eo-je ba-beul meo-geo-sseo-yo.",zh:"昨天吃饭了。"},{kr:"공부<b>했어요</b>.",ro:"gong-bu-haess-eo-yo.",zh:"学习了。"}],tip:"가다→갔어요，오다→왔어요，보다→봤어요，하다→했어요"},
+{lv:1,cat:"时态",struct:"-(으)ㄹ 거예요",name:"将来时",meaning:"将来的计划或推测「要/会…」",rule:"<b>无收음+ㄹ 거예요</b>，<b>有收음+을 거예요</b>",exs:[{kr:"내일 학교에 <b>갈 거예요</b>.",ro:"nae-il hak-gyo-e gal geo-ye-yo.",zh:"明天要去学校。"},{kr:"비가 <b>올 거예요</b>.",ro:"bi-ga ol geo-ye-yo.",zh:"会下雨的。"}],tip:"개인 계획→ㄹ 거예요；강한 의지→겠어요；추측→ㄹ 것 같아요"},
+{lv:1,cat:"敬语",struct:"-(으)세요",name:"请…（命令/邀请）",meaning:"礼貌命令或邀请「请做…」",rule:"<b>无收음+세요</b>，<b>有收음+으세요</b>，ㄹ收음直接+세요",exs:[{kr:"여기 앉<b>으세요</b>.",ro:"yeo-gi an-jeu-se-yo.",zh:"请坐这里。"},{kr:"천천히 말해 <b>주세요</b>.",ro:"cheon-cheon-hi mal-hae ju-se-yo.",zh:"请说慢一点。"}],tip:"주세요=请给我；아/어 주세요=请为我做…；가장 유용한 경어"},
+{lv:1,cat:"接续",struct:"-고",name:"并列/顺序连接",meaning:"连接两个动作或状态「做A，然后/且B」",rule:"<b>动词词干+고</b>（不区分收音）<br>时态由句尾决定，고前不变时态",exs:[{kr:"밥을 먹<b>고</b> 커피를 마셔요.",ro:"ba-beul meok-go keo-pi-reul ma-syeo-yo.",zh:"吃饭然后喝咖啡。"},{kr:"키가 크<b>고</b> 잘생겼어요.",ro:"ki-ga keu-go jal-saeng-gyeo-sseo-yo.",zh:"个子高而且帅。"}],tip:"고 앞에는 과거시제 잘 안 씀：먹고 ✓，먹었고 ✗（일반적으로）"},
+{lv:1,cat:"接续",struct:"-(으)러",name:"目的移动「为了…去」",meaning:"移动的目的「为了…去/来」",rule:"<b>无收음+러</b>，<b>有收음+으러</b><br>只与 가다/오다/다니다 搭配",exs:[{kr:"밥 먹<b>으러</b> 식당에 가요.",ro:"bap meo-geu-reo sik-dang-e ga-yo.",zh:"去餐厅吃饭。"},{kr:"친구를 만나<b>러</b> 왔어요.",ro:"chin-gu-reul man-na-reo wa-sseo-yo.",zh:"来见朋友的。"}],tip:"으러 뒤에는 반드시 이동 동사！으러+공부하다 ✗"},
+{lv:1,cat:"接续",struct:"-(으)면",name:"条件「如果…」",meaning:"条件或假设「如果…的话」",rule:"<b>无收음+면</b>，<b>有收음+으면</b>",exs:[{kr:"시간이 있<b>으면</b> 같이 가요.",ro:"si-ga-ni i-sseu-myeon ga-chi ga-yo.",zh:"如果有时间就一起去。"},{kr:"비가 오<b>면</b> 우산을 써요.",ro:"bi-ga o-myeon u-sa-neul sseo-yo.",zh:"如果下雨就撑伞。"}],tip:"으면 좋겠다=如果…就好了；으면 안 되다=不可以…"},
+{lv:1,cat:"接续",struct:"-(으)ㄹ까요",name:"提议/猜测疑问",meaning:"提议「要不要…？」或猜测「会…吗？」",rule:"<b>无收음+ㄹ까요</b>，<b>有收음+을까요</b>",exs:[{kr:"같이 갈<b>까요</b>?",ro:"ga-chi gal-kka-yo?",zh:"要一起去吗？"},{kr:"오늘 비가 올<b>까요</b>?",ro:"o-neul bi-ga ol-kka-yo?",zh:"今天会下雨吗？"}],tip:"같이+ㄹ까요=一起…吧（邀请）；혼자 쓰면 추측의 의문"},
+{lv:2,cat:"接续",struct:"아/어서",name:"原因/顺序连接",meaning:"「因为…所以」或动作前后顺序",rule:"阳性元音→<b>아서</b>，其他→<b>어서</b>，하다→<b>해서</b><br>前句不加时态，主语须一致",exs:[{kr:"배가 고파<b>서</b> 밥을 먹었어요.",ro:"bae-ga go-pa-seo ba-beul meo-geo-sseo-yo.",zh:"因为肚子饿，所以吃了饭。"},{kr:"손을 씻<b>어서</b> 밥을 먹어요.",ro:"so-neul ssi-sseo-seo ba-beul meo-geo-yo.",zh:"洗手然后吃饭。"}],tip:"아서 앞에 시제 불가：먹어서 ✓，먹었어서 ✗；늦어서 죄송해요"},
+{lv:2,cat:"接续",struct:"-(으)니까",name:"主观原因「因为」",meaning:"主观理由，可接命令/劝说，语气比아서强",rule:"<b>无收음+니까</b>，<b>有收음+으니까</b><br>前句可加时态",exs:[{kr:"피곤하<b>니까</b> 쉬세요.",ro:"pi-go-na-ni-kka swi-se-yo.",zh:"因为累，请休息。"},{kr:"날씨가 좋<b>으니까</b> 산책해요.",ro:"nal-ssi-ga jo-eu-ni-kka san-chae-kae-yo.",zh:"因为天气好，去散步。"}],tip:"命令/请求前用으니까（不用아서）；이유 강조엔 니까"},
+{lv:2,cat:"接续",struct:"-지만",name:"转折「虽然…但是」",meaning:"前后形成对比或转折",rule:"<b>词干+지만</b>（不区分收音）",exs:[{kr:"비싸<b>지만</b> 맛있어요.",ro:"bi-ssa-ji-man ma-si-sseo-yo.",zh:"虽然贵，但好吃。"},{kr:"한국어가 어렵<b>지만</b> 재미있어요.",ro:"han-gu-geo-ga eo-ryeop-ji-man jae-mi-i-sseo-yo.",zh:"韩语虽然难，但很有趣。"}],tip:"지만 앞뒤 주어 달라도 OK；더 강한 대조는 반면에"},
+{lv:2,cat:"接续",struct:"-거나",name:"或者选择",meaning:"提供选项「或者」",rule:"<b>词干+거나</b>（不区分收음）",exs:[{kr:"집에 있<b>거나</b> 도서관에 가요.",ro:"ji-be it-geo-na do-seo-gwan-e ga-yo.",zh:"要么在家，要么去图书馆。"},{kr:"커피<b>거나</b> 녹차를 주세요.",ro:"keo-pi-geo-na nok-cha-reul ju-se-yo.",zh:"请给我咖啡或绿茶。"}],tip:"名词선택은 이나/나를 씀：커피나 차（咖啡或茶）"},
+{lv:2,cat:"接续",struct:"-(으)면서",name:"同时进行「一边…一边」",meaning:"两个动作同时发生",rule:"<b>无收음+면서</b>，<b>有收음+으면서</b>，主语须一致",exs:[{kr:"음악을 들<b>으면서</b> 공부해요.",ro:"eu-ma-geul deu-reo-myeon-seo gong-bu-hae-yo.",zh:"一边听音乐一边学习。"},{kr:"웃<b>으면서</b> 말했어요.",ro:"u-seu-myeon-seo mal-haess-eo-yo.",zh:"笑着说。"}],tip:"주어 같아야 함；두 동작이 동시에 일어날 때만 사용"},
+{lv:2,cat:"接续",struct:"-아/어도",name:"让步「即使…也」",meaning:"让步条件",rule:"阳性元音→<b>아도</b>，其他→<b>어도</b>，하다→<b>해도</b>",exs:[{kr:"비가 와<b>도</b> 갈 거예요.",ro:"bi-ga wa-do gal geo-ye-yo.",zh:"即使下雨也要去。"},{kr:"바빠<b>도</b> 운동해요.",ro:"ba-ppa-do un-dong-hae-yo.",zh:"即使很忙也运动。"}],tip:"아도 되다=可以…；아도 괜찮다=即使…也没关系"},
+{lv:2,cat:"接续",struct:"-다가",name:"动作中断/转换",meaning:"做A途中转做B",rule:"<b>动词词干+다가</b>（不区분收음）",exs:[{kr:"공부하<b>다가</b> 잠이 들었어요.",ro:"gong-bu-ha-da-ga ja-mi deu-reo-sseo-yo.",zh:"正学习时睡着了。"},{kr:"가<b>다가</b> 돌아왔어요.",ro:"ga-da-ga do-ra-wa-sseo-yo.",zh:"走到一半又回来了。"}],tip:"이전 동작 미완료 중단→다가；완료 후 전환→고"},
+{lv:2,cat:"进行",struct:"-고 있다",name:"进行时「正在…」",meaning:"动作正在进行中",rule:"<b>动词词干+고 있다</b>，礼貌→고 있어요",exs:[{kr:"지금 밥을 먹<b>고 있어요</b>.",ro:"ji-geum ba-beul meok-go i-sseo-yo.",zh:"现在正在吃饭。"},{kr:"음악을 듣<b>고 있어요</b>.",ro:"eu-ma-geul deut-go i-sseo-yo.",zh:"正在听音乐。"}],tip:"입다+고 있다=穿着（状态持续）；먹고 있다=正在吃（진행）"},
+{lv:2,cat:"能力",struct:"-(으)ㄹ 수 있다/없다",name:"可能/不可能",meaning:"「能/不能做…」",rule:"<b>无收음+ㄹ 수 있다</b>，<b>有收음+을 수 있다</b>",exs:[{kr:"한국어를 <b>할 수 있어요</b>.",ro:"han-gu-geo-reul hal su i-sseo-yo.",zh:"会说韩语。"},{kr:"오늘은 <b>갈 수 없어요</b>.",ro:"o-neu-reun gal su eop-seo-yo.",zh:"今天不能去。"}],tip:"능력 있음→ㄹ 수 있다；실제 불가→못 하다"},
+{lv:2,cat:"愿望",struct:"-고 싶다",name:"想要做…",meaning:"表达自己的愿望「想做…」",rule:"<b>动词词干+고 싶다</b>，礼貌→고 싶어요<br>3人称：고 싶어하다",exs:[{kr:"한국에 <b>가고 싶어요</b>.",ro:"han-gu-ge ga-go si-peo-yo.",zh:"想去韩国。"},{kr:"뭐 먹<b>고 싶어요</b>?",ro:"mwo meok-go si-peo-yo?",zh:"想吃什么？"}],tip:"1/2인칭→고 싶다；3인칭→고 싶어하다（친구가 가고 싶어해요）"},
+{lv:2,cat:"义务",struct:"-아/어야 하다",name:"必须「得/应该…」",meaning:"表示义务或必要性",rule:"阳性元音→<b>아야 하다</b>，其他→<b>어야 하다</b>，하다→<b>해야 하다</b>",exs:[{kr:"숙제를 <b>해야 해요</b>.",ro:"suk-je-reul hae-ya hae-yo.",zh:"必须做作业。"},{kr:"일찍 일어나<b>야 해요</b>.",ro:"il-jjik i-reo-na-ya hae-yo.",zh:"必须早起。"}],tip:"야 하다≈야 되다（口语更자연스러움）"},
+{lv:2,cat:"禁止",struct:"-지 마세요",name:"请不要…",meaning:"礼貌禁止",rule:"<b>动词词干+지 마세요</b>（不区分收음）",exs:[{kr:"여기서 사진을 찍<b>지 마세요</b>.",ro:"yeo-gi-seo sa-ji-neul jjik-ji ma-se-yo.",zh:"请不要在这里拍照。"},{kr:"걱정하<b>지 마세요</b>.",ro:"geok-jeong-ha-ji ma-se-yo.",zh:"请不要担心。"}],tip:"지 마（반말）；지 마세요（존댓말）"},
+{lv:2,cat:"许可",struct:"-아/어도 되다",name:"可以…（许可）",meaning:"表示允许「可以做…」",rule:"阳性元音→<b>아도 되다</b>，其他→<b>어도 되다</b>",exs:[{kr:"여기 앉아<b>도 돼요</b>?",ro:"yeo-gi an-ja-do dwae-yo?",zh:"可以坐这里吗？"},{kr:"사진 찍어<b>도 돼요</b>.",ro:"sa-jin jji-geo-do dwae-yo.",zh:"可以拍照。"}],tip:"반대: 면 안 되다=不可以；꼭 해야 해요=必须做"},
+{lv:2,cat:"推测",struct:"-(으)ㄹ 것 같다",name:"好像/应该…（推测）",meaning:"基于根据进行推测",rule:"현재：<b>는 것 같다</b>，과거：<b>은/ㄴ 것 같다</b>，미래：<b>을/ㄹ 것 같다</b>",exs:[{kr:"비가 올 <b>것 같아요</b>.",ro:"bi-ga ol geot ga-ta-yo.",zh:"好像要下雨了。"},{kr:"그 사람이 학생인 <b>것 같아요</b>.",ro:"geu sa-ra-mi hak-saeng-in geot ga-ta-yo.",zh:"那个人好像是学生。"}],tip:"겠다=主观意志/추측；것 같다=객관적 근거의 추측"},
+{lv:2,cat:"经历",struct:"-(으)ㄴ 적이 있다/없다",name:"曾经…过",meaning:"是否有过某种经历",rule:"<b>无收음+ㄴ 적이 있다</b>，<b>有收음+은 적이 있다</b>",exs:[{kr:"한국에 <b>가 본 적이 있어요</b>.",ro:"han-gu-ge ga-bon jeo-gi i-sseo-yo.",zh:"曾经去过韩国。"},{kr:"김치를 먹어 <b>본 적이 없어요</b>.",ro:"gim-chi-reul meo-geo-bon jeo-gi eop-seo-yo.",zh:"没吃过泡菜。"}],tip:"아/어 보다+ㄴ 적 있다=尝试经历；自然한 표현"},
+{lv:2,cat:"尝试",struct:"-아/어 보다",name:"试着做…",meaning:"尝试某动作",rule:"阳性元음→<b>아 보다</b>，其他→<b>어 보다</b>，하다→<b>해 보다</b>",exs:[{kr:"한복을 입어 <b>봤어요</b>.",ro:"han-bo-geul i-beo bwa-sseo-yo.",zh:"试穿过韩服了。"},{kr:"한번 해 <b>보세요</b>.",ro:"han-beon hae bo-se-yo.",zh:"请试试看。"}],tip:"아/어 보고 싶다=想试试；먹어 봐요=你试着吃一下"},
+{lv:2,cat:"完了",struct:"-아/어 버리다",name:"彻底完成（遗憾/解脱）",meaning:"动作彻底结束，带遗憾或解脱感",rule:"阳性元음→<b>아 버리다</b>，其他→<b>어 버리다</b>",exs:[{kr:"지갑을 잃어<b>버렸어요</b>.",ro:"ji-ga-beul i-reo-beo-ryeo-sseo-yo.",zh:"把钱包弄丢了。（遗憾）"},{kr:"숙제를 다 해<b>버렸어요</b>.",ro:"suk-je-reul da hae-beo-ryeo-sseo-yo.",zh:"作业全做完了。（解脱）"}],tip:"부정적 사건→遗憾；긍정적 사건→解脱"},
+{lv:2,cat:"给予",struct:"-아/어 주다",name:"为对方做…",meaning:"为他人做某事「帮…做」",rule:"阳性元음→<b>아 주다</b>，其他→<b>어 주다</b><br>겸양→아/어 드리다",exs:[{kr:"도와<b>주세요</b>.",ro:"do-wa-ju-se-yo.",zh:"请帮帮我。"},{kr:"설명해 <b>주셨어요</b>.",ro:"seol-myeong-hae ju-syeo-sseo-yo.",zh:"（您）给我说明了。"}],tip:"드리다=주다의 겸양어，对长辈/尊者用"},
+{lv:2,cat:"修饰",struct:"-(으)ㄴ+명사",name:"定语形（形容词/过去动词）",meaning:"형容词或过去动词修饰名词",rule:"形容词/동사과거：<b>有收음+은，无收음+ㄴ</b>",exs:[{kr:"어제 먹<b>은</b> 음식이 맛있었어요.",ro:"eo-je meo-geun eum-si-gi ma-si-sseo-sseo-yo.",zh:"昨天吃的食物很好吃。"},{kr:"예쁜 꽃이에요.",ro:"ye-ppeun kko-chi-e-yo.",zh:"是漂亮的花。"}],tip:"형容词→은/ㄴ；동사 과거→은/ㄴ；현재→는；미래→을/ㄹ"},
+{lv:2,cat:"修饰",struct:"-는+명사",name:"定语形（现在动词）",meaning:"现在动词修饰名词「正在做…的」",rule:"<b>动词词干+는</b>（不区分收音）",exs:[{kr:"지금 읽<b>는</b> 책이 재미있어요.",ro:"ji-geum ing-neun chae-gi jae-mi-i-sseo-yo.",zh:"现在读的书很有趣。"},{kr:"가르치<b>는</b> 선생님이에요.",ro:"ga-reu-chi-neun seon-saeng-ni-mi-e-yo.",zh:"是教课的老师。"}],tip:"는 수식형은 동사에만；형容词에는 안 씀（예쁜 ✓，예쁘는 ✗）"},
+{lv:2,cat:"修饰",struct:"-(으)ㄹ+명사",name:"定语形（将来/推测）",meaning:"将来要做的「将要…的」",rule:"<b>无收음+ㄹ，有收음+을</b>+名词",exs:[{kr:"내일 먹<b>을</b> 음식을 준비해요.",ro:"nae-il meo-geul eum-si-geul jun-bi-hae-yo.",zh:"准备明天要吃的食物。"},{kr:"갈 곳이 없어요.",ro:"gal go-si eop-seo-yo.",zh:"没有要去的地方。"}],tip:"ㄹ/을+것=名词化（갈 것=要去的事）"},
+{lv:2,cat:"比较",struct:"보다（더）",name:"比较「比…更」",meaning:"A보다 B가 더 adj=B比A更…",rule:"<b>名词+보다</b>+더/덜/훨씬",exs:[{kr:"한국어가 일본어<b>보다</b> 쉬워요.",ro:"han-gu-geo-ga il-bo-neo-bo-da swi-wo-yo.",zh:"韩语比日语容易。"},{kr:"오늘이 어제<b>보다</b> 더 추워요.",ro:"o-neu-ri eo-je-bo-da deo chu-wo-yo.",zh:"今天比昨天更冷。"}],tip:"최상급：제일/가장+형용词（가장 맛있어요=最好吃）"},
+{lv:2,cat:"程度",struct:"만큼",name:"程度相当「像…一样」",meaning:"程度相当「和…一样多」",rule:"<b>名词+만큼</b>，也可接动词定语형",exs:[{kr:"너<b>만큼</b> 잘하고 싶어요.",ro:"neo-man-keum jal-ha-go si-peo-yo.",zh:"想做得像你一样好。"},{kr:"노력한<b>만큼</b> 결과가 나와요.",ro:"no-ryeo-kan-man-keum gyeol-gwa-ga na-wa-yo.",zh:"付出多少努力就有多少成果。"}],tip:"만큼=程度；처럼=外观形態；뉘앙스 달라요"},
+{lv:2,cat:"限定",struct:"밖에+부정",name:"只有…（否定限定）",meaning:"「只有…」，后接否定形",rule:"<b>名词+밖에+否定动词</b>",exs:[{kr:"돈이 천 원<b>밖에</b> 없어요.",ro:"do-ni cheo-nwo-ni-bak-ke eop-seo-yo.",zh:"只剩1000韩元。"},{kr:"저<b>밖에</b> 없어요.",ro:"jeo-bak-ke eop-seo-yo.",zh:"只有我了。"}],tip:"밖에 뒤는 항상 부정；만은 긍정과 씀"},
+{lv:2,cat:"变化",struct:"-아/어지다",name:"变化「变得…」",meaning:"状态逐渐变化",rule:"<b>形容词+아/어지다</b>，表示渐变",exs:[{kr:"날씨가 따뜻해<b>졌어요</b>.",ro:"nal-ssi-ga tta-tteu-tae-jyeo-sseo-yo.",zh:"天气变暖了。"},{kr:"한국어 실력이 좋아<b>지고 있어요</b>.",ro:"han-gu-geo sil-lyeo-gi jo-a-ji-go i-sseo-yo.",zh:"韩语水平在提高。"}],tip:"형容词+아/어지다=渐变；동사+게 되다=情况转变"},
+{lv:2,cat:"变化",struct:"-게 되다",name:"结果变化「结果变成…」",meaning:"非本人意志，情况结果变成如此",rule:"<b>动词/형容词+게 되다</b>",exs:[{kr:"한국에서 살<b>게 됐어요</b>.",ro:"han-gu-ge-seo sal-ge dwaess-eo-yo.",zh:"结果在韩国生活了。"},{kr:"한국어를 좋아하<b>게 됐어요</b>.",ro:"han-gu-geo-reul jo-a-ha-ge dwaess-eo-yo.",zh:"（慢慢地）喜欢上了韩语。"}],tip:"아/어지다=状態变化；게 되다=情況전환（非意志）"},
+{lv:2,cat:"目的",struct:"-(으)려고",name:"目的「为了/打算…」",meaning:"行动的目的或意图",rule:"<b>无收음+려고</b>，<b>有收음+으려고</b>",exs:[{kr:"한국어를 배우<b>려고</b> 한국에 왔어요.",ro:"han-gu-geo-reul bae-u-ryeo-go han-gu-ge wa-sseo-yo.",zh:"为了学韩语来了韩国。"},{kr:"살을 빼<b>려고</b> 운동해요.",ro:"sa-reul ppae-ryeo-go un-dong-hae-yo.",zh:"为了减肥在运动。"}],tip:"으러=移動목적（가다/오다만）；으려고=一般목的（모든 동사）"},
+{lv:2,cat:"意志",struct:"-(으)ㄹ게요",name:"自我承诺「我会…」",meaning:"说话人的意志或承诺",rule:"<b>无收음+ㄹ게요</b>，<b>有收음+을게요</b>",exs:[{kr:"제가 할<b>게요</b>.",ro:"je-ga hal-ge-yo.",zh:"我来做。"},{kr:"나중에 연락할<b>게요</b>.",ro:"na-jung-e yeol-la-kal-ge-yo.",zh:"之后我会联系的。"}],tip:"ㄹ게요=话者意志（1人称多）；ㄹ 거예요=单纯将来预告"},
+{lv:2,cat:"推量",struct:"-겠다",name:"意志/推测（겠）",meaning:"说话人意志「我要…」或推测「应该…」",rule:"<b>动词词干+겠다</b>，礼貌→겠어요",exs:[{kr:"제가 하<b>겠어요</b>.",ro:"je-ga ha-ge-sseo-yo.",zh:"我来做。（意志）"},{kr:"배가 고프<b>겠어요</b>.",ro:"bae-ga go-peu-ge-sseo-yo.",zh:"肚子应该饿了吧。（推测）"}],tip:"겠=意志（자신에 관해）或 推測（타인에 관해）；알겠어요=我明白了"},
+{lv:2,cat:"名词化",struct:"-(으)ㄴ/는/ㄹ 것",name:"名词化「…这件事」",meaning:"动词/形容词名词化",rule:"현재：<b>는 것</b>，과거：<b>은/ㄴ 것</b>，미래：<b>을/ㄹ 것</b>",exs:[{kr:"한국어를 배우<b>는 것</b>이 재미있어요.",ro:"han-gu-geo-reul bae-u-neun geo-si jae-mi-i-sseo-yo.",zh:"学韩语这件事很有趣。"},{kr:"제가 만든 <b>것</b>이에요.",ro:"je-ga man-deun geo-si-e-yo.",zh:"是我做的。"}],tip:"것=거（口語縮約）；ㄹ 것 같다，ㄹ 것이다에서도 사용"},
+{lv:2,cat:"时间",struct:"-(으)ㄹ 때",name:"时候「…的时候」",meaning:"表示时间「做…的时候」",rule:"<b>无收음+ㄹ 때</b>，<b>有收음+을 때</b>",exs:[{kr:"시간이 있<b>을 때</b> 연락하세요.",ro:"si-ga-ni i-sseul ttae yeol-la-ka-se-yo.",zh:"有时间的时候联系我。"},{kr:"학생<b>일 때</b>가 좋았어요.",ro:"hak-saeng-il ttae-ga jo-a-sseo-yo.",zh:"当学生的时候很好。"}],tip:"동작 진행 중→는 동안；특정 시점→ㄹ/을 때"},
+{lv:2,cat:"程度",struct:"-(으)ㄹ수록",name:"越…越…",meaning:"程度递进「越做越…」",rule:"<b>无收음+ㄹ수록</b>，<b>有收음+을수록</b>",exs:[{kr:"배우<b>면 배울수록</b> 재미있어요.",ro:"bae-u-myeon bae-ul-su-rok jae-mi-i-sseo-yo.",zh:"越学越有趣。"},{kr:"빠를<b>수록</b> 좋아요.",ro:"ppa-reul-su-rok jo-a-yo.",zh:"越快越好。"}],tip:"으면 으면 ㄹ/을수록 패턴이 자주 쓰임"},
+{lv:2,cat:"说明",struct:"-(으)ㄴ/는데",name:"背景/对比/铺垫",meaning:"提供背景信息或对比，语气柔和",rule:"형容词/과거：<b>은/ㄴ데</b>，현재动词：<b>는데</b>",exs:[{kr:"날씨가 좋<b>은데</b> 같이 산책할까요?",ro:"nal-ssi-ga jo-eun-de ga-chi san-chae-kal-kka-yo?",zh:"天气好，要不要一起散步？"},{kr:"바쁘<b>긴 한데</b> 해볼게요.",ro:"ba-ppeu-gin han-de hae-bol-ge-yo.",zh:"虽然很忙，但我会试试。"}],tip:"은/는데는 자연스러운 연결 도구；직접 이유보다 부드러운 전환"},
+{lv:2,cat:"引用",struct:"-(이)라고 하다",name:"引用/转述「说是…」",meaning:"转述他人的话",rule:"动词/형容词：<b>다고 하다</b>，名词：<b>(이)라고 하다</b>",exs:[{kr:"선생님이 내일 시험<b>이라고 했어요</b>.",ro:"seon-saeng-ni-mi nae-il si-heo-mi-ra-go haess-eo-yo.",zh:"老师说明天有考试。"},{kr:"비가 온<b>다고 해요</b>.",ro:"bi-ga on-da-go hae-yo.",zh:"据说要下雨。"}],tip:"라고 하다→래요（口語縮約）；들었어요와 함께 자주 씀"}
+];
+
+var lv=0,pool=[],idx=0;
+
+function buildBar(){
+  var bar=document.getElementById('lvBar');bar.innerHTML='';
+  [{v:0,l:'全部 ('+G.length+')'},{v:1,l:'TOPIK 1'},{v:2,l:'TOPIK 2'}].forEach(function(o){
+    var b=document.createElement('button');
+    b.className='lv-btn'+(o.v===lv?' on':'');
+    b.textContent=o.l;
+    b.onclick=(function(v){return function(){setLv(v);};})(o.v);
+    bar.appendChild(b);
+  });
+}
+function setLv(v){lv=v;pool=v===0?G.slice():G.filter(function(g){return g.lv===v;});idx=0;buildBar();render();}
+function doShuffle(){for(var i=pool.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=pool[i];pool[i]=pool[j];pool[j]=t;}idx=0;render();}
+function next(){idx=(idx+1)%pool.length;render();}
+function prev(){idx=(idx-1+pool.length)%pool.length;render();}
+function speak(t){if(!('speechSynthesis' in window))return;window.speechSynthesis.cancel();var u=new SpeechSynthesisUtterance(t.replace(/<[^>]+>/g,''));u.lang='ko-KR';u.rate=0.82;window.speechSynthesis.speak(u);}
+function playEx(){if(pool.length)speak(pool[idx].exs[0].kr);}
+function render(){
+  if(!pool.length)return;
+  var g=pool[idx];
+  document.getElementById('pf').style.width=((idx+1)/pool.length*100).toFixed(0)+'%';
+  document.getElementById('stat').textContent=(lv===0?'全部':'TOPIK '+lv)+' · '+pool.length+'个语法  ·  '+(idx+1)+'/'+pool.length;
+  document.getElementById('ctr').textContent=(idx+1)+' / '+pool.length+'  ·  Lv'+g.lv+' '+g.cat;
+  var h='<div class="card">';
+  h+='<div class="badge-row"><span class="badge blv">TOPIK '+g.lv+'</span><span class="badge bcat">'+g.cat+'</span></div>';
+  h+='<div class="struct">'+g.struct+'</div>';
+  h+='<div class="gname">'+g.name+'</div>';
+  h+='<div class="gmeaning">'+g.meaning+'</div>';
+  h+='<div class="rule">'+g.rule+'</div>';
+  h+='<div class="exs">';
+  g.exs.forEach(function(ex){
+    var plain=ex.kr.replace(/<[^>]+>/g,'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+    h+='<div class="ex" onclick="speak(\''+plain+'\')">';
+    h+='<div class="play" onclick="event.stopPropagation();speak(\''+plain+'\')">&#9654;</div>';
+    h+='<div class="et"><div class="ekr">'+ex.kr+'</div><div class="ero">'+ex.ro+'</div><div class="ezh">'+ex.zh+'</div></div>';
+    h+='</div>';
+  });
+  h+='</div><div class="tip">'+g.tip+'</div></div>';
+  document.getElementById('area').innerHTML=h;
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='f')next();
+  else if(e.key==='ArrowLeft')prev();
+  else if(e.key==='r')playEx();
+});
+buildBar();setLv(0);
+</script>
+</body>
+</html>
